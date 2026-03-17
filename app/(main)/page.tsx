@@ -68,7 +68,7 @@ const MOCK_EVENTS = [
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <section className="relative overflow-hidden px-4 pb-8 pt-20 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden px-4 pb-8 pt-28 sm:px-6 sm:pt-32 lg:px-8">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-[8%] top-24 h-72 w-72 rounded-full bg-[var(--green)]/14 blur-[120px]" />
           <div className="absolute right-[10%] top-16 h-96 w-96 rounded-full bg-[var(--brand)]/14 blur-[140px]" />
@@ -77,13 +77,13 @@ export default function HomePage() {
 
         <div className="relative mx-auto max-w-[1200px] overflow-hidden rounded-[32px] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(20,33,58,0.94),rgba(11,16,30,0.98))] shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
           <div className="absolute inset-0 hero-grid opacity-30" />
-          <div className="relative mx-auto max-w-5xl px-6 py-20 text-center sm:px-10 md:py-28">
+          <div className="relative mx-auto max-w-5xl px-6 py-16 text-center sm:px-10 sm:py-20 md:py-24">
             <div className="inline-flex items-center gap-3 rounded-full border border-[var(--green)]/30 bg-[var(--green)]/12 px-5 py-3 text-sm font-semibold text-[var(--green)] shadow-[0_0_0_1px_rgba(34,197,94,0.08)]">
               <span className="size-2.5 rounded-full bg-[var(--green)]" />
               Compare prices across 4+ platforms instantly
             </div>
 
-            <h1 className="mx-auto mt-8 max-w-4xl text-5xl font-bold leading-[0.95] tracking-[-0.04em] text-white sm:text-6xl md:text-7xl lg:text-[92px]">
+            <h1 className="mx-auto mt-8 max-w-4xl text-4xl font-bold leading-[1.02] tracking-[-0.04em] text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-[84px]">
               Find the Best
               <span className="mt-2 block text-gradient-green">Seat Deals</span>
             </h1>
