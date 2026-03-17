@@ -37,7 +37,7 @@ export default function HeroSearch() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search for teams, games, or events..."
-                className="w-full pl-12 pr-4 h-14 bg-[var(--bg-2)] border border-white/[0.08] rounded-xl text-white placeholder:text-[var(--text-3)] text-lg outline-none focus:border-[var(--brand)]/60 transition-all"
+                className="w-full pl-12 pr-4 h-14 bg-transparent border-0 text-white placeholder:text-[var(--text-3)] text-lg outline-none"
               />
             </div>
             <button
