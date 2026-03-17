@@ -8,17 +8,12 @@ interface PlatformBadgeProps {
   className?: string;
 }
 
-export default function PlatformBadge({
-  platform,
-  size = "md",
-  showName = true,
-  className,
-}: PlatformBadgeProps) {
+export default function PlatformBadge({ platform, size = "md", showName = true, className }: PlatformBadgeProps) {
   const info = PLATFORM_INFO[platform];
   if (!info) return null;
 
   const sizes = {
-    sm: "text-xs px-2 py-1 gap-1.5",
+    sm: "text-[11px] px-2 py-1 gap-1.5",
     md: "text-sm px-2.5 py-1.5 gap-2",
     lg: "text-base px-3 py-2 gap-2.5",
   };
@@ -32,19 +27,17 @@ export default function PlatformBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center font-semibold rounded-lg transition-colors",
+        "inline-flex items-center font-semibold rounded-lg border transition-colors",
         sizes[size],
         className
       )}
       style={{
-        backgroundColor: info.bgColor,
+        backgroundColor: `${info.color}18`,
+        borderColor: `${info.color}35`,
         color: info.color,
       }}
     >
-      <span
-        className={cn("rounded-full flex-shrink-0", dotSizes[size])}
-        style={{ backgroundColor: info.color }}
-      />
+      <span className={cn("rounded-full flex-shrink-0", dotSizes[size])} style={{ backgroundColor: info.color }} />
       {showName && info.name}
     </span>
   );

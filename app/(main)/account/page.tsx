@@ -1,80 +1,88 @@
-import { BookmarkIcon, Bell, History, ChevronRight, Ticket } from "lucide-react";
+import { BookmarkIcon, Bell, History, ChevronRight, Ticket, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function AccountPage() {
-  // In production this would use Clerk's currentUser()
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen pt-24 pb-20 px-5 sm:px-8">
+      <div className="max-w-2xl mx-auto">
+
         {/* Header */}
-        <div className="mb-10">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-400 to-brand-700 flex items-center justify-center text-2xl text-white font-bold shadow-brand">
+        <div className="flex items-center gap-4 mb-10">
+          <div className="relative">
+            <div className="absolute inset-0 rounded-2xl bg-[var(--brand)] blur-xl opacity-30" />
+            <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--brand)] to-[#4542b8] flex items-center justify-center text-2xl">
               👤
             </div>
-            <div>
-              <h1 className="text-2xl font-bold text-[var(--text-primary)]">My Account</h1>
-              <p className="text-[var(--text-muted)] text-sm">Manage your saved events and price alerts</p>
-            </div>
+          </div>
+          <div>
+            <h1 className="text-2xl font-black tracking-tight text-white">My Account</h1>
+            <p className="text-sm text-[var(--text-2)]">Saved events and price alerts</p>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-10">
+        <div className="grid grid-cols-3 gap-3 mb-8">
           {[
-            { label: "Saved events", value: "0", icon: BookmarkIcon, color: "text-brand-500" },
-            { label: "Active alerts", value: "0", icon: Bell, color: "text-green-500" },
-            { label: "Searches", value: "0", icon: History, color: "text-amber-500" },
-          ].map((s, i) => (
-            <div key={i} className="p-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] text-center">
-              <s.icon size={20} className={`${s.color} mx-auto mb-2`} />
-              <p className="text-2xl font-bold text-[var(--text-primary)]">{s.value}</p>
-              <p className="text-xs text-[var(--text-muted)] mt-0.5">{s.label}</p>
+            { label: "Saved", value: "0", icon: BookmarkIcon, color: "var(--brand-light)" },
+            { label: "Alerts", value: "0", icon: Bell, color: "var(--green)" },
+            { label: "Searches", value: "0", icon: History, color: "#f59e0b" },
+          ].map((s) => (
+            <div
+              key={s.label}
+              className="p-4 rounded-2xl border border-white/[0.07] bg-[var(--bg-1)] text-center"
+            >
+              <s.icon size={18} className="mx-auto mb-2" style={{ color: s.color }} />
+              <p className="text-2xl font-black text-white">{s.value}</p>
+              <p className="text-[11px] text-[var(--text-3)] mt-0.5">{s.label}</p>
             </div>
           ))}
         </div>
 
-        {/* Quick links */}
-        <div className="space-y-3">
+        {/* Nav cards */}
+        <div className="space-y-2 mb-8">
           {[
-            { href: "/account/saved", icon: BookmarkIcon, label: "Saved Events", desc: "Events you've bookmarked", color: "bg-brand-50 dark:bg-brand-950/20 text-brand-600" },
-            { href: "/account/alerts", icon: Bell, label: "Price Alerts", desc: "Get notified when prices drop", color: "bg-green-50 dark:bg-green-950/20 text-green-600" },
-            { href: "/search", icon: Ticket, label: "Find Tickets", desc: "Search for upcoming events", color: "bg-amber-50 dark:bg-amber-950/20 text-amber-600" },
-          ].map((item, i) => (
+            { href: "/account/saved", icon: BookmarkIcon, label: "Saved Events", desc: "Events you've bookmarked", color: "var(--brand)" },
+            { href: "/account/alerts", icon: Bell, label: "Price Alerts", desc: "Get notified when prices drop", color: "var(--green)" },
+            { href: "/search", icon: Ticket, label: "Find Tickets", desc: "Search upcoming events", color: "#f59e0b" },
+          ].map((item) => (
             <Link
-              key={i}
+              key={item.href}
               href={item.href}
-              className="flex items-center gap-4 p-5 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] hover:border-brand-200 dark:hover:border-brand-800 hover:-translate-y-0.5 transition-all group"
+              className="flex items-center gap-4 p-5 rounded-2xl border border-white/[0.07] bg-[var(--bg-1)] hover:border-white/[0.15] hover:bg-[var(--bg-2)] transition-all group"
             >
-              <div className={`w-11 h-11 rounded-xl ${item.color} flex items-center justify-center flex-shrink-0`}>
-                <item.icon size={20} />
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: `${item.color}18`, border: `1px solid ${item.color}30` }}
+              >
+                <item.icon size={18} style={{ color: item.color }} />
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-[var(--text-primary)]">{item.label}</p>
-                <p className="text-sm text-[var(--text-muted)]">{item.desc}</p>
+                <p className="font-semibold text-white text-sm">{item.label}</p>
+                <p className="text-xs text-[var(--text-3)]">{item.desc}</p>
               </div>
-              <ChevronRight size={18} className="text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-0.5 transition-all" />
+              <ChevronRight size={16} className="text-[var(--text-3)] group-hover:text-white group-hover:translate-x-0.5 transition-all" />
             </Link>
           ))}
         </div>
 
-        {/* Sign in notice */}
-        <div className="mt-8 p-5 rounded-2xl border border-dashed border-brand-200 dark:border-brand-800 bg-brand-50/50 dark:bg-brand-950/10 text-center">
-          <p className="text-sm text-[var(--text-secondary)] mb-3">
-            Sign in to save events and set price alerts across devices.
+        {/* Sign-in CTA */}
+        <div className="rounded-2xl border border-dashed border-white/[0.1] bg-[var(--bg-1)] p-6 text-center">
+          <p className="text-sm text-[var(--text-2)] mb-4">
+            Sign in to save events and receive price drop alerts.
           </p>
           <div className="flex gap-3 justify-center">
             <Link
               href="/sign-in"
-              className="px-4 py-2 rounded-xl text-sm font-semibold border border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-all"
+              className="px-4 py-2 rounded-lg text-sm font-semibold border border-white/[0.1] text-[var(--text-2)] hover:text-white hover:border-white/[0.2] transition-all"
             >
               Sign in
             </Link>
             <Link
               href="/sign-up"
-              className="px-4 py-2 rounded-xl text-sm font-semibold bg-brand-600 text-white hover:bg-brand-700 transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white transition-all glow-brand"
             >
               Create account
+              <ArrowRight size={14} />
             </Link>
           </div>
         </div>

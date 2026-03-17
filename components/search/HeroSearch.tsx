@@ -2,78 +2,62 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Search, ArrowRight } from "lucide-react";
-import Button from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { SPORTS, SPORT_EMOJIS, type Sport } from "@/types/event";
+import { SPORT_EMOJIS, type Sport } from "@/types/event";
 
 const PLACEHOLDERS = [
-  "Super Bowl tickets...",
   "Lakers vs Celtics...",
+  "Super Bowl tickets...",
   "Yankees vs Red Sox...",
   "Stanley Cup Finals...",
-  "World Cup...",
   "UFC 300...",
-  "Wimbledon finals...",
+  "World Cup...",
 ];
 
-const QUICK_SEARCHES = [
-  "NFL playoffs",
-  "NBA Finals",
-  "World Series",
-  "Stanley Cup",
-  "MLS Cup",
-  "College Football",
-];
+const QUICK: string[] = ["NBA Finals", "NFL playoffs", "World Series", "Stanley Cup", "UFC"];
+const SPORTS: Sport[] = ["NFL", "NBA", "MLB", "NHL", "MLS", "UFC"];
 
 export default function HeroSearch() {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [selectedSport, setSelectedSport] = useState<Sport | null>(null);
-  const [placeholderIdx, setPlaceholderIdx] = useState(0);
-  const [isFocused, setIsFocused] = useState(false);
+  const [sport, setSport] = useState<Sport | null>(null);
+  const [pidx, setPidx] = useState(0);
+  const [focused, setFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderIdx((i) => (i + 1) % PLACEHOLDERS.length);
-    }, 3000);
-    return () => clearInterval(interval);
+    const t = setInterval(() => setPidx((i) => (i + 1) % PLACEHOLDERS.length), 3200);
+    return () => clearInterval(t);
   }, []);
 
-  const handleSearch = (e?: React.FormEvent) => {
-    e?.preventDefault();
-    const q = query.trim();
-    if (!q) return;
-    const params = new URLSearchParams({ q });
-    if (selectedSport) params.set("sport", selectedSport);
-    router.push(`/search?${params}`);
+  const go = (q: string, s?: Sport | null) => {
+    const p = new URLSearchParams({ q });
+    if (s) p.set("sport", s);
+    router.push(`/search?${p}`);
   };
 
-  const handleQuickSearch = (term: string) => {
-    setQuery(term);
-    const params = new URLSearchParams({ q: term });
-    router.push(`/search?${params}`);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) go(query.trim(), sport);
   };
-
-  const SPORT_SUBSET: Sport[] = ["NFL", "NBA", "MLB", "NHL", "MLS", "UFC"];
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
-      {/* Search box */}
-      <form onSubmit={handleSearch} className="relative group">
+    <div className="w-full max-w-2xl mx-auto">
+      {/* Main search bar */}
+      <form onSubmit={handleSubmit}>
         <div
           className={cn(
-            "flex items-center gap-3 rounded-2xl border transition-all duration-300 px-4 py-3.5",
-            isFocused
-              ? "border-brand-400 shadow-brand bg-[var(--bg-primary)]"
-              : "border-[var(--border-strong)] bg-[var(--bg-primary)] hover:border-brand-300 shadow-soft dark:shadow-soft-dark"
+            "relative flex items-center gap-3 rounded-2xl border transition-all duration-300 px-4 py-3",
+            focused
+              ? "border-[var(--brand)] shadow-[0_0_0_4px_rgba(109,106,232,0.15)] bg-[var(--bg-1)]"
+              : "border-white/[0.1] bg-[var(--bg-1)] hover:border-white/[0.18]"
           )}
         >
           <Search
-            size={20}
+            size={19}
             className={cn(
-              "flex-shrink-0 transition-colors",
-              isFocused ? "text-brand-500" : "text-[var(--text-muted)]"
+              "flex-shrink-0 transition-colors duration-200",
+              focused ? "text-[var(--brand-light)]" : "text-[var(--text-3)]"
             )}
           />
           <input
@@ -81,52 +65,52 @@ export default function HeroSearch() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            placeholder={PLACEHOLDERS[placeholderIdx]}
-            className="flex-1 bg-transparent text-[var(--text-primary)] placeholder:text-[var(--text-muted)] text-base outline-none min-w-0"
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            placeholder={PLACEHOLDERS[pidx]}
+            className="flex-1 bg-transparent text-white placeholder:text-[var(--text-3)] text-[15px] outline-none min-w-0"
           />
-          <Button
+          <button
             type="submit"
-            size="md"
             disabled={!query.trim()}
-            className="flex-shrink-0 gap-1.5"
+            className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-[var(--brand)] hover:bg-[var(--brand-light)] disabled:opacity-30 disabled:cursor-not-allowed text-white transition-all glow-brand"
           >
-            Find seats
-            <ArrowRight size={16} />
-          </Button>
+            Search
+            <ArrowRight size={15} />
+          </button>
         </div>
       </form>
 
-      {/* Sport filters */}
+      {/* Sport pills */}
       <div className="flex flex-wrap gap-2 mt-4 justify-center">
-        {SPORT_SUBSET.map((sport) => (
+        {SPORTS.map((s) => (
           <button
-            key={sport}
-            onClick={() =>
-              setSelectedSport(selectedSport === sport ? null : sport)
-            }
+            key={s}
+            onClick={() => {
+              const next = sport === s ? null : s;
+              setSport(next);
+            }}
             className={cn(
-              "inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border",
-              selectedSport === sport
-                ? "bg-brand-600 text-white border-brand-600 shadow-brand"
-                : "bg-[var(--bg-primary)] border-[var(--border)] text-[var(--text-secondary)] hover:border-brand-300 hover:text-brand-600 dark:hover:text-brand-400"
+              "inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-all duration-200",
+              sport === s
+                ? "bg-[var(--brand)] border-[var(--brand)] text-white glow-brand"
+                : "border-white/[0.08] text-[var(--text-2)] hover:border-white/[0.18] hover:text-white bg-white/[0.03]"
             )}
           >
-            <span>{SPORT_EMOJIS[sport]}</span>
-            {sport}
+            <span className="text-[11px]">{SPORT_EMOJIS[s]}</span>
+            {s}
           </button>
         ))}
       </div>
 
-      {/* Quick search suggestions */}
-      <div className="mt-5 flex flex-wrap gap-2 justify-center">
-        <span className="text-xs text-[var(--text-muted)] self-center">Try:</span>
-        {QUICK_SEARCHES.map((term) => (
+      {/* Quick searches */}
+      <div className="flex flex-wrap gap-2 mt-4 justify-center items-center">
+        <span className="text-[11px] text-[var(--text-3)] font-medium uppercase tracking-wider">Trending:</span>
+        {QUICK.map((term) => (
           <button
             key={term}
-            onClick={() => handleQuickSearch(term)}
-            className="text-xs px-3 py-1.5 rounded-full bg-[var(--bg-secondary)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-brand-600 hover:border-brand-300 transition-all"
+            onClick={() => go(term)}
+            className="text-[12px] px-3 py-1 rounded-full border border-white/[0.06] text-[var(--text-3)] hover:text-white hover:border-white/[0.15] bg-white/[0.02] transition-all"
           >
             {term}
           </button>
