@@ -1,7 +1,11 @@
 import { BookmarkIcon, Bell, History, ChevronRight, Ticket, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { currentUser } from "@clerk/nextjs/server";
+import Image from "next/image";
 
-export default function AccountPage() {
+export default async function AccountPage() {
+  const user = await currentUser();
+
   return (
     <div className="min-h-screen pt-24 pb-20 px-5 sm:px-8">
       <div className="max-w-2xl mx-auto">
@@ -10,13 +14,29 @@ export default function AccountPage() {
         <div className="flex items-center gap-4 mb-10">
           <div className="relative">
             <div className="absolute inset-0 rounded-2xl bg-[var(--brand)] blur-xl opacity-30" />
-            <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--brand)] to-[#4542b8] flex items-center justify-center text-2xl">
-              👤
-            </div>
+            {user?.imageUrl ? (
+              <div className="relative w-16 h-16 rounded-2xl overflow-hidden ring-2 ring-[var(--brand)]/30">
+                <Image src={user.imageUrl} alt="Avatar" fill className="object-cover" />
+              </div>
+            ) : (
+              <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--brand)] to-[#4542b8] flex items-center justify-center text-2xl">
+                {user ? (
+                  <span className="text-white font-bold text-xl">
+                    {(user.firstName?.[0] ?? user.emailAddresses[0]?.emailAddress[0] ?? "?").toUpperCase()}
+                  </span>
+                ) : (
+                  <span>👤</span>
+                )}
+              </div>
+            )}
           </div>
           <div>
-            <h1 className="text-2xl font-black tracking-tight text-white">My Account</h1>
-            <p className="text-sm text-[var(--text-2)]">Saved events and price alerts</p>
+            <h1 className="text-2xl font-black tracking-tight text-white">
+              {user ? (user.firstName ? `${user.firstName}${user.lastName ? ` ${user.lastName}` : ""}` : "My Account") : "My Account"}
+            </h1>
+            <p className="text-sm text-[var(--text-2)]">
+              {user?.emailAddresses[0]?.emailAddress ?? "Saved events and price alerts"}
+            </p>
           </div>
         </div>
 
@@ -65,27 +85,29 @@ export default function AccountPage() {
           ))}
         </div>
 
-        {/* Sign-in CTA */}
-        <div className="rounded-2xl border border-dashed border-white/[0.1] bg-[var(--bg-1)] p-6 text-center">
-          <p className="text-sm text-[var(--text-2)] mb-4">
-            Sign in to save events and receive price drop alerts.
-          </p>
-          <div className="flex gap-3 justify-center">
-            <Link
-              href="/sign-in"
-              className="px-4 py-2 rounded-lg text-sm font-semibold border border-white/[0.1] text-[var(--text-2)] hover:text-white hover:border-white/[0.2] transition-all"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/sign-up"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white transition-all glow-brand"
-            >
-              Create account
-              <ArrowRight size={14} />
-            </Link>
+        {/* Sign-in CTA — only shown when not authenticated (middleware redirects, but just in case) */}
+        {!user && (
+          <div className="rounded-2xl border border-dashed border-white/[0.1] bg-[var(--bg-1)] p-6 text-center">
+            <p className="text-sm text-[var(--text-2)] mb-4">
+              Sign in to save events and receive price drop alerts.
+            </p>
+            <div className="flex gap-3 justify-center">
+              <Link
+                href="/sign-in"
+                className="px-4 py-2 rounded-lg text-sm font-semibold border border-white/[0.1] text-[var(--text-2)] hover:text-white hover:border-white/[0.2] transition-all"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/sign-up"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white transition-all glow-brand"
+              >
+                Create account
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -1,56 +1,71 @@
 import HeroSearch from "@/components/search/HeroSearch";
-import { Zap, Shield, TrendingDown, Star, ArrowRight } from "lucide-react";
-import { PLATFORM_INFO } from "@/types/ticket";
+import { Search, TrendingDown, Tag, SlidersHorizontal, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-const PLATFORMS = Object.values(PLATFORM_INFO);
-
-const FEATURES = [
-  {
-    icon: Zap,
-    title: "Real-time comparison",
-    desc: "Every major platform scanned simultaneously. You always see the most current prices.",
-    accent: "#f59e0b",
-  },
-  {
-    icon: TrendingDown,
-    title: "Always the lowest price",
-    desc: "Listings ranked cheapest first. The best seat at the best price — instantly surfaced.",
-    accent: "#22c55e",
-  },
-  {
-    icon: Shield,
-    title: "Zero markup. Ever.",
-    desc: "We never touch the price. Click through to buy directly on the original platform.",
-    accent: "#6d6ae8",
-  },
-];
-
-const TESTIMONIALS = [
-  {
-    text: "Saved $180 on Lakers tickets in under 30 seconds. This is exactly what was missing.",
-    author: "Marcus T.",
-    sport: "NBA fan",
-    saved: "$180",
-  },
-  {
-    text: "Found playoff tickets $60 cheaper than what I was about to pay on Ticketmaster.",
-    author: "Sarah K.",
-    sport: "NFL fan",
-    saved: "$60",
-  },
-  {
-    text: "My go-to before buying any sports ticket. The comparison view is incredibly clean.",
-    author: "Jordan M.",
-    sport: "MLB fan",
-    saved: "$95",
-  },
-];
-
 const STEPS = [
-  { n: "01", title: "Search any game", desc: "Type a team, event, or sport. We find everything." },
-  { n: "02", title: "Compare all prices", desc: "7+ platforms pulled in parallel, ranked cheapest first." },
-  { n: "03", title: "Buy on the original site", desc: "Click through. You pay the platform directly." },
+  {
+    n: "01",
+    icon: Search,
+    title: "Search Any Event",
+    desc: "Type a team name, artist, or event. We instantly search across all major ticket platforms.",
+  },
+  {
+    n: "02",
+    icon: TrendingDown,
+    title: "Compare All Prices",
+    desc: "See prices from Ticketmaster, StubHub, SeatGeek, and more — all side by side.",
+  },
+  {
+    n: "03",
+    icon: Tag,
+    title: "Buy at the Best Price",
+    desc: "Click through to purchase directly on the platform with the lowest price. Zero markup.",
+  },
+];
+
+const MOCK_EVENTS = [
+  {
+    id: "tm_lakers_celtics",
+    title: "Los Angeles Lakers vs Boston Celtics",
+    date: "Sat, Mar 22 · 7:30 PM",
+    venue: "Crypto.com Arena",
+    city: "Los Angeles, CA",
+    save: "$47",
+    gradient: "from-[#5452c8] to-[#1a1a3e]",
+    prices: [
+      { platform: "TickPick", price: "$89", best: true },
+      { platform: "SeatGeek", price: "$112" },
+      { platform: "StubHub", price: "$136" },
+    ],
+  },
+  {
+    id: "tm_yankees_redsox",
+    title: "New York Yankees vs Boston Red Sox",
+    date: "Sun, Mar 23 · 1:05 PM",
+    venue: "Yankee Stadium",
+    city: "New York, NY",
+    save: "$31",
+    gradient: "from-[#1a3a5c] to-[#0d1f30]",
+    prices: [
+      { platform: "Gametime", price: "$64", best: true },
+      { platform: "Ticketmaster", price: "$79" },
+      { platform: "Vivid Seats", price: "$95" },
+    ],
+  },
+  {
+    id: "tm_chiefs_ravens",
+    title: "Kansas City Chiefs vs Baltimore Ravens",
+    date: "Mon, Mar 24 · 8:15 PM",
+    venue: "Arrowhead Stadium",
+    city: "Kansas City, MO",
+    save: "$62",
+    gradient: "from-[#5c1a1a] to-[#2a0d0d]",
+    prices: [
+      { platform: "TickPick", price: "$118", best: true },
+      { platform: "SeatGeek", price: "$145" },
+      { platform: "StubHub", price: "$180" },
+    ],
+  },
 ];
 
 export default function HomePage() {
@@ -63,30 +78,28 @@ export default function HomePage() {
         <div className="orb w-[700px] h-[700px] bg-[var(--brand)] opacity-[0.07] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="orb w-[400px] h-[400px] bg-purple-500 opacity-[0.04] top-1/4 left-1/3" />
         <div className="orb w-[300px] h-[300px] bg-indigo-400 opacity-[0.04] bottom-1/4 right-1/4" />
-
-        {/* Vignette */}
         <div className="absolute inset-0 bg-radial from-transparent via-transparent to-[var(--bg)] pointer-events-none" />
 
         <div className="relative z-10 text-center w-full max-w-4xl mx-auto">
           {/* Pill badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/[0.1] bg-white/[0.04] text-[var(--text-2)] text-[13px] font-medium mb-8 backdrop-blur-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)] animate-pulse" />
-            Live prices from 7+ platforms
+            Compare prices across 4+ platforms instantly
           </div>
 
           {/* Headline */}
           <h1 className="font-black leading-[1.0] tracking-[-0.04em] mb-6">
             <span className="block text-[clamp(3rem,8vw,6rem)] text-white mb-1">
-              Find the cheapest
+              Find the Best
             </span>
             <span className="block text-[clamp(3rem,8vw,6rem)] text-chrome">
-              seat in the house.
+              Seat Deals
             </span>
           </h1>
 
-          <p className="text-[clamp(1rem,2vw,1.2rem)] text-[var(--text-2)] max-w-xl mx-auto leading-relaxed mb-10">
-            We compare Ticketmaster, StubHub, SeatGeek, Vivid Seats, AXS and more —
-            and surface the best deal in seconds.
+          <p className="text-[clamp(1rem,2vw,1.15rem)] text-[var(--text-2)] max-w-xl mx-auto leading-relaxed mb-10">
+            Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place.
+            Never overpay for seats again.
           </p>
 
           <HeroSearch />
@@ -99,51 +112,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Platforms ticker ─────────────────────────────────────── */}
-      <section className="py-14 border-y border-white/[0.06] overflow-hidden">
-        <p className="text-center text-[11px] font-semibold text-[var(--text-3)] uppercase tracking-[0.2em] mb-8">
-          Comparing prices across
-        </p>
-        <div className="flex flex-wrap justify-center gap-3 px-5 max-w-4xl mx-auto">
-          {PLATFORMS.map((p) => (
-            <div
-              key={p.id}
-              className="flex items-center gap-2.5 px-4 py-2 rounded-xl border border-white/[0.07] bg-white/[0.03] hover:border-white/[0.12] transition-all"
-            >
-              <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: p.color }} />
-              <span className="text-sm font-semibold text-[var(--text-1)]">{p.name}</span>
-            </div>
-          ))}
-          <div className="flex items-center px-4 py-2 rounded-xl border border-dashed border-white/[0.07] text-[var(--text-3)] text-sm">
-            + more
-          </div>
-        </div>
-      </section>
-
-      {/* ── How it works ──────────────────────────────────────────── */}
-      <section className="py-24 px-5">
+      {/* ── How It Works ──────────────────────────────────────────── */}
+      <section className="py-24 px-5 bg-[var(--bg-1)]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-[11px] font-semibold text-[var(--brand-light)] uppercase tracking-[0.2em] mb-3">
-              How it works
-            </p>
-            <h2 className="text-[clamp(2rem,4vw,3rem)] font-black tracking-tight text-white">
-              Three steps to the best seat
+            {/* Section pill */}
+            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full border border-[var(--brand)]/30 bg-[var(--brand)]/[0.08] text-[var(--brand-light)] text-[11px] font-bold uppercase tracking-[0.15em] mb-5">
+              How It Works
+            </div>
+            <h2 className="text-[clamp(2rem,4vw,2.8rem)] font-black tracking-tight text-white mb-3">
+              Three Simple Steps to Save
             </h2>
+            <p className="text-[var(--text-2)] text-base max-w-md mx-auto">
+              Finding the best ticket prices has never been easier
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.06] rounded-2xl overflow-hidden border border-white/[0.06]">
-            {STEPS.map((s, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {STEPS.map((s) => (
               <div
-                key={i}
-                className="relative p-8 bg-[var(--bg-1)] hover:bg-[var(--bg-2)] transition-colors"
+                key={s.n}
+                className="relative p-8 rounded-2xl border border-white/[0.07] bg-[var(--bg)] hover:border-white/[0.13] transition-all overflow-hidden"
               >
-                <span className="text-[80px] font-black text-white/[0.03] absolute top-4 right-6 leading-none select-none">
+                {/* Large watermark number */}
+                <span className="text-[96px] font-black text-white/[0.04] absolute -top-2 right-4 leading-none select-none">
                   {s.n}
                 </span>
-                <div className="w-10 h-10 rounded-xl bg-[var(--brand)]/10 border border-[var(--brand)]/20 flex items-center justify-center mb-5">
-                  <span className="text-sm font-bold text-[var(--brand-light)]">{parseInt(s.n)}</span>
+
+                {/* Green icon */}
+                <div className="w-12 h-12 rounded-xl bg-[var(--green)]/10 border border-[var(--green)]/20 flex items-center justify-center mb-6">
+                  <s.icon size={22} className="text-[var(--green)]" />
                 </div>
+
                 <h3 className="text-lg font-bold text-white mb-2">{s.title}</h3>
                 <p className="text-sm text-[var(--text-2)] leading-relaxed">{s.desc}</p>
               </div>
@@ -152,68 +152,84 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Features ──────────────────────────────────────────────── */}
-      <section className="py-24 px-5 bg-[var(--bg-1)]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-[11px] font-semibold text-[var(--brand-light)] uppercase tracking-[0.2em] mb-3">
-              Why SeatScout
-            </p>
-            <h2 className="text-[clamp(2rem,4vw,3rem)] font-black tracking-tight text-white">
-              Built for real fans
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {FEATURES.map((f, i) => (
-              <div
-                key={i}
-                className="group p-7 rounded-2xl border border-white/[0.07] bg-[var(--bg)] hover:border-white/[0.12] transition-all duration-300"
-              >
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: `${f.accent}15`, border: `1px solid ${f.accent}30` }}
-                >
-                  <f.icon size={20} style={{ color: f.accent }} />
-                </div>
-                <h3 className="text-base font-bold text-white mb-2">{f.title}</h3>
-                <p className="text-sm text-[var(--text-2)] leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Testimonials ──────────────────────────────────────────── */}
+      {/* ── Upcoming Events ───────────────────────────────────────── */}
       <section className="py-24 px-5">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-[clamp(2rem,4vw,3rem)] font-black tracking-tight text-white">
-              Fans save every day
-            </h2>
+
+          {/* Section header */}
+          <div className="flex items-start justify-between mb-8 gap-4 flex-wrap">
+            <div>
+              <h2 className="text-2xl font-black tracking-tight text-white mb-1">Upcoming Events</h2>
+              <p className="text-sm text-[var(--text-2)]">
+                Showing {MOCK_EVENTS.length} results · Updated 2 min ago
+              </p>
+            </div>
+            <button className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-medium text-[var(--text-1)] transition-all">
+              <SlidersHorizontal size={15} />
+              Filters
+            </button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {TESTIMONIALS.map((t, i) => (
-              <div
-                key={i}
-                className="p-7 rounded-2xl border border-white/[0.07] bg-[var(--bg-1)] hover:border-white/[0.12] transition-all"
+
+          {/* 3-col event grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+            {MOCK_EVENTS.map((event) => (
+              <Link
+                key={event.id}
+                href={`/event/${event.id}`}
+                className="group rounded-2xl border border-white/[0.07] bg-[var(--bg-1)] hover:border-white/[0.15] transition-all overflow-hidden flex flex-col"
               >
-                {/* Savings badge */}
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--green)]/10 border border-[var(--green)]/20 text-[var(--green)] text-xs font-bold mb-4">
-                  Saved {t.saved}
+                {/* Venue photo / gradient */}
+                <div className={`relative h-40 bg-gradient-to-br ${event.gradient} overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  {/* Save badge */}
+                  <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[var(--green)] text-white text-xs font-bold shadow-lg">
+                    Save {event.save}
+                  </div>
                 </div>
-                <div className="flex gap-0.5 mb-3">
-                  {Array.from({ length: 5 }).map((_, j) => (
-                    <Star key={j} size={12} className="text-yellow-400 fill-yellow-400" />
-                  ))}
+
+                {/* Event info */}
+                <div className="p-4 flex-1 flex flex-col">
+                  <h3 className="text-sm font-bold text-white leading-snug mb-1 line-clamp-2">
+                    {event.title}
+                  </h3>
+                  <p className="text-xs text-[var(--text-2)] mb-0.5">{event.date}</p>
+                  <p className="text-xs text-[var(--text-3)] mb-4">{event.venue} · {event.city}</p>
+
+                  {/* Platform price rows */}
+                  <div className="mt-auto space-y-1.5">
+                    {event.prices.map((p) => (
+                      <div
+                        key={p.platform}
+                        className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs ${
+                          p.best
+                            ? "bg-[var(--green)]/10 border border-[var(--green)]/20"
+                            : "bg-white/[0.03] border border-white/[0.05]"
+                        }`}
+                      >
+                        <span className={p.best ? "text-[var(--green)] font-semibold" : "text-[var(--text-2)]"}>
+                          {p.platform}
+                          {p.best && <span className="ml-1.5 text-[10px] opacity-70">Best</span>}
+                        </span>
+                        <span className={`font-bold ${p.best ? "text-[var(--green)]" : "text-[var(--text-1)]"}`}>
+                          {p.price}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <p className="text-sm text-[var(--text-2)] leading-relaxed mb-4">
-                  &ldquo;{t.text}&rdquo;
-                </p>
-                <p className="text-sm font-semibold text-white">{t.author}</p>
-                <p className="text-xs text-[var(--text-3)]">{t.sport}</p>
-              </div>
+              </Link>
             ))}
+          </div>
+
+          {/* Load more */}
+          <div className="flex justify-center">
+            <Link
+              href="/search"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-semibold text-[var(--text-1)] transition-all"
+            >
+              Load More Events
+              <ArrowRight size={15} />
+            </Link>
           </div>
         </div>
       </section>
@@ -222,10 +238,8 @@ export default function HomePage() {
       <section className="py-24 px-5">
         <div className="max-w-3xl mx-auto">
           <div className="relative rounded-3xl border border-white/[0.1] overflow-hidden p-12 text-center">
-            {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-2)] via-[var(--bg-1)] to-[var(--bg)]" />
             <div className="orb w-80 h-80 bg-[var(--brand)] opacity-[0.12] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-
             <div className="relative z-10">
               <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black tracking-tight text-white mb-4">
                 Stop overpaying for tickets.

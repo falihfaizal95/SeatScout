@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Menu, X, Ticket } from "lucide-react";
+import { useAuth, UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
@@ -11,6 +12,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHome = pathname === "/";
+  const { isSignedIn, isLoaded } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -20,7 +22,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/search", label: "Find Tickets" },
-    { href: "/account", label: "Account" },
+    ...(isSignedIn ? [{ href: "/account", label: "Account" }] : []),
   ];
 
   return (
@@ -67,19 +69,36 @@ export default function Navbar() {
           </nav>
 
           {/* Right */}
-          <div className="hidden md:flex items-center gap-2">
-            <button
-              onClick={() => router.push("/sign-in")}
-              className="px-4 py-2 text-sm font-medium text-[var(--text-2)] hover:text-white transition-colors"
-            >
-              Sign in
-            </button>
-            <button
-              onClick={() => router.push("/sign-up")}
-              className="px-4 py-2 rounded-lg text-sm font-semibold bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white transition-all glow-brand"
-            >
-              Get started
-            </button>
+          <div className="hidden md:flex items-center gap-3">
+            {isLoaded && isSignedIn ? (
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "w-8 h-8 ring-2 ring-[var(--brand)]/40",
+                    userButtonPopoverCard: "bg-[#111118] border border-white/[0.08]",
+                    userButtonPopoverActionButton: "text-[var(--text-1)] hover:bg-white/[0.06]",
+                    userButtonPopoverFooter: "hidden",
+                  },
+                }}
+              />
+            ) : isLoaded ? (
+              <>
+                <button
+                  onClick={() => router.push("/sign-in")}
+                  className="px-4 py-2 text-sm font-medium text-[var(--text-2)] hover:text-white transition-colors"
+                >
+                  Sign in
+                </button>
+                <button
+                  onClick={() => router.push("/sign-up")}
+                  className="px-4 py-2 rounded-lg text-sm font-semibold bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white transition-all glow-brand"
+                >
+                  Get started
+                </button>
+              </>
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-white/[0.06] animate-pulse" />
+            )}
           </div>
 
           {/* Mobile toggle */}
@@ -104,20 +123,22 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <div className="flex gap-2 mt-3 pt-3 border-t border-white/[0.06]">
-              <button
-                onClick={() => { router.push("/sign-in"); setMobileOpen(false); }}
-                className="flex-1 py-2.5 rounded-lg text-sm font-medium border border-white/[0.1] text-[var(--text-2)] hover:text-white transition-all"
-              >
-                Sign in
-              </button>
-              <button
-                onClick={() => { router.push("/sign-up"); setMobileOpen(false); }}
-                className="flex-1 py-2.5 rounded-lg text-sm font-semibold bg-[var(--brand)] text-white transition-all"
-              >
-                Get started
-              </button>
-            </div>
+            {isLoaded && !isSignedIn && (
+              <div className="flex gap-2 mt-3 pt-3 border-t border-white/[0.06]">
+                <button
+                  onClick={() => { router.push("/sign-in"); setMobileOpen(false); }}
+                  className="flex-1 py-2.5 rounded-lg text-sm font-medium border border-white/[0.1] text-[var(--text-2)] hover:text-white transition-all"
+                >
+                  Sign in
+                </button>
+                <button
+                  onClick={() => { router.push("/sign-up"); setMobileOpen(false); }}
+                  className="flex-1 py-2.5 rounded-lg text-sm font-semibold bg-[var(--brand)] text-white transition-all"
+                >
+                  Get started
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
