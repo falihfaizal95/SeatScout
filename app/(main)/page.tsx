@@ -2,27 +2,29 @@ import HeroSearch from "@/components/search/HeroSearch";
 import { Search, BarChart3, Ticket, TrendingDown, SlidersHorizontal, ArrowRight, Calendar, MapPin, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
+/* ── How It Works data ──────────────────────────────────────── */
 const STEPS = [
   {
-    n: "01",
     icon: Search,
+    number: "01",
     title: "Search Your Event",
-    desc: "Enter the team, game, or event you want to attend. We'll instantly find all available listings.",
+    description: "Enter the team, game, or event you want to attend. We'll instantly find all available listings.",
   },
   {
-    n: "02",
     icon: BarChart3,
+    number: "02",
     title: "Compare Prices",
-    desc: "View side-by-side prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in real-time.",
+    description: "View side-by-side prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in real-time.",
   },
   {
-    n: "03",
     icon: Ticket,
+    number: "03",
     title: "Get Best Deal",
-    desc: "See the cheapest option highlighted in green. Click to purchase directly from the platform.",
+    description: "See the cheapest option highlighted in green. Click to purchase directly from the platform.",
   },
 ];
 
+/* ── Stats ──────────────────────────────────────────────────── */
 const STATS = [
   { value: "1M+", label: "Tickets Compared" },
   { value: "4", label: "Platforms" },
@@ -30,13 +32,14 @@ const STATS = [
   { value: "50K+", label: "Happy Users" },
 ];
 
+/* ── Mock events ────────────────────────────────────────────── */
 const MOCK_EVENTS = [
   {
     id: "tm_lakers_warriors",
     title: "Lakers vs Warriors",
     date: "March 25, 2026 · 7:30 PM",
     location: "Crypto.com Arena, Los Angeles",
-    imageUrl: "https://images.unsplash.com/photo-1640862101983-9f7ef7fd7cc9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYXNrZXRiYWxsJTIwZ2FtZSUyMGFyZW5hJTIwY3Jvd2R8ZW58MXx8fHwxNzczNzA4OTI3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageUrl: "https://images.unsplash.com/photo-1640862101983-9f7ef7fd7cc9?w=800&q=80",
     prices: [
       { platform: "Ticketmaster", price: 189 },
       { platform: "StubHub", price: 165 },
@@ -49,7 +52,7 @@ const MOCK_EVENTS = [
     title: "Cowboys vs Eagles",
     date: "April 2, 2026 · 1:00 PM",
     location: "AT&T Stadium, Dallas",
-    imageUrl: "https://images.unsplash.com/photo-1663852914605-f5d7f50e7392?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb290YmFsbCUyMHN0YWRpdW0lMjBzcG9ydHN8ZW58MXx8fHwxNzczNzE4NzIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageUrl: "https://images.unsplash.com/photo-1663852914605-f5d7f50e7392?w=800&q=80",
     prices: [
       { platform: "Ticketmaster", price: 245 },
       { platform: "StubHub", price: 228 },
@@ -62,7 +65,7 @@ const MOCK_EVENTS = [
     title: "Yankees vs Red Sox",
     date: "April 10, 2026 · 7:05 PM",
     location: "Yankee Stadium, New York",
-    imageUrl: "https://images.unsplash.com/photo-1763246168695-36dc30e507ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYXNlYmFsbCUyMHN0YWRpdW0lMjBuaWdodCUyMGdhbWV8ZW58MXx8fHwxNzczNzE4NzI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageUrl: "https://images.unsplash.com/photo-1763246168695-36dc30e507ab?w=800&q=80",
     prices: [
       { platform: "Ticketmaster", price: 156 },
       { platform: "StubHub", price: 142 },
@@ -76,9 +79,9 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
 
-      {/* ── Hero ──────────────────────────────────────────────────── */}
-      <section className="relative pt-16 hero-grid overflow-hidden">
-        {/* Decorative blur orbs — same positions as zip */}
+      {/* ── Hero ──────────────────────────────────────────────── */}
+      <div className="relative pt-16 bg-[var(--bg)] overflow-hidden">
+        {/* Decorative blobs */}
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-[var(--green)] rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-[var(--brand)] rounded-full blur-3xl" />
@@ -87,9 +90,9 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
           <div className="text-center max-w-4xl mx-auto">
 
-            {/* Green pill badge */}
+            {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--green)]/20 border border-[var(--green)]/30 rounded-full mb-6">
-              <span className="w-2 h-2 bg-[var(--green)] rounded-full animate-pulse" />
+              <span className="size-2 bg-[var(--green)] rounded-full animate-pulse" />
               <span className="text-[var(--green)] text-sm font-medium">Compare prices across 4+ platforms instantly</span>
             </div>
 
@@ -102,13 +105,12 @@ export default function HomePage() {
             </h1>
 
             <p className="text-xl text-[var(--text-2)] mb-12 max-w-2xl mx-auto">
-              Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place.
-              Never overpay for seats again.
+              Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place. Never overpay for seats again.
             </p>
 
             <HeroSearch />
 
-            {/* Stats grid */}
+            {/* Stats */}
             <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
               {STATS.map((s) => (
                 <div key={s.label}>
@@ -119,13 +121,13 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* ── How It Works ──────────────────────────────────────────── */}
-      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 bg-[var(--bg-1)]">
-        <div className="max-w-7xl mx-auto">
+      {/* ── How It Works ──────────────────────────────────────── */}
+      <section id="how-it-works" className="py-24 bg-[var(--bg-1)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-[var(--green)]/10 border border-[var(--green)]/30 rounded-full mb-4">
+            <div className="inline-block px-4 py-2 bg-[var(--green)]/[0.08] border border-[var(--green)]/25 rounded-full mb-4">
               <span className="text-[var(--green)] text-sm font-semibold">HOW IT WORKS</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -141,25 +143,23 @@ export default function HomePage() {
               const Icon = step.icon;
               return (
                 <div key={index} className="relative">
-                  {/* Connector line between steps */}
+                  {/* Connector line */}
                   {index < STEPS.length - 1 && (
                     <div className="hidden md:block absolute top-20 left-1/2 w-full h-0.5 bg-gradient-to-r from-[var(--green)]/30 to-transparent z-10" />
                   )}
 
-                  <div className="relative bg-[var(--bg)] border border-white/[0.07] p-8 rounded-2xl hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] hover:border-white/[0.14] transition-all duration-300 group">
-                    {/* Number watermark — bleeds outside the card top-right */}
+                  <div className="relative bg-[var(--bg)] p-8 rounded-2xl border border-white/[0.07] hover:shadow-xl hover:border-white/[0.14] transition-all duration-300 group">
+                    {/* Number watermark bleeds outside card */}
                     <div className="absolute -top-4 -right-4 text-8xl font-bold text-[var(--green)]/[0.07] group-hover:text-[var(--green)]/[0.12] transition-colors select-none leading-none">
-                      {step.n}
+                      {step.number}
                     </div>
 
                     <div className="relative">
-                      {/* Solid green icon box */}
                       <div className="inline-flex p-4 bg-[var(--green)] rounded-2xl mb-6 group-hover:scale-110 transition-transform">
                         <Icon className="size-8 text-white" />
                       </div>
-
                       <h3 className="text-2xl font-bold text-white mb-4">{step.title}</h3>
-                      <p className="text-[var(--text-2)] leading-relaxed">{step.desc}</p>
+                      <p className="text-[var(--text-2)] leading-relaxed">{step.description}</p>
                     </div>
                   </div>
                 </div>
@@ -167,9 +167,8 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* Average savings badge */}
           <div className="mt-16 text-center">
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--green)]/[0.08] border border-[var(--green)]/20 rounded-xl">
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--green)]/[0.08] border border-[var(--green)]/25 rounded-xl">
               <span className="text-[var(--green)] font-semibold">💰 Average savings:</span>
               <span className="text-2xl font-bold text-[var(--green)]">$47 per ticket</span>
             </div>
@@ -177,11 +176,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Upcoming Events ───────────────────────────────────────── */}
-      <section id="results" className="py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      {/* ── Upcoming Events ───────────────────────────────────── */}
+      <section id="results" className="py-24 bg-[var(--bg)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Section header */}
+          {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
             <div>
               <h2 className="text-4xl font-bold text-white mb-2">Upcoming Events</h2>
@@ -190,12 +189,12 @@ export default function HomePage() {
               </p>
             </div>
             <button className="mt-4 md:mt-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-medium text-[var(--text-1)] transition-all">
-              <SlidersHorizontal size={16} />
+              <SlidersHorizontal className="size-4" />
               Filters
             </button>
           </div>
 
-          {/* 3-col card grid */}
+          {/* Cards grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {MOCK_EVENTS.map((event) => {
               const lowestPrice = Math.min(...event.prices.map((p) => p.price));
@@ -207,16 +206,16 @@ export default function HomePage() {
                   key={event.id}
                   className="bg-[var(--bg-1)] rounded-2xl border border-white/[0.07] overflow-hidden hover:shadow-2xl hover:shadow-black/40 hover:border-white/[0.14] transition-all duration-300 group"
                 >
-                  {/* Venue photo with zoom */}
+                  {/* Image */}
                   <div className="relative h-48 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={event.imageUrl}
                       alt={event.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      crossOrigin="anonymous"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    {/* Save badge */}
                     <div className="absolute top-4 right-4 px-3 py-1.5 bg-[var(--green)] text-white rounded-full flex items-center gap-1 text-sm font-semibold">
                       <TrendingDown className="size-4" />
                       Save ${savings}
@@ -229,26 +228,23 @@ export default function HomePage() {
                       {event.title}
                     </h3>
 
-                    {/* Date + Location with icons */}
                     <div className="flex flex-col gap-2 mb-6">
                       <div className="flex items-center gap-2 text-[var(--text-2)] text-sm">
-                        <Calendar className="size-4 flex-shrink-0" />
+                        <Calendar className="size-4" />
                         <span>{event.date}</span>
                       </div>
                       <div className="flex items-center gap-2 text-[var(--text-2)] text-sm">
-                        <MapPin className="size-4 flex-shrink-0" />
+                        <MapPin className="size-4" />
                         <span>{event.location}</span>
                       </div>
                     </div>
 
                     {/* Price comparison */}
                     <div className="space-y-3 mb-6">
-                      {/* Column headers */}
                       <div className="flex items-center justify-between text-xs text-[var(--text-3)] uppercase tracking-wide font-semibold px-2">
                         <span>Platform</span>
                         <span>Price</span>
                       </div>
-
                       {event.prices.map((p) => {
                         const isBest = p.price === lowestPrice;
                         return (
@@ -278,7 +274,7 @@ export default function HomePage() {
                       })}
                     </div>
 
-                    {/* View Best Deal */}
+                    {/* CTA button */}
                     <Link
                       href={`/event/${event.id}`}
                       className="w-full h-12 bg-[var(--green)] hover:bg-[#16a34a] text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 group/btn"
@@ -305,8 +301,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA ───────────────────────────────────────────────────── */}
-      <section className="py-24 px-5">
+      {/* ── CTA ───────────────────────────────────────────────── */}
+      <section className="py-24 px-5 bg-[var(--bg-1)]">
         <div className="max-w-3xl mx-auto">
           <div className="relative rounded-3xl border border-white/[0.1] overflow-hidden p-12 text-center">
             <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-2)] via-[var(--bg-1)] to-[var(--bg)]" />

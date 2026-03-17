@@ -1,107 +1,78 @@
 import Link from "next/link";
 import { Ticket, Twitter, Instagram, Facebook } from "lucide-react";
 
-const COLUMNS = [
-  {
-    heading: "Product",
-    links: [
-      { label: "How It Works", href: "/#how-it-works" },
-      { label: "Compare Prices", href: "/search" },
-      { label: "Price Alerts", href: "/account/alerts" },
-      { label: "Sign Up Free", href: "/sign-up" },
-    ],
-  },
-  {
-    heading: "Sports",
-    links: [
-      { label: "NBA", href: "/search?sport=NBA" },
-      { label: "NFL", href: "/search?sport=NFL" },
-      { label: "MLB", href: "/search?sport=MLB" },
-      { label: "NHL", href: "/search?sport=NHL" },
-      { label: "MLS", href: "/search?sport=MLS" },
-      { label: "UFC", href: "/search?sport=UFC" },
-    ],
-  },
-  {
-    heading: "Company",
-    links: [
-      { label: "About Us", href: "#" },
-      { label: "Contact", href: "#" },
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Service", href: "#" },
-    ],
-  },
-];
-
-const SOCIALS = [
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Facebook, href: "#", label: "Facebook" },
-];
-
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] bg-[var(--bg-1)]">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+    <footer className="bg-[var(--bg-1)] border-t border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
 
-          {/* Brand column */}
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5 mb-4 group w-fit">
-              <div className="w-8 h-8 rounded-lg bg-[var(--green)] flex items-center justify-center">
-                <Ticket size={15} className="text-white" />
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="bg-[var(--green)] p-2 rounded-lg">
+                <Ticket className="size-5 text-white" />
               </div>
-              <span className="font-bold text-base text-white">SeatScout</span>
-            </Link>
-            <p className="text-sm text-[var(--text-2)] leading-relaxed max-w-[210px] mb-5">
+              <span className="text-xl font-bold text-white">SeatScout</span>
+            </div>
+            <p className="text-[var(--text-2)] text-sm mb-4">
               Compare ticket prices across all major platforms and never overpay for seats again.
             </p>
-
-            {/* Social icons */}
-            <div className="flex items-center gap-2">
-              {SOCIALS.map(({ icon: Icon, href, label }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="p-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-[var(--text-2)] hover:text-white transition-all"
-                >
-                  <Icon size={15} />
-                </Link>
-              ))}
+            <div className="flex gap-3">
+              <a href="#" className="p-2 bg-white/[0.05] hover:bg-white/[0.1] rounded-lg transition-colors">
+                <Twitter className="size-4 text-[var(--text-2)]" />
+              </a>
+              <a href="#" className="p-2 bg-white/[0.05] hover:bg-white/[0.1] rounded-lg transition-colors">
+                <Instagram className="size-4 text-[var(--text-2)]" />
+              </a>
+              <a href="#" className="p-2 bg-white/[0.05] hover:bg-white/[0.1] rounded-lg transition-colors">
+                <Facebook className="size-4 text-[var(--text-2)]" />
+              </a>
             </div>
           </div>
 
-          {/* Link columns */}
-          {COLUMNS.map((col) => (
-            <div key={col.heading}>
-              <p className="text-sm font-bold text-white mb-4">
-                {col.heading}
-              </p>
-              <ul className="space-y-2.5">
-                {col.links.map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      className="text-sm text-[var(--text-2)] hover:text-white transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Product */}
+          <div>
+            <h4 className="text-white font-semibold mb-4">Product</h4>
+            <ul className="space-y-2">
+              <li><Link href="/#how-it-works" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">How It Works</Link></li>
+              <li><Link href="/search" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">Compare Prices</Link></li>
+              <li><Link href="/account/alerts" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">Price Alerts</Link></li>
+            </ul>
+          </div>
+
+          {/* Sports */}
+          <div>
+            <h4 className="text-white font-semibold mb-4">Sports</h4>
+            <ul className="space-y-2">
+              <li><Link href="/search?sport=NBA" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">NBA</Link></li>
+              <li><Link href="/search?sport=NFL" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">NFL</Link></li>
+              <li><Link href="/search?sport=MLB" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">MLB</Link></li>
+              <li><Link href="/search?sport=NHL" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">NHL</Link></li>
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <h4 className="text-white font-semibold mb-4">Company</h4>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">About Us</a></li>
+              <li><a href="#" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">Contact</a></li>
+              <li><a href="#" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">Terms of Service</a></li>
+            </ul>
+          </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-[var(--text-3)]">
-            © {new Date().getFullYear()} SeatScout. All rights reserved.
-          </p>
-          <p className="text-xs text-[var(--text-3)]">
-            Prices are updated in real-time from official ticket platforms
-          </p>
+        <div className="pt-8 border-t border-white/[0.06]">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-[var(--text-2)] text-sm">
+              © {new Date().getFullYear()} SeatScout. All rights reserved.
+            </p>
+            <p className="text-[var(--text-3)] text-xs">
+              Prices are updated in real-time from official ticket platforms
+            </p>
+          </div>
         </div>
       </div>
     </footer>
