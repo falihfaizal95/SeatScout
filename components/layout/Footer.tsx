@@ -3,11 +3,10 @@ import { Ticket, Twitter, Instagram, Facebook } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--bg-1)] border-t border-white/[0.06]">
+    <footer className="bg-[var(--bg-1)] border-t border-white/[0.08]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
 
-          {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="bg-[var(--green)] p-2 rounded-lg">
@@ -31,17 +30,15 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Product */}
           <div>
             <h4 className="text-white font-semibold mb-4">Product</h4>
             <ul className="space-y-2">
-              <li><Link href="/#how-it-works" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">How It Works</Link></li>
-              <li><Link href="/search" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">Compare Prices</Link></li>
-              <li><Link href="/account/alerts" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">Price Alerts</Link></li>
+              <li><a href="/#how-it-works" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">How It Works</a></li>
+              <li><a href="/search" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">Compare Prices</a></li>
+              <li><a href="#" className="text-[var(--text-2)] hover:text-white text-sm transition-colors">FAQ</a></li>
             </ul>
           </div>
 
-          {/* Sports */}
           <div>
             <h4 className="text-white font-semibold mb-4">Sports</h4>
             <ul className="space-y-2">
@@ -52,7 +49,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Company */}
           <div>
             <h4 className="text-white font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
@@ -64,14 +60,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/[0.06]">
+        <div className="pt-8 border-t border-white/[0.08]">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-[var(--text-2)] text-sm">
-              © {new Date().getFullYear()} SeatScout. All rights reserved.
-            </p>
-            <p className="text-[var(--text-3)] text-xs">
-              Prices are updated in real-time from official ticket platforms
-            </p>
+            <p className="text-[var(--text-2)] text-sm">© {new Date().getFullYear()} SeatScout. All rights reserved.</p>
+            <p className="text-[var(--text-3)] text-xs">Prices are updated in real-time from official ticket platforms</p>
           </div>
         </div>
       </div>

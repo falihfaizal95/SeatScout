@@ -1,8 +1,7 @@
 import HeroSearch from "@/components/search/HeroSearch";
-import { Search, BarChart3, Ticket, TrendingDown, SlidersHorizontal, ArrowRight, Calendar, MapPin, ExternalLink } from "lucide-react";
+import { Search, BarChart3, Ticket, TrendingDown, SlidersHorizontal, Calendar, MapPin, ExternalLink, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-/* ── How It Works data ──────────────────────────────────────── */
 const STEPS = [
   {
     icon: Search,
@@ -24,15 +23,6 @@ const STEPS = [
   },
 ];
 
-/* ── Stats ──────────────────────────────────────────────────── */
-const STATS = [
-  { value: "1M+", label: "Tickets Compared" },
-  { value: "4", label: "Platforms" },
-  { value: "$2.5M", label: "Total Saved" },
-  { value: "50K+", label: "Happy Users" },
-];
-
-/* ── Mock events ────────────────────────────────────────────── */
 const MOCK_EVENTS = [
   {
     id: "tm_lakers_warriors",
@@ -79,9 +69,8 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
 
-      {/* ── Hero ──────────────────────────────────────────────── */}
-      <div className="relative pt-16 bg-[var(--bg)] overflow-hidden">
-        {/* Decorative blobs */}
+      {/* ── 1. HERO ───────────────────────────────────────────────── */}
+      <div className="relative pt-16 overflow-hidden">
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-[var(--green)] rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-[var(--brand)] rounded-full blur-3xl" />
@@ -90,13 +79,11 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
           <div className="text-center max-w-4xl mx-auto">
 
-            {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--green)]/20 border border-[var(--green)]/30 rounded-full mb-6">
               <span className="size-2 bg-[var(--green)] rounded-full animate-pulse" />
               <span className="text-[var(--green)] text-sm font-medium">Compare prices across 4+ platforms instantly</span>
             </div>
 
-            {/* Headline */}
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
               Find the Best
               <span className="block bg-gradient-to-r from-[var(--green)] to-emerald-400 bg-clip-text text-transparent">
@@ -110,9 +97,13 @@ export default function HomePage() {
 
             <HeroSearch />
 
-            {/* Stats */}
             <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
-              {STATS.map((s) => (
+              {[
+                { value: "1M+", label: "Tickets Compared" },
+                { value: "4", label: "Platforms" },
+                { value: "$2.5M", label: "Total Saved" },
+                { value: "50K+", label: "Happy Users" },
+              ].map((s) => (
                 <div key={s.label}>
                   <div className="text-3xl md:text-4xl font-bold text-white mb-1">{s.value}</div>
                   <div className="text-[var(--text-2)] text-sm">{s.label}</div>
@@ -123,9 +114,10 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ── How It Works ──────────────────────────────────────── */}
+      {/* ── 2. HOW IT WORKS ───────────────────────────────────────── */}
       <section id="how-it-works" className="py-24 bg-[var(--bg-1)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
           <div className="text-center mb-16">
             <div className="inline-block px-4 py-2 bg-[var(--green)]/[0.08] border border-[var(--green)]/25 rounded-full mb-4">
               <span className="text-[var(--green)] text-sm font-semibold">HOW IT WORKS</span>
@@ -143,17 +135,13 @@ export default function HomePage() {
               const Icon = step.icon;
               return (
                 <div key={index} className="relative">
-                  {/* Connector line */}
                   {index < STEPS.length - 1 && (
                     <div className="hidden md:block absolute top-20 left-1/2 w-full h-0.5 bg-gradient-to-r from-[var(--green)]/30 to-transparent z-10" />
                   )}
-
-                  <div className="relative bg-[var(--bg)] p-8 rounded-2xl border border-white/[0.07] hover:shadow-xl hover:border-white/[0.14] transition-all duration-300 group">
-                    {/* Number watermark bleeds outside card */}
+                  <div className="relative bg-[var(--bg)] p-8 rounded-2xl border border-white/[0.07] hover:shadow-xl hover:border-white/[0.14] transition-all duration-300 group overflow-hidden">
                     <div className="absolute -top-4 -right-4 text-8xl font-bold text-[var(--green)]/[0.07] group-hover:text-[var(--green)]/[0.12] transition-colors select-none leading-none">
                       {step.number}
                     </div>
-
                     <div className="relative">
                       <div className="inline-flex p-4 bg-[var(--green)] rounded-2xl mb-6 group-hover:scale-110 transition-transform">
                         <Icon className="size-8 text-white" />
@@ -176,11 +164,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Upcoming Events ───────────────────────────────────── */}
+      {/* ── 3. UPCOMING EVENTS ────────────────────────────────────── */}
       <section id="results" className="py-24 bg-[var(--bg)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
             <div>
               <h2 className="text-4xl font-bold text-white mb-2">Upcoming Events</h2>
@@ -194,7 +181,6 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* Cards grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {MOCK_EVENTS.map((event) => {
               const lowestPrice = Math.min(...event.prices.map((p) => p.price));
@@ -206,7 +192,6 @@ export default function HomePage() {
                   key={event.id}
                   className="bg-[var(--bg-1)] rounded-2xl border border-white/[0.07] overflow-hidden hover:shadow-2xl hover:shadow-black/40 hover:border-white/[0.14] transition-all duration-300 group"
                 >
-                  {/* Image */}
                   <div className="relative h-48 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -222,12 +207,10 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* Content */}
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[var(--green)] transition-colors">
                       {event.title}
                     </h3>
-
                     <div className="flex flex-col gap-2 mb-6">
                       <div className="flex items-center gap-2 text-[var(--text-2)] text-sm">
                         <Calendar className="size-4" />
@@ -239,7 +222,6 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    {/* Price comparison */}
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center justify-between text-xs text-[var(--text-3)] uppercase tracking-wide font-semibold px-2">
                         <span>Platform</span>
@@ -274,7 +256,6 @@ export default function HomePage() {
                       })}
                     </div>
 
-                    {/* CTA button */}
                     <Link
                       href={`/event/${event.id}`}
                       className="w-full h-12 bg-[var(--green)] hover:bg-[#16a34a] text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 group/btn"
@@ -288,7 +269,6 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* Load more */}
           <div className="mt-12 text-center">
             <Link
               href="/search"
@@ -301,30 +281,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA ───────────────────────────────────────────────── */}
-      <section className="py-24 px-5 bg-[var(--bg-1)]">
-        <div className="max-w-3xl mx-auto">
-          <div className="relative rounded-3xl border border-white/[0.1] overflow-hidden p-12 text-center">
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-2)] via-[var(--bg-1)] to-[var(--bg)]" />
-            <div className="orb w-80 h-80 bg-[var(--brand)] opacity-[0.12] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-            <div className="relative z-10">
-              <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black tracking-tight text-white mb-4">
-                Stop overpaying for tickets.
-              </h2>
-              <p className="text-[var(--text-2)] mb-8 text-base max-w-md mx-auto">
-                Search any game and compare every price across every platform — in seconds.
-              </p>
-              <Link
-                href="/search"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white font-bold text-base transition-all glow-brand"
-              >
-                Find tickets now
-                <ArrowRight size={18} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

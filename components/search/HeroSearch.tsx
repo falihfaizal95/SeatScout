@@ -2,26 +2,22 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
-import { type Sport } from "@/types/event";
-
-const POPULAR = ["Lakers", "Yankees", "Cowboys", "Warriors"];
 
 export default function HeroSearch() {
-  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-
-  const go = (q: string) => {
-    router.push(`/search?q=${encodeURIComponent(q)}`);
-  };
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) go(searchQuery.trim());
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
   };
+
+  const go = (q: string) => router.push(`/search?q=${encodeURIComponent(q)}`);
 
   return (
     <div className="max-w-3xl mx-auto">
-      {/* Glass wrapper */}
       <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/20 shadow-2xl">
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col md:flex-row gap-3">
@@ -46,10 +42,9 @@ export default function HeroSearch() {
         </form>
       </div>
 
-      {/* Popular searches */}
       <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
         <span className="text-[var(--text-2)] text-sm">Popular:</span>
-        {POPULAR.map((team) => (
+        {["Lakers", "Yankees", "Cowboys", "Warriors"].map((team) => (
           <button
             key={team}
             onClick={() => go(team)}
