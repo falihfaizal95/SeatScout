@@ -57,18 +57,18 @@ export async function cacheSet<T>(
   }
 }
 
-export async function getOrSet<T extends object>(
+export async function getOrSet<T>(
   key: string,
   fetcher: () => Promise<T>,
   ttl = CACHE_TTL
-): Promise<T & { fromCache?: boolean }> {
+): Promise<T> {
   const cached = await cacheGet<T>(key);
   if (cached) {
-    return { ...cached, fromCache: true } as T & { fromCache: boolean };
+    return cached;
   }
   const fresh = await fetcher();
   await cacheSet(key, fresh, ttl);
-  return { ...fresh, fromCache: false };
+  return fresh;
 }
 
 export function ticketCacheKey(eventId: string): string {
