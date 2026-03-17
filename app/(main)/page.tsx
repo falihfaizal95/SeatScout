@@ -1,5 +1,5 @@
 import HeroSearch from "@/components/search/HeroSearch";
-import { Search, BarChart3, Ticket, TrendingDown, SlidersHorizontal, ArrowRight, ExternalLink } from "lucide-react";
+import { Search, BarChart3, Ticket, TrendingDown, SlidersHorizontal, ArrowRight, Calendar, MapPin, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 const STEPS = [
@@ -35,8 +35,7 @@ const MOCK_EVENTS = [
     id: "tm_lakers_warriors",
     title: "Lakers vs Warriors",
     date: "March 25, 2026 · 7:30 PM",
-    venue: "Crypto.com Arena",
-    location: "Los Angeles, CA",
+    location: "Crypto.com Arena, Los Angeles",
     imageUrl: "https://images.unsplash.com/photo-1640862101983-9f7ef7fd7cc9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYXNrZXRiYWxsJTIwZ2FtZSUyMGFyZW5hJTIwY3Jvd2R8ZW58MXx8fHwxNzczNzA4OTI3fDA&ixlib=rb-4.1.0&q=80&w=1080",
     prices: [
       { platform: "Ticketmaster", price: 189 },
@@ -49,8 +48,7 @@ const MOCK_EVENTS = [
     id: "tm_cowboys_eagles",
     title: "Cowboys vs Eagles",
     date: "April 2, 2026 · 1:00 PM",
-    venue: "AT&T Stadium",
-    location: "Dallas, TX",
+    location: "AT&T Stadium, Dallas",
     imageUrl: "https://images.unsplash.com/photo-1663852914605-f5d7f50e7392?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb290YmFsbCUyMHN0YWRpdW0lMjBzcG9ydHN8ZW58MXx8fHwxNzczNzE4NzIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
     prices: [
       { platform: "Ticketmaster", price: 245 },
@@ -63,8 +61,7 @@ const MOCK_EVENTS = [
     id: "tm_yankees_redsox",
     title: "Yankees vs Red Sox",
     date: "April 10, 2026 · 7:05 PM",
-    venue: "Yankee Stadium",
-    location: "New York, NY",
+    location: "Yankee Stadium, New York",
     imageUrl: "https://images.unsplash.com/photo-1763246168695-36dc30e507ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYXNlYmFsbCUyMHN0YWRpdW0lMjBuaWdodCUyMGdhbWV8ZW58MXx8fHwxNzczNzE4NzI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
     prices: [
       { platform: "Ticketmaster", price: 156 },
@@ -80,131 +77,126 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
 
       {/* ── Hero ──────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center hero-grid overflow-hidden px-5 pt-24 pb-16">
-        {/* Ambient glow orbs */}
-        <div className="orb w-[700px] h-[700px] bg-[var(--brand)] opacity-[0.07] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-        <div className="orb w-[400px] h-[400px] bg-purple-500 opacity-[0.04] top-1/4 left-1/3" />
-        <div className="orb w-[300px] h-[300px] bg-indigo-400 opacity-[0.04] bottom-1/4 right-1/4" />
-        <div className="absolute inset-0 bg-radial from-transparent via-transparent to-[var(--bg)] pointer-events-none" />
-
-        <div className="relative z-10 text-center w-full max-w-4xl mx-auto">
-          {/* Pill badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--green)]/30 bg-[var(--green)]/[0.1] text-[var(--green)] text-[13px] font-medium mb-8 backdrop-blur-sm">
-            <span className="w-2 h-2 rounded-full bg-[var(--green)] animate-pulse" />
-            Compare prices across 4+ platforms instantly
-          </div>
-
-          {/* Headline */}
-          <h1 className="font-black leading-[1.05] tracking-[-0.04em] mb-6">
-            <span className="block text-[clamp(3rem,8vw,6rem)] text-white mb-1">
-              Find the Best
-            </span>
-            <span className="block text-[clamp(3rem,8vw,6rem)]" style={{
-              background: "linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #4ade80 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}>
-              Seat Deals
-            </span>
-          </h1>
-
-          <p className="text-[clamp(1rem,2vw,1.2rem)] text-[var(--text-2)] max-w-2xl mx-auto leading-relaxed mb-10">
-            Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place.
-            Never overpay for seats again.
-          </p>
-
-          <HeroSearch />
-
-          {/* Stats */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
-            {STATS.map((s) => (
-              <div key={s.label}>
-                <div className="text-3xl md:text-4xl font-black text-white mb-1">{s.value}</div>
-                <div className="text-sm text-[var(--text-2)]">{s.label}</div>
-              </div>
-            ))}
-          </div>
+      <section className="relative pt-16 hero-grid overflow-hidden">
+        {/* Decorative blur orbs — same positions as zip */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-[var(--green)] rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-[var(--brand)] rounded-full blur-3xl" />
         </div>
 
-        {/* Scroll hint */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-20 animate-bounce">
-          <div className="w-px h-8 bg-white rounded-full" />
-          <div className="w-1.5 h-1.5 rounded-full bg-white" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+          <div className="text-center max-w-4xl mx-auto">
+
+            {/* Green pill badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--green)]/20 border border-[var(--green)]/30 rounded-full mb-6">
+              <span className="w-2 h-2 bg-[var(--green)] rounded-full animate-pulse" />
+              <span className="text-[var(--green)] text-sm font-medium">Compare prices across 4+ platforms instantly</span>
+            </div>
+
+            {/* Headline */}
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+              Find the Best
+              <span className="block bg-gradient-to-r from-[var(--green)] to-emerald-400 bg-clip-text text-transparent">
+                Seat Deals
+              </span>
+            </h1>
+
+            <p className="text-xl text-[var(--text-2)] mb-12 max-w-2xl mx-auto">
+              Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place.
+              Never overpay for seats again.
+            </p>
+
+            <HeroSearch />
+
+            {/* Stats grid */}
+            <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
+              {STATS.map((s) => (
+                <div key={s.label}>
+                  <div className="text-3xl md:text-4xl font-bold text-white mb-1">{s.value}</div>
+                  <div className="text-[var(--text-2)] text-sm">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ── How It Works ──────────────────────────────────────────── */}
-      <section id="how-it-works" className="py-24 px-5 bg-[var(--bg-1)]">
-        <div className="max-w-6xl mx-auto">
+      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 bg-[var(--bg-1)]">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 rounded-full border border-[var(--green)]/30 bg-[var(--green)]/[0.08] text-[var(--green)] text-[11px] font-bold uppercase tracking-[0.15em] mb-5">
-              How It Works
+            <div className="inline-block px-4 py-2 bg-[var(--green)]/10 border border-[var(--green)]/30 rounded-full mb-4">
+              <span className="text-[var(--green)] text-sm font-semibold">HOW IT WORKS</span>
             </div>
-            <h2 className="text-[clamp(2rem,4vw,2.8rem)] font-black tracking-tight text-white mb-3">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Three Simple Steps to Save
             </h2>
-            <p className="text-[var(--text-2)] text-base max-w-md mx-auto">
+            <p className="text-xl text-[var(--text-2)] max-w-2xl mx-auto">
               Finding the best ticket prices has never been easier
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-8">
-            {STEPS.map((s, index) => (
-              <div key={s.n} className="relative">
-                {/* Connector line between cards (desktop only) */}
-                {index < STEPS.length - 1 && (
-                  <div className="hidden md:block absolute top-16 left-1/2 w-full h-px bg-gradient-to-r from-[var(--green)]/30 to-transparent z-10" />
-                )}
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+            {STEPS.map((step, index) => {
+              const Icon = step.icon;
+              return (
+                <div key={index} className="relative">
+                  {/* Connector line between steps */}
+                  {index < STEPS.length - 1 && (
+                    <div className="hidden md:block absolute top-20 left-1/2 w-full h-0.5 bg-gradient-to-r from-[var(--green)]/30 to-transparent z-10" />
+                  )}
 
-                <div className="relative p-8 rounded-2xl border border-white/[0.07] bg-[var(--bg)] hover:border-white/[0.13] hover:shadow-[0_0_30px_rgba(34,197,94,0.06)] transition-all overflow-hidden group">
-                  {/* Large watermark number */}
-                  <span className="text-[96px] font-black text-white/[0.04] absolute -top-2 right-4 leading-none select-none group-hover:text-white/[0.06] transition-colors">
-                    {s.n}
-                  </span>
+                  <div className="relative bg-[var(--bg)] border border-white/[0.07] p-8 rounded-2xl hover:shadow-[0_8px_40px_rgba(0,0,0,0.4)] hover:border-white/[0.14] transition-all duration-300 group">
+                    {/* Number watermark — bleeds outside the card top-right */}
+                    <div className="absolute -top-4 -right-4 text-8xl font-bold text-[var(--green)]/[0.07] group-hover:text-[var(--green)]/[0.12] transition-colors select-none leading-none">
+                      {step.n}
+                    </div>
 
-                  {/* Solid green icon box */}
-                  <div className="inline-flex p-4 bg-[var(--green)] rounded-2xl mb-6 group-hover:scale-110 transition-transform">
-                    <s.icon size={24} className="text-white" />
+                    <div className="relative">
+                      {/* Solid green icon box */}
+                      <div className="inline-flex p-4 bg-[var(--green)] rounded-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <Icon className="size-8 text-white" />
+                      </div>
+
+                      <h3 className="text-2xl font-bold text-white mb-4">{step.title}</h3>
+                      <p className="text-[var(--text-2)] leading-relaxed">{step.desc}</p>
+                    </div>
                   </div>
-
-                  <h3 className="text-xl font-bold text-white mb-3">{s.title}</h3>
-                  <p className="text-sm text-[var(--text-2)] leading-relaxed">{s.desc}</p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Average savings badge */}
-          <div className="mt-12 flex justify-center">
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[var(--green)]/20 bg-[var(--green)]/[0.08]">
-              <span className="text-[var(--green)] font-semibold text-sm">💰 Average savings:</span>
-              <span className="text-2xl font-black text-[var(--green)]">$47 per ticket</span>
+          <div className="mt-16 text-center">
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--green)]/[0.08] border border-[var(--green)]/20 rounded-xl">
+              <span className="text-[var(--green)] font-semibold">💰 Average savings:</span>
+              <span className="text-2xl font-bold text-[var(--green)]">$47 per ticket</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Upcoming Events ───────────────────────────────────────── */}
-      <section id="results" className="py-24 px-5">
-        <div className="max-w-6xl mx-auto">
+      <section id="results" className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
 
           {/* Section header */}
-          <div className="flex items-start justify-between mb-10 gap-4 flex-wrap">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
             <div>
-              <h2 className="text-3xl font-black tracking-tight text-white mb-1">Upcoming Events</h2>
-              <p className="text-sm text-[var(--text-2)]">
-                Showing <span className="font-semibold text-[var(--text-1)]">3 results</span> · Updated 2 min ago
+              <h2 className="text-4xl font-bold text-white mb-2">Upcoming Events</h2>
+              <p className="text-[var(--text-2)]">
+                Showing <span className="font-semibold text-white">3 results</span> · Updated 2 min ago
               </p>
             </div>
-            <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-medium text-[var(--text-1)] transition-all">
-              <SlidersHorizontal size={15} />
+            <button className="mt-4 md:mt-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-medium text-[var(--text-1)] transition-all">
+              <SlidersHorizontal size={16} />
               Filters
             </button>
           </div>
 
-          {/* 3-col event grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+          {/* 3-col card grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {MOCK_EVENTS.map((event) => {
               const lowestPrice = Math.min(...event.prices.map((p) => p.price));
               const highestPrice = Math.max(...event.prices.map((p) => p.price));
@@ -213,9 +205,9 @@ export default function HomePage() {
               return (
                 <div
                   key={event.id}
-                  className="group rounded-2xl border border-white/[0.07] bg-[var(--bg-1)] hover:border-white/[0.15] hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col"
+                  className="bg-[var(--bg-1)] rounded-2xl border border-white/[0.07] overflow-hidden hover:shadow-2xl hover:shadow-black/40 hover:border-white/[0.14] transition-all duration-300 group"
                 >
-                  {/* Venue photo */}
+                  {/* Venue photo with zoom */}
                   <div className="relative h-48 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -225,24 +217,34 @@ export default function HomePage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     {/* Save badge */}
-                    <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--green)] text-white text-sm font-bold shadow-lg">
-                      <TrendingDown size={14} />
+                    <div className="absolute top-4 right-4 px-3 py-1.5 bg-[var(--green)] text-white rounded-full flex items-center gap-1 text-sm font-semibold">
+                      <TrendingDown className="size-4" />
                       Save ${savings}
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-5 flex-1 flex flex-col">
-                    <h3 className="text-base font-bold text-white leading-snug mb-2 group-hover:text-[var(--green)] transition-colors">
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[var(--green)] transition-colors">
                       {event.title}
                     </h3>
-                    <p className="text-xs text-[var(--text-2)] mb-0.5">{event.date}</p>
-                    <p className="text-xs text-[var(--text-3)] mb-5">{event.venue} · {event.location}</p>
 
-                    {/* Platform price comparison */}
-                    <div className="mt-auto space-y-2 mb-4">
-                      {/* Header row */}
-                      <div className="flex items-center justify-between text-[10px] text-[var(--text-3)] uppercase tracking-widest font-semibold px-1 mb-1">
+                    {/* Date + Location with icons */}
+                    <div className="flex flex-col gap-2 mb-6">
+                      <div className="flex items-center gap-2 text-[var(--text-2)] text-sm">
+                        <Calendar className="size-4 flex-shrink-0" />
+                        <span>{event.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[var(--text-2)] text-sm">
+                        <MapPin className="size-4 flex-shrink-0" />
+                        <span>{event.location}</span>
+                      </div>
+                    </div>
+
+                    {/* Price comparison */}
+                    <div className="space-y-3 mb-6">
+                      {/* Column headers */}
+                      <div className="flex items-center justify-between text-xs text-[var(--text-3)] uppercase tracking-wide font-semibold px-2">
                         <span>Platform</span>
                         <span>Price</span>
                       </div>
@@ -252,37 +254,37 @@ export default function HomePage() {
                         return (
                           <div
                             key={p.platform}
-                            className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-all ${
+                            className={`flex items-center justify-between p-3 rounded-lg transition-all ${
                               isBest
-                                ? "bg-[var(--green)]/10 border-2 border-[var(--green)]/40"
-                                : "bg-white/[0.03] border border-white/[0.06]"
+                                ? "bg-[var(--green)]/10 border-2 border-[var(--green)]"
+                                : "bg-white/[0.03] border border-white/[0.07]"
                             }`}
                           >
                             <div className="flex items-center gap-2">
-                              <span className={`text-sm font-semibold ${isBest ? "text-[var(--green)]" : "text-[var(--text-2)]"}`}>
+                              <span className={`font-semibold ${isBest ? "text-[var(--green)]" : "text-[var(--text-2)]"}`}>
                                 {p.platform}
                               </span>
                               {isBest && (
-                                <span className="px-1.5 py-0.5 bg-[var(--green)] text-white text-[10px] rounded-full font-bold">
+                                <span className="px-2 py-0.5 bg-[var(--green)] text-white text-xs rounded-full font-semibold">
                                   BEST
                                 </span>
                               )}
                             </div>
-                            <span className={`text-sm font-black ${isBest ? "text-[var(--green)]" : "text-[var(--text-1)]"}`}>
+                            <div className={`text-lg font-bold ${isBest ? "text-[var(--green)]" : "text-white"}`}>
                               ${p.price}
-                            </span>
+                            </div>
                           </div>
                         );
                       })}
                     </div>
 
-                    {/* View Best Deal button */}
+                    {/* View Best Deal */}
                     <Link
                       href={`/event/${event.id}`}
-                      className="w-full py-3 rounded-xl bg-[var(--green)] hover:bg-[#16a34a] text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 group/btn"
+                      className="w-full h-12 bg-[var(--green)] hover:bg-[#16a34a] text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 group/btn"
                     >
-                      View Best Deal
-                      <ExternalLink size={14} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                      <span>View Best Deal</span>
+                      <ExternalLink className="size-4 group-hover/btn:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </div>
@@ -291,10 +293,10 @@ export default function HomePage() {
           </div>
 
           {/* Load more */}
-          <div className="flex justify-center">
+          <div className="mt-12 text-center">
             <Link
               href="/search"
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-semibold text-[var(--text-1)] transition-all"
+              className="inline-flex items-center gap-2 px-8 h-12 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-semibold text-[var(--text-1)] transition-all"
             >
               Load More Events
               <ArrowRight size={15} />
