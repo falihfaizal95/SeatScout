@@ -1,69 +1,76 @@
 import HeroSearch from "@/components/search/HeroSearch";
-import { Search, TrendingDown, Tag, SlidersHorizontal, ArrowRight } from "lucide-react";
+import { Search, BarChart3, Ticket, TrendingDown, SlidersHorizontal, ArrowRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 const STEPS = [
   {
     n: "01",
     icon: Search,
-    title: "Search Any Event",
-    desc: "Type a team name, artist, or event. We instantly search across all major ticket platforms.",
+    title: "Search Your Event",
+    desc: "Enter the team, game, or event you want to attend. We'll instantly find all available listings.",
   },
   {
     n: "02",
-    icon: TrendingDown,
-    title: "Compare All Prices",
-    desc: "See prices from Ticketmaster, StubHub, SeatGeek, and more — all side by side.",
+    icon: BarChart3,
+    title: "Compare Prices",
+    desc: "View side-by-side prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in real-time.",
   },
   {
     n: "03",
-    icon: Tag,
-    title: "Buy at the Best Price",
-    desc: "Click through to purchase directly on the platform with the lowest price. Zero markup.",
+    icon: Ticket,
+    title: "Get Best Deal",
+    desc: "See the cheapest option highlighted in green. Click to purchase directly from the platform.",
   },
+];
+
+const STATS = [
+  { value: "1M+", label: "Tickets Compared" },
+  { value: "4", label: "Platforms" },
+  { value: "$2.5M", label: "Total Saved" },
+  { value: "50K+", label: "Happy Users" },
 ];
 
 const MOCK_EVENTS = [
   {
-    id: "tm_lakers_celtics",
-    title: "Los Angeles Lakers vs Boston Celtics",
-    date: "Sat, Mar 22 · 7:30 PM",
+    id: "tm_lakers_warriors",
+    title: "Lakers vs Warriors",
+    date: "March 25, 2026 · 7:30 PM",
     venue: "Crypto.com Arena",
-    city: "Los Angeles, CA",
-    save: "$47",
-    gradient: "from-[#5452c8] to-[#1a1a3e]",
+    location: "Los Angeles, CA",
+    imageUrl: "https://images.unsplash.com/photo-1640862101983-9f7ef7fd7cc9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYXNrZXRiYWxsJTIwZ2FtZSUyMGFyZW5hJTIwY3Jvd2R8ZW58MXx8fHwxNzczNzA4OTI3fDA&ixlib=rb-4.1.0&q=80&w=1080",
     prices: [
-      { platform: "TickPick", price: "$89", best: true },
-      { platform: "SeatGeek", price: "$112" },
-      { platform: "StubHub", price: "$136" },
+      { platform: "Ticketmaster", price: 189 },
+      { platform: "StubHub", price: 165 },
+      { platform: "SeatGeek", price: 172 },
+      { platform: "Vivid Seats", price: 179 },
+    ],
+  },
+  {
+    id: "tm_cowboys_eagles",
+    title: "Cowboys vs Eagles",
+    date: "April 2, 2026 · 1:00 PM",
+    venue: "AT&T Stadium",
+    location: "Dallas, TX",
+    imageUrl: "https://images.unsplash.com/photo-1663852914605-f5d7f50e7392?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb290YmFsbCUyMHN0YWRpdW0lMjBzcG9ydHN8ZW58MXx8fHwxNzczNzE4NzIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    prices: [
+      { platform: "Ticketmaster", price: 245 },
+      { platform: "StubHub", price: 228 },
+      { platform: "SeatGeek", price: 239 },
+      { platform: "Vivid Seats", price: 235 },
     ],
   },
   {
     id: "tm_yankees_redsox",
-    title: "New York Yankees vs Boston Red Sox",
-    date: "Sun, Mar 23 · 1:05 PM",
+    title: "Yankees vs Red Sox",
+    date: "April 10, 2026 · 7:05 PM",
     venue: "Yankee Stadium",
-    city: "New York, NY",
-    save: "$31",
-    gradient: "from-[#1a3a5c] to-[#0d1f30]",
+    location: "New York, NY",
+    imageUrl: "https://images.unsplash.com/photo-1763246168695-36dc30e507ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYXNlYmFsbCUyMHN0YWRpdW0lMjBuaWdodCUyMGdhbWV8ZW58MXx8fHwxNzczNzE4NzI0fDA&ixlib=rb-4.1.0&q=80&w=1080",
     prices: [
-      { platform: "Gametime", price: "$64", best: true },
-      { platform: "Ticketmaster", price: "$79" },
-      { platform: "Vivid Seats", price: "$95" },
-    ],
-  },
-  {
-    id: "tm_chiefs_ravens",
-    title: "Kansas City Chiefs vs Baltimore Ravens",
-    date: "Mon, Mar 24 · 8:15 PM",
-    venue: "Arrowhead Stadium",
-    city: "Kansas City, MO",
-    save: "$62",
-    gradient: "from-[#5c1a1a] to-[#2a0d0d]",
-    prices: [
-      { platform: "TickPick", price: "$118", best: true },
-      { platform: "SeatGeek", price: "$145" },
-      { platform: "StubHub", price: "$180" },
+      { platform: "Ticketmaster", price: 156 },
+      { platform: "StubHub", price: 142 },
+      { platform: "SeatGeek", price: 138 },
+      { platform: "Vivid Seats", price: 149 },
     ],
   },
 ];
@@ -82,27 +89,42 @@ export default function HomePage() {
 
         <div className="relative z-10 text-center w-full max-w-4xl mx-auto">
           {/* Pill badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/[0.1] bg-white/[0.04] text-[var(--text-2)] text-[13px] font-medium mb-8 backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)] animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--green)]/30 bg-[var(--green)]/[0.1] text-[var(--green)] text-[13px] font-medium mb-8 backdrop-blur-sm">
+            <span className="w-2 h-2 rounded-full bg-[var(--green)] animate-pulse" />
             Compare prices across 4+ platforms instantly
           </div>
 
           {/* Headline */}
-          <h1 className="font-black leading-[1.0] tracking-[-0.04em] mb-6">
+          <h1 className="font-black leading-[1.05] tracking-[-0.04em] mb-6">
             <span className="block text-[clamp(3rem,8vw,6rem)] text-white mb-1">
               Find the Best
             </span>
-            <span className="block text-[clamp(3rem,8vw,6rem)] text-chrome">
+            <span className="block text-[clamp(3rem,8vw,6rem)]" style={{
+              background: "linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #4ade80 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}>
               Seat Deals
             </span>
           </h1>
 
-          <p className="text-[clamp(1rem,2vw,1.15rem)] text-[var(--text-2)] max-w-xl mx-auto leading-relaxed mb-10">
+          <p className="text-[clamp(1rem,2vw,1.2rem)] text-[var(--text-2)] max-w-2xl mx-auto leading-relaxed mb-10">
             Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place.
             Never overpay for seats again.
           </p>
 
           <HeroSearch />
+
+          {/* Stats */}
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
+            {STATS.map((s) => (
+              <div key={s.label}>
+                <div className="text-3xl md:text-4xl font-black text-white mb-1">{s.value}</div>
+                <div className="text-sm text-[var(--text-2)]">{s.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Scroll hint */}
@@ -113,11 +135,10 @@ export default function HomePage() {
       </section>
 
       {/* ── How It Works ──────────────────────────────────────────── */}
-      <section className="py-24 px-5 bg-[var(--bg-1)]">
+      <section id="how-it-works" className="py-24 px-5 bg-[var(--bg-1)]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            {/* Section pill */}
-            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full border border-[var(--brand)]/30 bg-[var(--brand)]/[0.08] text-[var(--brand-light)] text-[11px] font-bold uppercase tracking-[0.15em] mb-5">
+            <div className="inline-flex items-center px-4 py-2 rounded-full border border-[var(--green)]/30 bg-[var(--green)]/[0.08] text-[var(--green)] text-[11px] font-bold uppercase tracking-[0.15em] mb-5">
               How It Works
             </div>
             <h2 className="text-[clamp(2rem,4vw,2.8rem)] font-black tracking-tight text-white mb-3">
@@ -128,104 +149,152 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {STEPS.map((s) => (
-              <div
-                key={s.n}
-                className="relative p-8 rounded-2xl border border-white/[0.07] bg-[var(--bg)] hover:border-white/[0.13] transition-all overflow-hidden"
-              >
-                {/* Large watermark number */}
-                <span className="text-[96px] font-black text-white/[0.04] absolute -top-2 right-4 leading-none select-none">
-                  {s.n}
-                </span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-8">
+            {STEPS.map((s, index) => (
+              <div key={s.n} className="relative">
+                {/* Connector line between cards (desktop only) */}
+                {index < STEPS.length - 1 && (
+                  <div className="hidden md:block absolute top-16 left-1/2 w-full h-px bg-gradient-to-r from-[var(--green)]/30 to-transparent z-10" />
+                )}
 
-                {/* Green icon */}
-                <div className="w-12 h-12 rounded-xl bg-[var(--green)]/10 border border-[var(--green)]/20 flex items-center justify-center mb-6">
-                  <s.icon size={22} className="text-[var(--green)]" />
+                <div className="relative p-8 rounded-2xl border border-white/[0.07] bg-[var(--bg)] hover:border-white/[0.13] hover:shadow-[0_0_30px_rgba(34,197,94,0.06)] transition-all overflow-hidden group">
+                  {/* Large watermark number */}
+                  <span className="text-[96px] font-black text-white/[0.04] absolute -top-2 right-4 leading-none select-none group-hover:text-white/[0.06] transition-colors">
+                    {s.n}
+                  </span>
+
+                  {/* Solid green icon box */}
+                  <div className="inline-flex p-4 bg-[var(--green)] rounded-2xl mb-6 group-hover:scale-110 transition-transform">
+                    <s.icon size={24} className="text-white" />
+                  </div>
+
+                  <h3 className="text-xl font-bold text-white mb-3">{s.title}</h3>
+                  <p className="text-sm text-[var(--text-2)] leading-relaxed">{s.desc}</p>
                 </div>
-
-                <h3 className="text-lg font-bold text-white mb-2">{s.title}</h3>
-                <p className="text-sm text-[var(--text-2)] leading-relaxed">{s.desc}</p>
               </div>
             ))}
+          </div>
+
+          {/* Average savings badge */}
+          <div className="mt-12 flex justify-center">
+            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[var(--green)]/20 bg-[var(--green)]/[0.08]">
+              <span className="text-[var(--green)] font-semibold text-sm">💰 Average savings:</span>
+              <span className="text-2xl font-black text-[var(--green)]">$47 per ticket</span>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── Upcoming Events ───────────────────────────────────────── */}
-      <section className="py-24 px-5">
+      <section id="results" className="py-24 px-5">
         <div className="max-w-6xl mx-auto">
 
           {/* Section header */}
-          <div className="flex items-start justify-between mb-8 gap-4 flex-wrap">
+          <div className="flex items-start justify-between mb-10 gap-4 flex-wrap">
             <div>
-              <h2 className="text-2xl font-black tracking-tight text-white mb-1">Upcoming Events</h2>
+              <h2 className="text-3xl font-black tracking-tight text-white mb-1">Upcoming Events</h2>
               <p className="text-sm text-[var(--text-2)]">
-                Showing {MOCK_EVENTS.length} results · Updated 2 min ago
+                Showing <span className="font-semibold text-[var(--text-1)]">3 results</span> · Updated 2 min ago
               </p>
             </div>
-            <button className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-medium text-[var(--text-1)] transition-all">
+            <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-medium text-[var(--text-1)] transition-all">
               <SlidersHorizontal size={15} />
               Filters
             </button>
           </div>
 
           {/* 3-col event grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
-            {MOCK_EVENTS.map((event) => (
-              <Link
-                key={event.id}
-                href={`/event/${event.id}`}
-                className="group rounded-2xl border border-white/[0.07] bg-[var(--bg-1)] hover:border-white/[0.15] transition-all overflow-hidden flex flex-col"
-              >
-                {/* Venue photo / gradient */}
-                <div className={`relative h-40 bg-gradient-to-br ${event.gradient} overflow-hidden`}>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  {/* Save badge */}
-                  <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[var(--green)] text-white text-xs font-bold shadow-lg">
-                    Save {event.save}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            {MOCK_EVENTS.map((event) => {
+              const lowestPrice = Math.min(...event.prices.map((p) => p.price));
+              const highestPrice = Math.max(...event.prices.map((p) => p.price));
+              const savings = highestPrice - lowestPrice;
+
+              return (
+                <div
+                  key={event.id}
+                  className="group rounded-2xl border border-white/[0.07] bg-[var(--bg-1)] hover:border-white/[0.15] hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col"
+                >
+                  {/* Venue photo */}
+                  <div className="relative h-48 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={event.imageUrl}
+                      alt={event.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    {/* Save badge */}
+                    <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--green)] text-white text-sm font-bold shadow-lg">
+                      <TrendingDown size={14} />
+                      Save ${savings}
+                    </div>
                   </div>
-                </div>
 
-                {/* Event info */}
-                <div className="p-4 flex-1 flex flex-col">
-                  <h3 className="text-sm font-bold text-white leading-snug mb-1 line-clamp-2">
-                    {event.title}
-                  </h3>
-                  <p className="text-xs text-[var(--text-2)] mb-0.5">{event.date}</p>
-                  <p className="text-xs text-[var(--text-3)] mb-4">{event.venue} · {event.city}</p>
+                  {/* Content */}
+                  <div className="p-5 flex-1 flex flex-col">
+                    <h3 className="text-base font-bold text-white leading-snug mb-2 group-hover:text-[var(--green)] transition-colors">
+                      {event.title}
+                    </h3>
+                    <p className="text-xs text-[var(--text-2)] mb-0.5">{event.date}</p>
+                    <p className="text-xs text-[var(--text-3)] mb-5">{event.venue} · {event.location}</p>
 
-                  {/* Platform price rows */}
-                  <div className="mt-auto space-y-1.5">
-                    {event.prices.map((p) => (
-                      <div
-                        key={p.platform}
-                        className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs ${
-                          p.best
-                            ? "bg-[var(--green)]/10 border border-[var(--green)]/20"
-                            : "bg-white/[0.03] border border-white/[0.05]"
-                        }`}
-                      >
-                        <span className={p.best ? "text-[var(--green)] font-semibold" : "text-[var(--text-2)]"}>
-                          {p.platform}
-                          {p.best && <span className="ml-1.5 text-[10px] opacity-70">Best</span>}
-                        </span>
-                        <span className={`font-bold ${p.best ? "text-[var(--green)]" : "text-[var(--text-1)]"}`}>
-                          {p.price}
-                        </span>
+                    {/* Platform price comparison */}
+                    <div className="mt-auto space-y-2 mb-4">
+                      {/* Header row */}
+                      <div className="flex items-center justify-between text-[10px] text-[var(--text-3)] uppercase tracking-widest font-semibold px-1 mb-1">
+                        <span>Platform</span>
+                        <span>Price</span>
                       </div>
-                    ))}
+
+                      {event.prices.map((p) => {
+                        const isBest = p.price === lowestPrice;
+                        return (
+                          <div
+                            key={p.platform}
+                            className={`flex items-center justify-between px-3 py-2.5 rounded-xl transition-all ${
+                              isBest
+                                ? "bg-[var(--green)]/10 border-2 border-[var(--green)]/40"
+                                : "bg-white/[0.03] border border-white/[0.06]"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className={`text-sm font-semibold ${isBest ? "text-[var(--green)]" : "text-[var(--text-2)]"}`}>
+                                {p.platform}
+                              </span>
+                              {isBest && (
+                                <span className="px-1.5 py-0.5 bg-[var(--green)] text-white text-[10px] rounded-full font-bold">
+                                  BEST
+                                </span>
+                              )}
+                            </div>
+                            <span className={`text-sm font-black ${isBest ? "text-[var(--green)]" : "text-[var(--text-1)]"}`}>
+                              ${p.price}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* View Best Deal button */}
+                    <Link
+                      href={`/event/${event.id}`}
+                      className="w-full py-3 rounded-xl bg-[var(--green)] hover:bg-[#16a34a] text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 group/btn"
+                    >
+                      View Best Deal
+                      <ExternalLink size={14} className="group-hover/btn:translate-x-0.5 transition-transform" />
+                    </Link>
                   </div>
                 </div>
-              </Link>
-            ))}
+              );
+            })}
           </div>
 
           {/* Load more */}
           <div className="flex justify-center">
             <Link
               href="/search"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-semibold text-[var(--text-1)] transition-all"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-xl border border-white/[0.1] bg-white/[0.03] hover:bg-white/[0.07] text-sm font-semibold text-[var(--text-1)] transition-all"
             >
               Load More Events
               <ArrowRight size={15} />
