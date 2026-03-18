@@ -116,22 +116,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="how-it-works" className="w-full py-24">
-        <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/88 px-6 py-20 shadow-[0_24px_64px_rgba(0,0,0,0.2)] sm:px-10 lg:px-16">
-          <div className="mx-auto max-w-7xl">
+      <section id="how-it-works" className="w-full">
+        <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/88 py-20 sm:py-28 shadow-[0_24px_64px_rgba(0,0,0,0.2)]">
+          <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-12">
           <div className="text-center">
             <div className="inline-flex rounded-full border border-[var(--brand)]/25 bg-[var(--brand)]/[0.08] px-4 py-2 text-sm font-semibold text-[var(--brand)]">
               HOW IT WORKS
             </div>
-            <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-bold tracking-[-0.03em] text-white md:text-4xl">
+            <h2 className="mx-auto mt-6 max-w-3xl text-3xl font-bold tracking-[-0.03em] text-white md:text-4xl">
               Three Simple Steps to Save
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-base text-[var(--text-2)]">
+            <p className="mx-auto mt-4 max-w-2xl text-base text-[var(--text-2)]">
               Finding the best ticket prices has never been easier
             </p>
           </div>
 
-          <div className="relative mt-16 grid gap-8 lg:grid-cols-3">
+          <div className="relative mt-16 grid gap-6 sm:gap-8 lg:grid-cols-3">
             <div className="absolute left-[16.5%] right-[16.5%] top-[52px] hidden h-px bg-gradient-to-r from-transparent via-[var(--brand)]/18 to-transparent lg:block" />
             {STEPS.map((step) => {
               const Icon = step.icon;
@@ -166,13 +166,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="results" className="w-full pb-24 pt-4">
-        <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/92 px-6 py-20 shadow-[0_24px_64px_rgba(0,0,0,0.24)] sm:px-10 lg:px-16">
-          <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+      <section id="results" className="w-full">
+        <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/92 py-20 sm:py-28 shadow-[0_24px_64px_rgba(0,0,0,0.24)]">
+          <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-12">
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
             <div>
-              <h2 className="text-3xl font-bold tracking-[-0.03em] text-white md:text-4xl">Upcoming Events</h2>
-              <p className="mt-2 text-sm text-[var(--text-2)]">
+              <h2 className="mb-2 text-3xl font-bold tracking-[-0.03em] text-white md:text-4xl">Upcoming Events</h2>
+              <p className="text-sm text-[var(--text-2)]">
                 Showing <span className="font-semibold text-white">3 results</span> · Updated 2 min ago
               </p>
             </div>
