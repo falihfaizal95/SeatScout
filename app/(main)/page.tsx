@@ -77,7 +77,7 @@ export default function HomePage() {
 
         <div className="relative w-full overflow-hidden border-y border-white/[0.08] bg-[linear-gradient(180deg,rgba(20,33,58,0.94),rgba(11,16,30,0.98))] shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
           <div className="absolute inset-0 hero-grid opacity-30" />
-          <div className="relative mx-auto max-w-5xl px-4 py-16 text-center sm:px-8 sm:py-20 md:py-24 lg:px-10">
+          <div className="relative mx-auto max-w-5xl px-6 py-20 text-center flex flex-col items-center sm:px-10 sm:py-24 md:py-28">
             <div className="inline-flex items-center gap-3 rounded-full border border-[var(--brand)]/30 bg-[var(--brand)]/12 px-5 py-3 text-sm font-semibold text-[var(--brand)] shadow-[0_0_0_1px_rgba(109,106,232,0.08)]">
               <span className="size-2.5 rounded-full bg-[var(--brand)]" />
               Compare prices across 4+ platforms instantly
@@ -105,7 +105,7 @@ export default function HomePage() {
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="rounded-2xl border border-white/[0.07] bg-white/[0.04] px-5 py-6 backdrop-blur-sm"
+                  className="rounded-2xl border border-white/[0.07] bg-white/[0.04] px-5 py-6 backdrop-blur-sm text-center"
                 >
                   <div className="text-2xl font-bold text-white md:text-3xl">{s.value}</div>
                   <div className="mt-1.5 text-xs text-[var(--text-2)]">{s.label}</div>
@@ -116,8 +116,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="how-it-works" className="py-20">
-        <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/88 px-4 py-16 shadow-[0_24px_64px_rgba(0,0,0,0.2)] sm:px-6 lg:px-8">
+      <section id="how-it-works" className="py-24">
+        <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/88 px-6 py-20 shadow-[0_24px_64px_rgba(0,0,0,0.2)] sm:px-10 lg:px-16">
           <div className="mx-auto max-w-7xl">
           <div className="text-center">
             <div className="inline-flex rounded-full border border-[var(--brand)]/25 bg-[var(--brand)]/[0.08] px-4 py-2 text-sm font-semibold text-[var(--brand)]">
@@ -131,7 +131,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="relative mt-14 grid gap-6 lg:grid-cols-3">
+          <div className="relative mt-16 grid gap-8 lg:grid-cols-3">
             <div className="absolute left-[16.5%] right-[16.5%] top-[52px] hidden h-px bg-gradient-to-r from-transparent via-[var(--brand)]/18 to-transparent lg:block" />
             {STEPS.map((step) => {
               const Icon = step.icon;
@@ -166,8 +166,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="results" className="pb-16 pt-8">
-        <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/92 px-4 py-14 shadow-[0_24px_64px_rgba(0,0,0,0.24)] sm:px-6 lg:px-8">
+      <section id="results" className="pb-24 pt-4">
+        <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/92 px-6 py-20 shadow-[0_24px_64px_rgba(0,0,0,0.24)] sm:px-10 lg:px-16">
           <div className="mx-auto max-w-7xl">
           <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
             <div>
@@ -182,7 +182,7 @@ export default function HomePage() {
             </button>
           </div>
 
-          <div className="mt-12 grid gap-8 xl:grid-cols-3">
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {MOCK_EVENTS.map((event) => {
               const lowestPrice = Math.min(...event.prices.map((p) => p.price));
               const highestPrice = Math.max(...event.prices.map((p) => p.price));
