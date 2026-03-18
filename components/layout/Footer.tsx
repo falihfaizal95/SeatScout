@@ -11,9 +11,9 @@ export default function Footer() {
               <div className="rounded-2xl bg-[var(--green)] p-3">
                 <Ticket className="size-5 text-white" />
               </div>
-              <span className="text-2xl font-bold tracking-[-0.03em] text-white">SeatScout</span>
+              <span className="text-xl font-bold tracking-[-0.03em] text-white">SeatScout</span>
             </div>
-            <p className="mb-5 max-w-xs text-base leading-8 text-[var(--text-2)]">
+            <p className="mb-5 max-w-xs text-sm leading-6 text-[var(--text-2)]">
               Compare ticket prices across all major platforms and never overpay for seats again.
             </p>
             <div className="flex gap-3">
@@ -30,31 +30,31 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-2xl font-semibold text-white">Product</h4>
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-3)]">Product</h4>
             <ul className="space-y-2">
-              <li><Link href="/#how-it-works" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">How It Works</Link></li>
-              <li><Link href="/search" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">Compare Prices</Link></li>
-              <li><a href="#" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">FAQ</a></li>
+              <li><Link href="/#how-it-works" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">How It Works</Link></li>
+              <li><Link href="/search" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">Compare Prices</Link></li>
+              <li><a href="#" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">FAQ</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-4 text-2xl font-semibold text-white">Sports</h4>
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-3)]">Sports</h4>
             <ul className="space-y-2">
-              <li><Link href="/search?sport=NBA" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">NBA</Link></li>
-              <li><Link href="/search?sport=NFL" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">NFL</Link></li>
-              <li><Link href="/search?sport=MLB" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">MLB</Link></li>
-              <li><Link href="/search?sport=NHL" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">NHL</Link></li>
+              <li><Link href="/search?sport=NBA" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">NBA</Link></li>
+              <li><Link href="/search?sport=NFL" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">NFL</Link></li>
+              <li><Link href="/search?sport=MLB" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">MLB</Link></li>
+              <li><Link href="/search?sport=NHL" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">NHL</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-4 text-2xl font-semibold text-white">Company</h4>
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-3)]">Company</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">About Us</a></li>
-              <li><a href="#" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">Contact</a></li>
-              <li><a href="#" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">Privacy Policy</a></li>
-              <li><a href="#" className="text-lg text-[var(--text-2)] transition-colors hover:text-white">Terms of Service</a></li>
+              <li><a href="#" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">About Us</a></li>
+              <li><a href="#" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">Contact</a></li>
+              <li><a href="#" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">Privacy Policy</a></li>
+              <li><a href="#" className="text-sm text-[var(--text-2)] transition-colors hover:text-white">Terms of Service</a></li>
             </ul>
           </div>
         </div>

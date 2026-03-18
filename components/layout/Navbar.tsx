@@ -16,13 +16,13 @@ export default function Navbar() {
             <div className="rounded-2xl bg-[var(--green)] p-3 shadow-[0_18px_36px_rgba(34,197,94,0.18)]">
               <Ticket className="size-6 text-white" />
             </div>
-            <span className="text-2xl font-bold tracking-[-0.03em] text-white">SeatScout</span>
+            <span className="text-xl font-bold tracking-[-0.03em] text-white">SeatScout</span>
           </Link>
 
-          <div className="hidden items-center gap-10 md:flex">
-            <Link href="/#how-it-works" className="text-lg font-medium text-[var(--text-2)] transition-colors hover:text-white">How It Works</Link>
-            <Link href="/#results" className="text-lg font-medium text-[var(--text-2)] transition-colors hover:text-white">Compare Prices</Link>
-            <Link href="/#results" className="text-lg font-medium text-[var(--text-2)] transition-colors hover:text-white">FAQ</Link>
+          <div className="hidden items-center gap-8 md:flex">
+            <Link href="/#how-it-works" className="text-sm font-medium text-[var(--text-2)] transition-colors hover:text-white">How It Works</Link>
+            <Link href="/#results" className="text-sm font-medium text-[var(--text-2)] transition-colors hover:text-white">Compare Prices</Link>
+            <Link href="/#results" className="text-sm font-medium text-[var(--text-2)] transition-colors hover:text-white">FAQ</Link>
           </div>
 
           <div>
@@ -37,7 +37,7 @@ export default function Navbar() {
             ) : (
               <button
                 onClick={() => router.push("/sign-in")}
-                className="rounded-2xl border border-[var(--green)] bg-white px-6 py-3 text-lg font-semibold text-[var(--green)] transition-colors hover:bg-[var(--green)] hover:text-white"
+                className="rounded-xl border border-[var(--green)] bg-white px-5 py-2 text-sm font-semibold text-[var(--green)] transition-colors hover:bg-[var(--green)] hover:text-white"
               >
                 Sign In
               </button>
