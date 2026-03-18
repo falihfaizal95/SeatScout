@@ -67,8 +67,8 @@ const MOCK_EVENTS = [
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <section className="relative pt-36 sm:pt-40">
+    <div className="w-full flex flex-col min-h-screen">
+      <section className="relative w-full pt-36 sm:pt-40">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-[8%] top-24 h-72 w-72 rounded-full bg-[var(--brand)]/14 blur-[120px]" />
           <div className="absolute right-[10%] top-16 h-96 w-96 rounded-full bg-[var(--brand)]/14 blur-[140px]" />
@@ -77,7 +77,7 @@ export default function HomePage() {
 
         <div className="relative w-full overflow-hidden border-y border-white/[0.08] bg-[linear-gradient(180deg,rgba(20,33,58,0.94),rgba(11,16,30,0.98))] shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
           <div className="absolute inset-0 hero-grid opacity-30" />
-          <div className="relative mx-auto max-w-5xl px-6 py-20 text-center flex flex-col items-center sm:px-10 sm:py-24 md:py-28">
+          <div className="relative w-full mx-auto max-w-5xl px-6 py-20 text-center sm:px-10 sm:py-24 md:py-28">
             <div className="inline-flex items-center gap-3 rounded-full border border-[var(--brand)]/30 bg-[var(--brand)]/12 px-5 py-3 text-sm font-semibold text-[var(--brand)] shadow-[0_0_0_1px_rgba(109,106,232,0.08)]">
               <span className="size-2.5 rounded-full bg-[var(--brand)]" />
               Compare prices across 4+ platforms instantly
@@ -116,7 +116,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="how-it-works" className="py-24">
+      <section id="how-it-works" className="w-full py-24">
         <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/88 px-6 py-20 shadow-[0_24px_64px_rgba(0,0,0,0.2)] sm:px-10 lg:px-16">
           <div className="mx-auto max-w-7xl">
           <div className="text-center">
@@ -166,7 +166,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="results" className="pb-24 pt-4">
+      <section id="results" className="w-full pb-24 pt-4">
         <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/92 px-6 py-20 shadow-[0_24px_64px_rgba(0,0,0,0.24)] sm:px-10 lg:px-16">
           <div className="mx-auto max-w-7xl">
           <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">

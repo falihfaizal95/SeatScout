@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       }}
     >
       <html lang="en" className="dark">
-        <body>{children}</body>
+        <body className="w-full">{children}</body>
       </html>
     </ClerkProvider>
   );
