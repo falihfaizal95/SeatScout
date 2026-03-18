@@ -70,7 +70,7 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
       <section className="relative pt-36 sm:pt-40">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-[8%] top-24 h-72 w-72 rounded-full bg-[var(--green)]/14 blur-[120px]" />
+          <div className="absolute left-[8%] top-24 h-72 w-72 rounded-full bg-[var(--brand)]/14 blur-[120px]" />
           <div className="absolute right-[10%] top-16 h-96 w-96 rounded-full bg-[var(--brand)]/14 blur-[140px]" />
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[var(--bg)]" />
         </div>
@@ -78,14 +78,14 @@ export default function HomePage() {
         <div className="relative w-full overflow-hidden border-y border-white/[0.08] bg-[linear-gradient(180deg,rgba(20,33,58,0.94),rgba(11,16,30,0.98))] shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
           <div className="absolute inset-0 hero-grid opacity-30" />
           <div className="relative mx-auto max-w-5xl px-4 py-16 text-center sm:px-8 sm:py-20 md:py-24 lg:px-10">
-            <div className="inline-flex items-center gap-3 rounded-full border border-[var(--green)]/30 bg-[var(--green)]/12 px-5 py-3 text-sm font-semibold text-[var(--green)] shadow-[0_0_0_1px_rgba(34,197,94,0.08)]">
-              <span className="size-2.5 rounded-full bg-[var(--green)]" />
+            <div className="inline-flex items-center gap-3 rounded-full border border-[var(--brand)]/30 bg-[var(--brand)]/12 px-5 py-3 text-sm font-semibold text-[var(--brand)] shadow-[0_0_0_1px_rgba(109,106,232,0.08)]">
+              <span className="size-2.5 rounded-full bg-[var(--brand)]" />
               Compare prices across 4+ platforms instantly
             </div>
 
             <h1 className="mx-auto mt-8 max-w-4xl text-3xl font-bold leading-[1.08] tracking-[-0.04em] text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
               Find the Best
-              <span className="mt-2 block text-gradient-green">Seat Deals</span>
+              <span className="mt-2 block text-gradient">Seat Deals</span>
             </h1>
 
             <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-[var(--text-2)] sm:text-xl">
@@ -120,7 +120,7 @@ export default function HomePage() {
         <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/88 px-4 py-16 shadow-[0_24px_64px_rgba(0,0,0,0.2)] sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
           <div className="text-center">
-            <div className="inline-flex rounded-full border border-[var(--green)]/25 bg-[var(--green)]/[0.08] px-4 py-2 text-sm font-semibold text-[var(--green)]">
+            <div className="inline-flex rounded-full border border-[var(--brand)]/25 bg-[var(--brand)]/[0.08] px-4 py-2 text-sm font-semibold text-[var(--brand)]">
               HOW IT WORKS
             </div>
             <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-bold tracking-[-0.03em] text-white md:text-4xl">
@@ -132,7 +132,7 @@ export default function HomePage() {
           </div>
 
           <div className="relative mt-14 grid gap-6 lg:grid-cols-3">
-            <div className="absolute left-[16.5%] right-[16.5%] top-[52px] hidden h-px bg-gradient-to-r from-transparent via-[var(--green)]/18 to-transparent lg:block" />
+            <div className="absolute left-[16.5%] right-[16.5%] top-[52px] hidden h-px bg-gradient-to-r from-transparent via-[var(--brand)]/18 to-transparent lg:block" />
             {STEPS.map((step) => {
               const Icon = step.icon;
               return (
@@ -140,11 +140,11 @@ export default function HomePage() {
                   key={step.number}
                   className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] p-7 shadow-[0_12px_32px_rgba(0,0,0,0.2)]"
                 >
-                  <div className="absolute right-5 top-2 text-[80px] font-bold leading-none tracking-[-0.06em] text-[var(--green)]/[0.08]">
+                  <div className="absolute right-5 top-2 text-[80px] font-bold leading-none tracking-[-0.06em] text-[var(--brand)]/[0.08]">
                     {step.number}
                   </div>
                   <div className="relative z-10 flex h-full flex-col">
-                    <div className="inline-flex size-14 items-center justify-center rounded-2xl bg-[var(--green)] shadow-[0_12px_28px_rgba(34,197,94,0.2)]">
+                    <div className="inline-flex size-14 items-center justify-center rounded-2xl bg-[var(--brand)] shadow-[0_12px_28px_rgba(109,106,232,0.2)]">
                       <Icon className="size-7 text-white" />
                     </div>
                     <h3 className="mt-6 text-xl font-bold tracking-[-0.02em] text-white">{step.title}</h3>
@@ -156,10 +156,10 @@ export default function HomePage() {
           </div>
 
           <div className="mt-10 text-center">
-            <div className="inline-flex items-center gap-2.5 rounded-xl border border-[var(--green)]/30 bg-[var(--green)]/10 px-5 py-3">
+            <div className="inline-flex items-center gap-2.5 rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/10 px-5 py-3">
               <span className="text-base">💰</span>
-              <span className="text-sm font-semibold text-[var(--green)]">Average savings:</span>
-              <span className="text-xl font-bold tracking-[-0.03em] text-[var(--green)]">$47 per ticket</span>
+              <span className="text-sm font-semibold text-[var(--brand)]">Average savings:</span>
+              <span className="text-xl font-bold tracking-[-0.03em] text-[var(--brand)]">$47 per ticket</span>
             </div>
           </div>
         </div>
@@ -202,14 +202,14 @@ export default function HomePage() {
                       crossOrigin="anonymous"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,6,12,0.1)] to-transparent" />
-                    <div className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--green)] px-3 py-1.5 text-xs font-semibold text-white shadow-[0_8px_20px_rgba(34,197,94,0.22)]">
+                    <div className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--brand)] px-3 py-1.5 text-xs font-semibold text-white shadow-[0_8px_20px_rgba(109,106,232,0.22)]">
                       <TrendingDown className="size-3" />
                       Save ${savings}
                     </div>
                   </div>
 
                   <div className="p-5">
-                    <h3 className="text-xl font-bold tracking-[-0.03em] text-white transition-colors group-hover:text-[var(--green)]">
+                    <h3 className="text-xl font-bold tracking-[-0.03em] text-white transition-colors group-hover:text-[var(--brand)]">
                       {event.title}
                     </h3>
 
@@ -237,21 +237,21 @@ export default function HomePage() {
                               key={p.platform}
                               className={`flex items-center justify-between rounded-xl px-3 py-2.5 transition-colors ${
                                 isBest
-                                  ? "border border-[var(--green)] bg-[var(--green)]/12"
+                                  ? "border border-[var(--brand)] bg-[var(--brand)]/12"
                                   : "border border-white/[0.08] bg-white/[0.03]"
                               }`}
                             >
                               <div className="flex items-center gap-2">
-                                <span className={`text-sm font-semibold ${isBest ? "text-[var(--green)]" : "text-[var(--text-1)]"}`}>
+                                <span className={`text-sm font-semibold ${isBest ? "text-[var(--brand)]" : "text-[var(--text-1)]"}`}>
                                   {p.platform}
                                 </span>
                                 {isBest && (
-                                  <span className="rounded-full bg-[var(--green)] px-2 py-0.5 text-[10px] font-bold text-white">
+                                  <span className="rounded-full bg-[var(--brand)] px-2 py-0.5 text-[10px] font-bold text-white">
                                     BEST
                                   </span>
                                 )}
                               </div>
-                              <div className={`text-base font-bold tracking-[-0.02em] ${isBest ? "text-[var(--green)]" : "text-white"}`}>
+                              <div className={`text-base font-bold tracking-[-0.02em] ${isBest ? "text-[var(--brand)]" : "text-white"}`}>
                                 ${p.price}
                               </div>
                             </div>
@@ -262,7 +262,7 @@ export default function HomePage() {
 
                     <Link
                       href={`/event/${event.id}`}
-                      className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--green)] text-sm font-semibold text-white transition-colors hover:bg-[#16a34a]"
+                      className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--brand)] text-sm font-semibold text-white transition-colors hover:bg-[var(--brand-light)]"
                     >
                       <span>View Best Deal</span>
                       <ExternalLink className="size-4 transition-transform group-hover:translate-x-0.5" />

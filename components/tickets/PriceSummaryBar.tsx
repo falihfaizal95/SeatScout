@@ -17,7 +17,7 @@ export default function PriceSummaryBar({ data }: { data: AggregatedTickets }) {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-6">
         <div>
           <p className="text-[11px] text-[var(--text-3)] uppercase tracking-wider mb-1">Best price</p>
-          <p className="text-2xl font-black text-[var(--green)]">{formatPrice(lowestPrice)}</p>
+          <p className="text-2xl font-black text-[var(--brand)]">{formatPrice(lowestPrice)}</p>
         </div>
         {averagePrice && (
           <div>
@@ -37,17 +37,17 @@ export default function PriceSummaryBar({ data }: { data: AggregatedTickets }) {
 
       {/* Savings callout */}
       {savings > 0 && (
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--green)]/10 border border-[var(--green)]/20 text-[var(--green)] text-xs font-semibold mb-5">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--brand)]/10 border border-[var(--brand)]/20 text-[var(--brand)] text-xs font-semibold mb-5">
           ✦ Best listing saves {savings}% vs average
         </div>
       )}
 
       {/* Range bar */}
       <div className="relative">
-        <div className="h-1.5 rounded-full bg-gradient-to-r from-[var(--green)] via-yellow-400 to-red-500 opacity-60" />
+        <div className="h-1.5 rounded-full bg-gradient-to-r from-[var(--brand)] via-yellow-400 to-red-500 opacity-60" />
         {/* Best marker */}
         <div
-          className="absolute top-1/2 w-4 h-4 rounded-full bg-[var(--green)] border-2 border-[var(--bg)] shadow-[0_0_8px_rgba(34,197,94,0.6)]"
+          className="absolute top-1/2 w-4 h-4 rounded-full bg-[var(--brand)] border-2 border-[var(--bg)] shadow-[0_0_8px_rgba(109,106,232,0.6)]"
           style={{ left: "0%", transform: "translateX(-50%) translateY(-50%)" }}
         />
         {/* Avg marker */}

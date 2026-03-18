@@ -44,7 +44,7 @@ export default async function AccountPage() {
         <div className="grid grid-cols-3 gap-3 mb-8">
           {[
             { label: "Saved", value: "0", icon: BookmarkIcon, color: "var(--brand-light)" },
-            { label: "Alerts", value: "0", icon: Bell, color: "var(--green)" },
+            { label: "Alerts", value: "0", icon: Bell, color: "var(--brand)" },
             { label: "Searches", value: "0", icon: History, color: "#f59e0b" },
           ].map((s) => (
             <div
@@ -62,7 +62,7 @@ export default async function AccountPage() {
         <div className="space-y-2 mb-8">
           {[
             { href: "/account/saved", icon: BookmarkIcon, label: "Saved Events", desc: "Events you've bookmarked", color: "var(--brand)" },
-            { href: "/account/alerts", icon: Bell, label: "Price Alerts", desc: "Get notified when prices drop", color: "var(--green)" },
+            { href: "/account/alerts", icon: Bell, label: "Price Alerts", desc: "Get notified when prices drop", color: "var(--brand)" },
             { href: "/search", icon: Ticket, label: "Find Tickets", desc: "Search upcoming events", color: "#f59e0b" },
           ].map((item) => (
             <Link

@@ -34,7 +34,7 @@ export default function HeroSearch() {
             <button
               type="submit"
               disabled={!searchQuery.trim()}
-              className="h-16 rounded-2xl bg-[var(--green)] px-10 text-lg font-semibold text-white transition-colors hover:bg-[#16a34a] disabled:cursor-not-allowed disabled:opacity-40 md:min-w-[240px]"
+              className="h-16 rounded-2xl bg-[var(--brand)] px-10 text-lg font-semibold text-white transition-colors hover:bg-[var(--brand-light)] disabled:cursor-not-allowed disabled:opacity-40 md:min-w-[240px]"
             >
               Search Deals
             </button>

@@ -15,14 +15,14 @@ export default function TicketRow({ listing, isLowest, index }: TicketRowProps) 
     <div
       className={`flex items-center gap-4 px-4 py-3.5 rounded-xl border transition-all duration-200 hover:-translate-y-px ${
         isLowest
-          ? "border-[var(--green)]/25 bg-[var(--green)]/[0.04] hover:bg-[var(--green)]/[0.07]"
+          ? "border-[var(--brand)]/25 bg-[var(--brand)]/[0.04] hover:bg-[var(--brand)]/[0.07]"
           : "border-white/[0.06] bg-[var(--bg-1)] hover:border-white/[0.12] hover:bg-[var(--bg-2)]"
       }`}
     >
       {/* Rank */}
       <span className="w-7 text-center text-xs font-bold flex-shrink-0 text-[var(--text-3)]">
         {isLowest ? (
-          <span className="text-[var(--green)] text-sm">✦</span>
+          <span className="text-[var(--brand)] text-sm">✦</span>
         ) : (
           `#${index + 1}`
         )}
@@ -54,7 +54,7 @@ export default function TicketRow({ listing, isLowest, index }: TicketRowProps) 
 
       {/* Price */}
       <div className="text-right flex-shrink-0 w-20">
-        <p className={`font-bold text-[15px] ${isLowest ? "text-[var(--green)]" : "text-white"}`}>
+        <p className={`font-bold text-[15px] ${isLowest ? "text-[var(--brand)]" : "text-white"}`}>
           {formatPrice(listing.pricePerTicket)}
         </p>
         <p className="text-[10px] text-[var(--text-3)]">per ticket</p>
@@ -67,7 +67,7 @@ export default function TicketRow({ listing, isLowest, index }: TicketRowProps) 
         rel="noopener noreferrer"
         className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-[12px] font-semibold transition-all ${
           isLowest
-            ? "bg-[var(--green)] hover:bg-green-400 text-black glow-green"
+            ? "bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white glow-brand"
             : "bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/[0.08]"
         }`}
       >

@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="mb-10 grid gap-8 md:grid-cols-4">
           <div className="md:col-span-1">
             <div className="mb-4 flex items-center gap-3">
-              <div className="rounded-2xl bg-[var(--green)] p-3">
+              <div className="rounded-2xl bg-[var(--brand)] p-3">
                 <Ticket className="size-5 text-white" />
               </div>
               <span className="text-xl font-bold tracking-[-0.03em] text-white">SeatScout</span>

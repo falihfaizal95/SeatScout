@@ -45,7 +45,7 @@ export default function EventCard({ event }: EventCardProps) {
           {/* Price */}
           {event.lowestPrice && (
             <div className="absolute bottom-3 right-3">
-              <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-[var(--green)]/15 border border-[var(--green)]/30 text-[var(--green)] text-xs font-bold">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-[var(--brand)]/15 border border-[var(--brand)]/30 text-[var(--brand)] text-xs font-bold">
                 From {formatPrice(event.lowestPrice)}
               </span>
             </div>

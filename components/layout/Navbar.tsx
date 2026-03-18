@@ -13,7 +13,7 @@ export default function Navbar() {
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
-            <div className="rounded-2xl bg-[var(--green)] p-3 shadow-[0_18px_36px_rgba(34,197,94,0.18)]">
+            <div className="rounded-2xl bg-[var(--brand)] p-3 shadow-[0_18px_36px_rgba(109,106,232,0.18)]">
               <Ticket className="size-6 text-white" />
             </div>
             <span className="text-xl font-bold tracking-[-0.03em] text-white">SeatScout</span>
@@ -30,14 +30,14 @@ export default function Navbar() {
               <UserButton
                 appearance={{
                   elements: {
-                    avatarBox: "w-8 h-8 ring-2 ring-[var(--green)]/40",
+                    avatarBox: "w-8 h-8 ring-2 ring-[var(--brand)]/40",
                   },
                 }}
               />
             ) : (
               <button
                 onClick={() => router.push("/sign-in")}
-                className="rounded-xl border border-[var(--green)] bg-white px-5 py-2 text-sm font-semibold text-[var(--green)] transition-colors hover:bg-[var(--green)] hover:text-white"
+                className="rounded-xl border border-[var(--brand)] bg-white px-5 py-2 text-sm font-semibold text-[var(--brand)] transition-colors hover:bg-[var(--brand)] hover:text-white"
               >
                 Sign In
               </button>
