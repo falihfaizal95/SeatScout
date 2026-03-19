@@ -25,42 +25,42 @@ const STEPS = [
 
 const MOCK_EVENTS = [
   {
-    id: "tm_lakers_warriors",
-    title: "Lakers vs Warriors",
-    date: "March 25, 2026 · 7:30 PM",
-    location: "Crypto.com Arena, Los Angeles",
-    imageUrl: "https://images.unsplash.com/photo-1640862101983-9f7ef7fd7cc9?w=800&q=80",
+    id: "tm_knicks_celtics",
+    title: "Knicks vs Celtics",
+    date: "March 18, 2026 · 7:30 PM",
+    location: "Madison Square Garden, New York",
+    imageUrl: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?w=800&q=80",
     prices: [
-      { platform: "Ticketmaster", price: 189 },
-      { platform: "StubHub", price: 165 },
-      { platform: "SeatGeek", price: 172 },
-      { platform: "Vivid Seats", price: 179 },
+      { platform: "Ticketmaster", price: 310 },
+      { platform: "StubHub", price: 274 },
+      { platform: "SeatGeek", price: 289 },
+      { platform: "Vivid Seats", price: 298 },
     ],
   },
   {
-    id: "tm_cowboys_eagles",
-    title: "Cowboys vs Eagles",
-    date: "April 2, 2026 · 1:00 PM",
-    location: "AT&T Stadium, Dallas",
-    imageUrl: "https://images.unsplash.com/photo-1663852914605-f5d7f50e7392?w=800&q=80",
+    id: "tm_heat_bucks",
+    title: "Heat vs Bucks",
+    date: "March 18, 2026 · 8:00 PM",
+    location: "Kaseya Center, Miami",
+    imageUrl: "https://images.unsplash.com/photo-1608245449230-4ac19066d2d0?w=800&q=80",
     prices: [
-      { platform: "Ticketmaster", price: 245 },
-      { platform: "StubHub", price: 228 },
-      { platform: "SeatGeek", price: 239 },
-      { platform: "Vivid Seats", price: 235 },
+      { platform: "Ticketmaster", price: 198 },
+      { platform: "StubHub", price: 172 },
+      { platform: "SeatGeek", price: 181 },
+      { platform: "Vivid Seats", price: 190 },
     ],
   },
   {
-    id: "tm_yankees_redsox",
-    title: "Yankees vs Red Sox",
-    date: "April 10, 2026 · 7:05 PM",
-    location: "Yankee Stadium, New York",
-    imageUrl: "https://images.unsplash.com/photo-1763246168695-36dc30e507ab?w=800&q=80",
+    id: "tm_rangers_bruins",
+    title: "Rangers vs Bruins",
+    date: "March 19, 2026 · 7:00 PM",
+    location: "Madison Square Garden, New York",
+    imageUrl: "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?w=800&q=80",
     prices: [
-      { platform: "Ticketmaster", price: 156 },
-      { platform: "StubHub", price: 142 },
-      { platform: "SeatGeek", price: 138 },
-      { platform: "Vivid Seats", price: 149 },
+      { platform: "Ticketmaster", price: 225 },
+      { platform: "StubHub", price: 196 },
+      { platform: "SeatGeek", price: 204 },
+      { platform: "Vivid Seats", price: 218 },
     ],
   },
 ];
@@ -173,7 +173,7 @@ export default function HomePage() {
             <div>
               <h2 className="text-3xl font-bold tracking-[-0.03em] text-white md:text-4xl">Upcoming Events</h2>
               <p className="mt-2 text-sm text-[var(--text-2)]">
-                Showing <span className="font-semibold text-white">3 results</span> · Updated 2 min ago
+                <span className="font-semibold text-white">3 popular events</span> in the next 2 days · Updated 2 min ago
               </p>
             </div>
             <button className="inline-flex h-11 items-center gap-2 self-start rounded-2xl border border-white/[0.1] bg-white/[0.03] px-4 text-sm font-semibold text-[var(--text-1)] transition-colors hover:bg-white/[0.07]">
