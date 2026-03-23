@@ -17,8 +17,8 @@ export default function HeroSearch() {
   const go = (q: string) => router.push(`/search?q=${encodeURIComponent(q)}`);
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <form onSubmit={handleSubmit}>
+    <div className="mx-auto flex max-w-[560px] flex-col items-center">
+      <form onSubmit={handleSubmit} className="w-full">
         <div className="flex flex-col gap-3 sm:flex-row">
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[var(--text-2)]" />
@@ -33,7 +33,7 @@ export default function HeroSearch() {
           <button
             type="submit"
             disabled={!searchQuery.trim()}
-            className="h-14 rounded-[10px] bg-[var(--brand)] px-8 text-[15px] font-[600] text-white transition-all hover:-translate-y-0.5 hover:bg-[var(--brand-light)] hover:shadow-[0_8px_24px_rgba(124,106,247,0.35)] disabled:cursor-not-allowed disabled:opacity-40"
+            className="font-syne h-14 rounded-[10px] bg-[var(--brand)] px-8 text-[15px] font-[700] text-white transition-all hover:-translate-y-0.5 hover:bg-[var(--brand-light)] hover:shadow-[0_8px_24px_rgba(124,106,247,0.35)] disabled:cursor-not-allowed disabled:opacity-40"
           >
             Search Deals →
           </button>
