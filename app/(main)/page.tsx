@@ -80,8 +80,11 @@ export default function HomePage() {
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pb-[100px] pt-[140px] text-center">
-        {/* Radial orb */}
-        <div className="pointer-events-none absolute -top-[200px] left-1/2 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(124,106,247,0.18)_0%,transparent_70%)]" />
+        {/* Animated floating purple orb */}
+        <div
+          className="orb-float pointer-events-none absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(124,106,247,0.22) 0%, transparent 65%)", zIndex: 0 }}
+        />
 
         {/* Centered content column — max 1200px */}
         <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-center px-6 sm:px-[60px]">
@@ -108,8 +111,8 @@ export default function HomePage() {
             <HeroSearch />
           </div>
 
-          {/* Stats bar — 48px below popular tags */}
-          <div className="mt-12 flex w-full max-w-[900px]">
+          {/* Stats bar — 40px below popular tags */}
+          <div className="mt-[40px] flex w-full max-w-[900px]">
             {STATS.map((stat, i) => (
               <div
                 key={stat.label}

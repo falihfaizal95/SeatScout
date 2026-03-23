@@ -115,6 +115,18 @@ body {
 .fade-up-3 { animation: fadeUp 0.5s 0.3s ease both; }
 .fade-up-4 { animation: fadeUp 0.5s 0.4s ease both; }
 
+@keyframes floatPurple {
+  0%   { transform: translate(-20%, -20%); }
+  25%  { transform: translate(20%, -10%); }
+  50%  { transform: translate(15%, 20%); }
+  75%  { transform: translate(-15%, 15%); }
+  100% { transform: translate(-20%, -20%); }
+}
+
+.orb-float {
+  animation: floatPurple 12s ease-in-out infinite;
+}
+
 /* ─── Glass ──────────────────────────────────────────────────────── */
 .glass {
   background: var(--glass-bg);
