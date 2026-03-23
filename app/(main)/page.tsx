@@ -1,4 +1,5 @@
 import HeroSearch from "@/components/search/HeroSearch";
+import LocalEventDate from "@/components/ui/LocalEventDate";
 import { Search, BarChart3, Ticket, TrendingDown, SlidersHorizontal, Calendar, MapPin, ExternalLink, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -23,11 +24,12 @@ const STEPS = [
   },
 ];
 
+// Dates stored as UTC ISO strings so they display in each visitor's local timezone
 const MOCK_EVENTS = [
   {
     id: "tm_knicks_celtics",
     title: "Knicks vs Celtics",
-    date: "March 18, 2026 · 7:30 PM",
+    isoDate: "2026-03-18T23:30:00Z", // 7:30 PM ET
     location: "Madison Square Garden, New York",
     imageUrl: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?w=800&q=80",
     prices: [
@@ -40,7 +42,7 @@ const MOCK_EVENTS = [
   {
     id: "tm_heat_bucks",
     title: "Heat vs Bucks",
-    date: "March 18, 2026 · 8:00 PM",
+    isoDate: "2026-03-19T00:00:00Z", // 8:00 PM ET
     location: "Kaseya Center, Miami",
     imageUrl: "https://images.unsplash.com/photo-1608245449230-4ac19066d2d0?w=800&q=80",
     prices: [
@@ -53,7 +55,7 @@ const MOCK_EVENTS = [
   {
     id: "tm_rangers_bruins",
     title: "Rangers vs Bruins",
-    date: "March 19, 2026 · 7:00 PM",
+    isoDate: "2026-03-19T23:00:00Z", // 7:00 PM ET
     location: "Madison Square Garden, New York",
     imageUrl: "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?w=800&q=80",
     prices: [
@@ -216,7 +218,7 @@ export default function HomePage() {
                     <div className="mt-3 space-y-2 text-sm text-[var(--text-2)]">
                       <div className="flex items-center gap-2">
                         <Calendar className="size-4 flex-shrink-0" />
-                        <span>{event.date}</span>
+                        <LocalEventDate isoDate={event.isoDate} />
                       </div>
                       <div className="flex items-center gap-2">
                         <MapPin className="size-4 flex-shrink-0" />
