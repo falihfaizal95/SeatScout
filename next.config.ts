@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "chairnerd.global.ssl.fastly.net" },
       { protocol: "https", hostname: "*.seatgeek.com" },
       { protocol: "https", hostname: "*.cloudfront.net" },
+      { protocol: "https", hostname: "a.espncdn.com" },
+      { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
 };
