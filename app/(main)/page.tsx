@@ -112,7 +112,7 @@ export default function HomePage() {
           </div>
 
           {/* Stats bar — 40px below popular tags */}
-          <div className="mt-[40px] flex w-full max-w-[900px]">
+          <div className="mx-auto mt-[48px] flex w-full max-w-[900px]">
             {STATS.map((stat, i) => (
               <div
                 key={stat.label}

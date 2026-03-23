@@ -19,7 +19,7 @@ export default function HeroSearch() {
   return (
     <div className="mx-auto flex max-w-[680px] flex-col items-center">
       <form onSubmit={handleSubmit} className="w-full">
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <div className="relative flex-1">
             <Search className="absolute left-5 top-1/2 size-5 -translate-y-1/2 text-[var(--text-2)]" />
             <input
@@ -40,7 +40,7 @@ export default function HeroSearch() {
         </div>
       </form>
 
-      <div className="mt-9 flex flex-wrap items-center justify-center gap-[10px]">
+      <div className="mt-8 flex w-full flex-wrap items-center justify-center gap-[10px]">
         <span className="mr-1 text-[13px] text-[var(--text-3)]">Popular:</span>
         {["Lakers", "Yankees", "Cowboys", "Warriors"].map((team) => (
           <button
