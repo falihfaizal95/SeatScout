@@ -45,7 +45,7 @@ export default function Navbar() {
           ) : (
             <button
               onClick={() => router.push("/sign-in")}
-              className="rounded-[8px] bg-[var(--brand)] px-[22px] py-[10px] text-[14px] font-[600] text-white transition-all hover:bg-[var(--brand-light)] hover:-translate-y-px"
+              className="font-syne rounded-[8px] bg-[var(--brand)] px-[28px] py-[12px] text-[15px] font-[800] text-white transition-all hover:bg-[var(--brand-light)] hover:-translate-y-px"
             >
               Sign In
             </button>
