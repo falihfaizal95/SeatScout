@@ -1,7 +1,6 @@
 import HeroSearch from "@/components/search/HeroSearch";
 import { Search, BarChart3, Ticket, TrendingDown, SlidersHorizontal, Calendar, MapPin, ExternalLink, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { getUpcomingPopularEvents } from "@/lib/upcomingEvents";
 
 const STEPS = [
   {
@@ -24,34 +23,72 @@ const STEPS = [
   },
 ];
 
-export default async function HomePage() {
-  const upcomingEvents = await getUpcomingPopularEvents(3);
+const MOCK_EVENTS = [
+  {
+    id: "tm_knicks_celtics",
+    title: "Knicks vs Celtics",
+    date: "March 18, 2026 · 7:30 PM",
+    location: "Madison Square Garden, New York",
+    imageUrl: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?w=800&q=80",
+    prices: [
+      { platform: "Ticketmaster", price: 310 },
+      { platform: "StubHub", price: 274 },
+      { platform: "SeatGeek", price: 289 },
+      { platform: "Vivid Seats", price: 298 },
+    ],
+  },
+  {
+    id: "tm_heat_bucks",
+    title: "Heat vs Bucks",
+    date: "March 18, 2026 · 8:00 PM",
+    location: "Kaseya Center, Miami",
+    imageUrl: "https://images.unsplash.com/photo-1608245449230-4ac19066d2d0?w=800&q=80",
+    prices: [
+      { platform: "Ticketmaster", price: 198 },
+      { platform: "StubHub", price: 172 },
+      { platform: "SeatGeek", price: 181 },
+      { platform: "Vivid Seats", price: 190 },
+    ],
+  },
+  {
+    id: "tm_rangers_bruins",
+    title: "Rangers vs Bruins",
+    date: "March 19, 2026 · 7:00 PM",
+    location: "Madison Square Garden, New York",
+    imageUrl: "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?w=800&q=80",
+    prices: [
+      { platform: "Ticketmaster", price: 225 },
+      { platform: "StubHub", price: 196 },
+      { platform: "SeatGeek", price: 204 },
+      { platform: "Vivid Seats", price: 218 },
+    ],
+  },
+];
 
+export default function HomePage() {
   return (
     <div className="w-full flex flex-col min-h-screen">
+      <section className="relative w-full pt-36 sm:pt-40">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-[8%] top-24 h-72 w-72 rounded-full bg-[var(--brand)]/14 blur-[120px]" />
+          <div className="absolute right-[10%] top-16 h-96 w-96 rounded-full bg-[var(--brand)]/14 blur-[140px]" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[var(--bg)]" />
+        </div>
 
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative w-full">
-        <div className="relative w-full overflow-hidden bg-gradient-to-br from-[#0a1628] via-[#112240] to-[#0a1628]">
-          {/* decorative orbs */}
-          <div className="pointer-events-none absolute inset-0 opacity-20">
-            <div className="absolute left-10 top-20 h-72 w-72 rounded-full bg-green-500 blur-3xl" />
-            <div className="absolute bottom-20 right-10 h-96 w-96 rounded-full bg-blue-500 blur-3xl" />
-          </div>
-
-          <div className="relative mx-auto max-w-7xl px-4 pb-24 pt-36 text-center sm:px-6 sm:pb-32 sm:pt-44 lg:px-8">
-            {/* badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/20 px-5 py-2.5">
-              <span className="size-2 animate-pulse rounded-full bg-green-500" />
-              <span className="text-sm font-medium text-green-400">Compare prices across 4+ platforms instantly</span>
+        <div className="relative w-full overflow-hidden border-y border-white/[0.08] bg-[linear-gradient(180deg,rgba(20,33,58,0.94),rgba(11,16,30,0.98))] shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
+          <div className="absolute inset-0 hero-grid opacity-30" />
+          <div className="relative mx-auto max-w-7xl px-6 py-20 text-center sm:px-10 sm:py-24 md:py-28">
+            <div className="inline-flex items-center gap-3 rounded-full border border-[var(--brand)]/30 bg-[var(--brand)]/12 px-5 py-3 text-sm font-semibold text-[var(--brand)] shadow-[0_0_0_1px_rgba(109,106,232,0.08)]">
+              <span className="size-2.5 rounded-full bg-[var(--brand)]" />
+              Compare prices across 4+ platforms instantly
             </div>
 
-            <h1 className="mx-auto mt-8 max-w-4xl text-5xl font-bold leading-tight tracking-tight text-white md:text-7xl">
+            <h1 className="mx-auto mt-8 max-w-4xl text-3xl font-bold leading-[1.08] tracking-[-0.04em] text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
               Find the Best
-              <span className="mt-2 block text-gradient-green">Seat Deals</span>
+              <span className="mt-2 block text-gradient">Seat Deals</span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-xl text-gray-300">
+            <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-[var(--text-2)] sm:text-xl">
               Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place. Never overpay for seats again.
             </p>
 
@@ -59,17 +96,19 @@ export default async function HomePage() {
               <HeroSearch />
             </div>
 
-            {/* stats */}
-            <div className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-8 md:grid-cols-4">
+            <div className="mx-auto mt-16 grid max-w-5xl grid-cols-2 gap-5 md:grid-cols-4">
               {[
                 { value: "1M+", label: "Tickets Compared" },
                 { value: "4", label: "Platforms" },
                 { value: "$2.5M", label: "Total Saved" },
                 { value: "50K+", label: "Happy Users" },
               ].map((s) => (
-                <div key={s.label}>
-                  <div className="text-3xl font-bold text-white md:text-4xl">{s.value}</div>
-                  <div className="mt-1 text-sm text-gray-400">{s.label}</div>
+                <div
+                  key={s.label}
+                  className="rounded-2xl border border-white/[0.07] bg-white/[0.04] px-5 py-6 backdrop-blur-sm text-center"
+                >
+                  <div className="text-2xl font-bold text-white md:text-3xl">{s.value}</div>
+                  <div className="mt-1.5 text-xs text-[var(--text-2)]">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -77,73 +116,74 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── How It Works ─────────────────────────────────────────────────── */}
-      <section id="how-it-works" className="w-full bg-white py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center mb-16">
-            <div className="inline-block rounded-full border border-green-200 bg-green-50 px-4 py-2 mb-4">
-              <span className="text-sm font-semibold text-green-600">HOW IT WORKS</span>
+      <section id="how-it-works" className="w-full py-24">
+        <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/88 py-20 shadow-[0_24px_64px_rgba(0,0,0,0.2)]">
+          <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+          <div className="text-center">
+            <div className="inline-flex rounded-full border border-[var(--brand)]/25 bg-[var(--brand)]/[0.08] px-4 py-2 text-sm font-semibold text-[var(--brand)]">
+              HOW IT WORKS
             </div>
-            <h2 className="text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
+            <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-bold tracking-[-0.03em] text-white md:text-4xl">
               Three Simple Steps to Save
             </h2>
-            <p className="mt-4 text-xl text-gray-600">
+            <p className="mx-auto mt-3 max-w-2xl text-base text-[var(--text-2)]">
               Finding the best ticket prices has never been easier
             </p>
           </div>
 
-          <div className="relative grid gap-8 lg:grid-cols-3">
-            {/* connector line */}
-            <div className="absolute left-[16.5%] right-[16.5%] top-[52px] hidden h-px bg-gradient-to-r from-green-200 via-green-300 to-transparent lg:block" />
-
+          <div className="relative mt-16 grid gap-8 lg:grid-cols-3">
+            <div className="absolute left-[16.5%] right-[16.5%] top-[52px] hidden h-px bg-gradient-to-r from-transparent via-[var(--brand)]/18 to-transparent lg:block" />
             {STEPS.map((step) => {
               const Icon = step.icon;
               return (
-                <div key={step.number} className="group relative">
-                  <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-8 transition-all duration-300 hover:shadow-xl">
-                    <div className="absolute -right-4 -top-4 text-[80px] font-bold leading-none text-green-50 transition-colors group-hover:text-green-100">
-                      {step.number}
+                <div
+                  key={step.number}
+                  className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))] p-7 shadow-[0_12px_32px_rgba(0,0,0,0.2)]"
+                >
+                  <div className="absolute right-5 top-2 text-[80px] font-bold leading-none tracking-[-0.06em] text-[var(--brand)]/[0.08]">
+                    {step.number}
+                  </div>
+                  <div className="relative z-10 flex h-full flex-col">
+                    <div className="inline-flex size-14 items-center justify-center rounded-2xl bg-[var(--brand)] shadow-[0_12px_28px_rgba(109,106,232,0.2)]">
+                      <Icon className="size-7 text-white" />
                     </div>
-                    <div className="relative">
-                      <div className="mb-6 inline-flex rounded-2xl bg-green-500 p-4 transition-transform group-hover:scale-110">
-                        <Icon className="size-8 text-white" />
-                      </div>
-                      <h3 className="mb-4 text-2xl font-bold text-gray-900">{step.title}</h3>
-                      <p className="leading-relaxed text-gray-600">{step.description}</p>
-                    </div>
+                    <h3 className="mt-6 text-xl font-bold tracking-[-0.02em] text-white">{step.title}</h3>
+                    <p className="mt-3 max-w-sm text-sm leading-6 text-[var(--text-2)]">{step.description}</p>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div className="mt-16 text-center">
-            <div className="inline-flex items-center gap-2 rounded-xl border border-green-200 bg-green-50 px-6 py-3">
-              <span className="font-semibold text-green-600">💰 Average savings:</span>
-              <span className="text-2xl font-bold text-green-600">$47 per ticket</span>
+          <div className="mt-10 text-center">
+            <div className="inline-flex items-center gap-2.5 rounded-xl border border-[var(--brand)]/30 bg-[var(--brand)]/10 px-5 py-3">
+              <span className="text-base">💰</span>
+              <span className="text-sm font-semibold text-[var(--brand)]">Average savings:</span>
+              <span className="text-xl font-bold tracking-[-0.03em] text-[var(--brand)]">$47 per ticket</span>
             </div>
           </div>
         </div>
+        </div>
       </section>
 
-      {/* ── Results ──────────────────────────────────────────────────────── */}
-      <section id="results" className="w-full bg-gray-50 py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+      <section id="results" className="w-full pb-24 pt-4">
+        <div className="w-full border-y border-white/[0.06] bg-[var(--bg-1)]/92 py-20 shadow-[0_24px_64px_rgba(0,0,0,0.24)]">
+          <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
             <div>
-              <h2 className="text-4xl font-bold tracking-tight text-gray-900">Upcoming Events</h2>
-              <p className="mt-2 text-gray-600">
-                <span className="font-semibold text-gray-900">{upcomingEvents.length} popular events</span> in the next 2 days · Live prices
+              <h2 className="text-3xl font-bold tracking-[-0.03em] text-white md:text-4xl">Upcoming Events</h2>
+              <p className="mt-2 text-sm text-[var(--text-2)]">
+                <span className="font-semibold text-white">3 popular events</span> in the next 2 days · Updated 2 min ago
               </p>
             </div>
-            <button className="inline-flex h-11 items-center gap-2 self-start rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50">
+            <button className="inline-flex h-11 items-center gap-2 self-start rounded-2xl border border-white/[0.1] bg-white/[0.03] px-4 text-sm font-semibold text-[var(--text-1)] transition-colors hover:bg-white/[0.07]">
               <SlidersHorizontal className="size-4" />
               Filters
             </button>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            {upcomingEvents.map((event) => {
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {MOCK_EVENTS.map((event) => {
               const lowestPrice = Math.min(...event.prices.map((p) => p.price));
               const highestPrice = Math.max(...event.prices.map((p) => p.price));
               const savings = highestPrice - lowestPrice;
@@ -151,7 +191,7 @@ export default async function HomePage() {
               return (
                 <div
                   key={event.id}
-                  className="group overflow-hidden rounded-[28px] border border-gray-200 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                  className="group overflow-hidden rounded-[28px] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.015))] shadow-[0_22px_50px_rgba(0,0,0,0.26)] transition-all duration-300 hover:-translate-y-1 hover:border-white/[0.14] hover:shadow-[0_28px_60px_rgba(0,0,0,0.34)]"
                 >
                   <div className="relative h-44 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -161,22 +201,19 @@ export default async function HomePage() {
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       crossOrigin="anonymous"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                    <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-black/30 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">
-                      {event.sport}
-                    </div>
-                    <div className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-semibold text-white shadow-lg">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,6,12,0.1)] to-transparent" />
+                    <div className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--brand)] px-3 py-1.5 text-xs font-semibold text-white shadow-[0_8px_20px_rgba(109,106,232,0.22)]">
                       <TrendingDown className="size-3" />
                       Save ${savings}
                     </div>
                   </div>
 
                   <div className="p-5">
-                    <h3 className="text-xl font-bold tracking-tight text-gray-900 transition-colors group-hover:text-green-600">
+                    <h3 className="text-xl font-bold tracking-[-0.03em] text-white transition-colors group-hover:text-[var(--brand)]">
                       {event.title}
                     </h3>
 
-                    <div className="mt-3 space-y-2 text-sm text-gray-500">
+                    <div className="mt-3 space-y-2 text-sm text-[var(--text-2)]">
                       <div className="flex items-center gap-2">
                         <Calendar className="size-4 flex-shrink-0" />
                         <span>{event.date}</span>
@@ -188,7 +225,7 @@ export default async function HomePage() {
                     </div>
 
                     <div className="mt-5">
-                      <div className="mb-2 flex items-center justify-between px-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-gray-400">
+                      <div className="mb-2 flex items-center justify-between px-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-[var(--text-3)]">
                         <span>Platform</span>
                         <span>Price</span>
                       </div>
@@ -200,21 +237,21 @@ export default async function HomePage() {
                               key={p.platform}
                               className={`flex items-center justify-between rounded-xl px-3 py-2.5 transition-colors ${
                                 isBest
-                                  ? "border border-green-500 bg-green-50"
-                                  : "border border-gray-100 bg-gray-50"
+                                  ? "border border-[var(--brand)] bg-[var(--brand)]/12"
+                                  : "border border-white/[0.08] bg-white/[0.03]"
                               }`}
                             >
                               <div className="flex items-center gap-2">
-                                <span className={`text-sm font-semibold ${isBest ? "text-green-600" : "text-gray-700"}`}>
+                                <span className={`text-sm font-semibold ${isBest ? "text-[var(--brand)]" : "text-[var(--text-1)]"}`}>
                                   {p.platform}
                                 </span>
                                 {isBest && (
-                                  <span className="rounded-full bg-green-500 px-2 py-0.5 text-[10px] font-bold text-white">
+                                  <span className="rounded-full bg-[var(--brand)] px-2 py-0.5 text-[10px] font-bold text-white">
                                     BEST
                                   </span>
                                 )}
                               </div>
-                              <div className={`text-base font-bold tracking-tight ${isBest ? "text-green-600" : "text-gray-900"}`}>
+                              <div className={`text-base font-bold tracking-[-0.02em] ${isBest ? "text-[var(--brand)]" : "text-white"}`}>
                                 ${p.price}
                               </div>
                             </div>
@@ -223,40 +260,29 @@ export default async function HomePage() {
                       </div>
                     </div>
 
-                    {event.tmUrl ? (
-                      <a
-                        href={event.tmUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-green-500 text-sm font-semibold text-white transition-colors hover:bg-green-600"
-                      >
-                        <span>View Best Deal</span>
-                        <ExternalLink className="size-4" />
-                      </a>
-                    ) : (
-                      <Link
-                        href={`/event/${event.id}`}
-                        className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-green-500 text-sm font-semibold text-white transition-colors hover:bg-green-600"
-                      >
-                        <span>View Best Deal</span>
-                        <ExternalLink className="size-4" />
-                      </Link>
-                    )}
+                    <Link
+                      href={`/event/${event.id}`}
+                      className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--brand)] text-sm font-semibold text-white transition-colors hover:bg-[var(--brand-light)]"
+                    >
+                      <span>View Best Deal</span>
+                      <ExternalLink className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </Link>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div className="mt-12 text-center">
+          <div className="mt-10 text-center">
             <Link
               href="/search"
-              className="inline-flex h-12 items-center gap-2 rounded-xl border border-gray-200 bg-white px-8 text-base font-semibold text-gray-700 shadow-sm transition-colors hover:bg-gray-50"
+              className="inline-flex h-12 items-center gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-6 text-base font-semibold text-[var(--text-1)] transition-colors hover:bg-white/[0.07]"
             >
               Load More Events
               <ArrowRight size={16} />
             </Link>
           </div>
+        </div>
         </div>
       </section>
     </div>
