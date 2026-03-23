@@ -9,7 +9,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed left-0 right-0 top-0 z-50 border-b border-[var(--card-border)] bg-[rgba(10,11,20,0.85)] backdrop-blur-[16px]">
-      <div className="relative mx-auto flex w-full max-w-[1200px] items-center justify-between px-6 py-5 sm:px-[60px]">
+      <div className="relative flex w-full items-center justify-between px-6 py-5 sm:px-[60px]">
         <Link href="/" className="font-syne text-[22px] font-[800] tracking-[-0.5px] text-[var(--text-1)]">
           Seat<span className="text-[var(--brand)]">Scout</span>
         </Link>
