@@ -17,38 +17,36 @@ export default function HeroSearch() {
   const go = (q: string) => router.push(`/search?q=${encodeURIComponent(q)}`);
 
   return (
-    <div className="mx-auto max-w-4xl">
-      <div className="rounded-[28px] border border-white/15 bg-white/[0.08] p-4 shadow-[0_24px_60px_rgba(0,0,0,0.25)] backdrop-blur-md">
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-3 md:flex-row">
-            <div className="flex-1 relative">
-              <Search className="absolute left-6 top-1/2 size-6 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search for teams, games, or events..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-16 w-full rounded-2xl border border-white/10 bg-white px-14 pr-5 text-lg text-slate-900 outline-none transition-shadow placeholder:text-slate-500 focus:shadow-[0_0_0_3px_rgba(34,197,94,0.16)]"
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={!searchQuery.trim()}
-              className="h-16 rounded-2xl bg-[var(--brand)] px-10 text-lg font-semibold text-white transition-colors hover:bg-[var(--brand-light)] disabled:cursor-not-allowed disabled:opacity-40 md:min-w-[240px]"
-            >
-              Search Deals
-            </button>
+    <div className="mx-auto max-w-2xl">
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[var(--text-2)]" />
+            <input
+              type="text"
+              placeholder="Search for teams, games, or events..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-14 w-full rounded-[10px] border border-[var(--card-border)] bg-[var(--card)] pl-12 pr-4 text-[15px] text-[var(--text-1)] outline-none transition-colors placeholder:text-[var(--text-2)] focus:border-[rgba(124,106,247,0.4)]"
+            />
           </div>
-        </form>
-      </div>
+          <button
+            type="submit"
+            disabled={!searchQuery.trim()}
+            className="h-14 rounded-[10px] bg-[var(--brand)] px-8 text-[15px] font-[600] text-white transition-all hover:-translate-y-0.5 hover:bg-[var(--brand-light)] hover:shadow-[0_8px_24px_rgba(124,106,247,0.35)] disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Search Deals →
+          </button>
+        </div>
+      </form>
 
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <span className="text-base text-[var(--text-2)]">Popular:</span>
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-[10px]">
+        <span className="mr-1 text-[13px] text-[var(--text-3)]">Popular:</span>
         {["Lakers", "Yankees", "Cowboys", "Warriors"].map((team) => (
           <button
             key={team}
             onClick={() => go(team)}
-            className="rounded-2xl border border-white/[0.1] bg-white/[0.05] px-5 py-3 text-base font-medium text-[var(--text-2)] transition-colors hover:bg-white/[0.1] hover:text-white"
+            className="rounded-full border border-[var(--card-border)] bg-[var(--card)] px-[14px] py-[6px] text-[13px] text-[var(--text-2)] transition-all hover:border-[rgba(124,106,247,0.3)] hover:bg-[var(--brand-dim)] hover:text-[var(--brand-light)]"
           >
             {team}
           </button>

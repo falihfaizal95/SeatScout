@@ -1,29 +1,31 @@
 @import "tailwindcss";
 
-/* ─── Design Tokens ──────────────────────────────────────────────────── */
+/* ─── Design Tokens ──────────────────────────────────────────────── */
 :root {
-  --bg: #06060c;
-  --bg-1: #0d0d18;
-  --bg-2: #121220;
-  --bg-3: #1a1a2e;
-  --border: rgba(255, 255, 255, 0.07);
-  --border-hover: rgba(255, 255, 255, 0.14);
-  --border-brand: rgba(109, 106, 232, 0.4);
-  --text-1: #f4f4ff;
-  --text-2: #8888aa;
-  --text-3: #44445a;
-  --brand: #6d6ae8;
-  --brand-light: #8d8bff;
-  --brand-glow: rgba(109, 106, 232, 0.35);
-  --green: #22c55e;
-  --green-glow: rgba(34, 197, 94, 0.25);
-
-  /* glass */
-  --glass-bg: rgba(13, 13, 24, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --bg:          #0a0b14;
+  --bg-1:        #0f1120;
+  --bg-2:        #141629;
+  --bg-3:        #141629;
+  --card:        #131527;
+  --card-border: rgba(255, 255, 255, 0.07);
+  --border:      rgba(255, 255, 255, 0.07);
+  --border-hover:rgba(255, 255, 255, 0.15);
+  --border-brand:rgba(124, 106, 247, 0.3);
+  --text-1:      #f0f0f8;
+  --text-2:      #7a7d99;
+  --text-3:      #4a4d66;
+  --brand:       #7c6af7;
+  --brand-light: #9d8fff;
+  --brand-dim:   rgba(124, 106, 247, 0.15);
+  --brand-glow:  rgba(124, 106, 247, 0.35);
+  --green:       #22c55e;
+  --green-dim:   rgba(34, 197, 94, 0.12);
+  --green-glow:  rgba(34, 197, 94, 0.25);
+  --glass-bg:    rgba(19, 21, 39, 0.75);
+  --glass-border:rgba(255, 255, 255, 0.07);
 }
 
-/* ─── Base ───────────────────────────────────────────────────────────── */
+/* ─── Base ───────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
@@ -35,18 +37,50 @@ html {
 body {
   width: 100%;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(109, 106, 232, 0.09), transparent 30%),
-    radial-gradient(circle at top right, rgba(109, 106, 232, 0.1), transparent 34%),
-    linear-gradient(180deg, #080911 0%, #06060c 42%, #090b14 100%);
+  background: var(--bg);
   color: var(--text-1);
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  font-family: var(--font-dm-sans), 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* ─── Hero Grid Pattern ──────────────────────────────────────────────── */
+/* ─── Font Utility ───────────────────────────────────────────────── */
+.font-syne {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+}
+
+/* ─── Section Helpers ────────────────────────────────────────────── */
+.section-tag {
+  display: inline-block;
+  color: var(--brand-light);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-size: clamp(32px, 4vw, 50px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.section-sub {
+  color: var(--text-2);
+  font-size: 16px;
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 72px;
+}
+
+/* ─── Hero Grid Pattern ──────────────────────────────────────────── */
 .hero-grid {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
@@ -54,37 +88,9 @@ body {
   background-size: 72px 72px;
 }
 
-/* ─── Metallic / Chrome Text ─────────────────────────────────────────── */
-.text-chrome {
-  background: linear-gradient(
-    160deg,
-    #6b6b6b 0%,
-    #d4d4d4 18%,
-    #ffffff 28%,
-    #e8e8e8 38%,
-    #aaaaaa 50%,
-    #ffffff 62%,
-    #d0d0d0 72%,
-    #888888 85%,
-    #ffffff 100%
-  );
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: chrome-sweep 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.08));
-}
-
-@keyframes chrome-sweep {
-  0%   { background-position: 100% 50%; }
-  50%  { background-position: 0%   50%; }
-  100% { background-position: 100% 50%; }
-}
-
-/* ─── Gradient Text ──────────────────────────────────────────────────── */
+/* ─── Gradient Text ──────────────────────────────────────────────── */
 .text-gradient {
-  background: linear-gradient(135deg, #6d6ae8 0%, #a78bfa 50%, #c4b5fd 100%);
+  background: linear-gradient(135deg, #7c6af7 0%, #9d8fff 50%, #c4b5fd 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -97,7 +103,19 @@ body {
   background-clip: text;
 }
 
-/* ─── Glass ──────────────────────────────────────────────────────────── */
+/* ─── Animations ─────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up-0 { animation: fadeUp 0.5s ease both; }
+.fade-up-1 { animation: fadeUp 0.5s 0.1s ease both; }
+.fade-up-2 { animation: fadeUp 0.5s 0.2s ease both; }
+.fade-up-3 { animation: fadeUp 0.5s 0.3s ease both; }
+.fade-up-4 { animation: fadeUp 0.5s 0.4s ease both; }
+
+/* ─── Glass ──────────────────────────────────────────────────────── */
 .glass {
   background: var(--glass-bg);
   backdrop-filter: blur(20px) saturate(180%);
@@ -105,22 +123,9 @@ body {
   border: 1px solid var(--glass-border);
 }
 
-/* ─── Glow Orbs ──────────────────────────────────────────────────────── */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  filter: blur(80px);
-}
-
-/* ─── Shimmer skeleton ───────────────────────────────────────────────── */
+/* ─── Shimmer skeleton ───────────────────────────────────────────── */
 .shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--bg-1) 0%,
-    var(--bg-2) 50%,
-    var(--bg-1) 100%
-  );
+  background: linear-gradient(90deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-1) 100%);
   background-size: 200% 100%;
   animation: shimmer 1.6s ease-in-out infinite;
 }
@@ -130,27 +135,27 @@ body {
   100% { background-position:  200% 0; }
 }
 
-/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+/* ─── Scrollbar ──────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(109, 106, 232, 0.25); border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(109, 106, 232, 0.45); }
+::-webkit-scrollbar-thumb { background: rgba(124, 106, 247, 0.25); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(124, 106, 247, 0.45); }
 
-/* ─── Selection ──────────────────────────────────────────────────────── */
-::selection { background: rgba(109, 106, 232, 0.25); color: #fff; }
+/* ─── Selection ──────────────────────────────────────────────────── */
+::selection { background: rgba(124, 106, 247, 0.25); color: #fff; }
 
-/* ─── Focus ──────────────────────────────────────────────────────────── */
+/* ─── Focus ──────────────────────────────────────────────────────── */
 :focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 6px; }
 
-/* ─── Glow shadows ───────────────────────────────────────────────────── */
-.glow-brand  { box-shadow: 0 0 30px var(--brand-glow); }
-.glow-green  { box-shadow: 0 0 20px var(--green-glow); }
-.glow-text   { text-shadow: 0 0 30px rgba(109, 106, 232, 0.6); }
+/* ─── Glow shadows ───────────────────────────────────────────────── */
+.glow-brand { box-shadow: 0 0 30px var(--brand-glow); }
+.glow-green { box-shadow: 0 0 20px var(--green-glow); }
+.glow-text  { text-shadow: 0 0 30px rgba(124, 106, 247, 0.6); }
 
-/* ─── Card ───────────────────────────────────────────────────────────── */
+/* ─── Card ───────────────────────────────────────────────────────── */
 .card {
-  background: var(--bg-1);
-  border: 1px solid var(--border);
+  background: var(--card);
+  border: 1px solid var(--card-border);
   border-radius: 16px;
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
@@ -160,7 +165,7 @@ body {
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* ─── Noise overlay (subtle texture) ────────────────────────────────── */
+/* ─── Noise overlay ──────────────────────────────────────────────── */
 body::before {
   content: "";
   position: fixed;
