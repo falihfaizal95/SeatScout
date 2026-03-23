@@ -9,22 +9,30 @@ export async function POST(req: NextRequest) {
     const { type, data } = payload;
 
     if (type === "user.created" || type === "user.updated") {
-      const { id, email_addresses, first_name, last_name, image_url } = data;
+      const { id, email_addresses, first_name, last_name, image_url, unsafe_metadata } = data;
       const email = email_addresses?.[0]?.email_address;
       if (!email) return NextResponse.json({ error: "No email" }, { status: 400 });
+
+      const meta = (unsafe_metadata ?? {}) as Record<string, unknown>;
 
       await prisma.user.upsert({
         where: { clerkId: id },
         update: {
           email,
-          name: [first_name, last_name].filter(Boolean).join(" ") || null,
-          imageUrl: image_url || null,
+          name:        [first_name, last_name].filter(Boolean).join(" ") || null,
+          imageUrl:    image_url || null,
+          dateOfBirth: meta.dateOfBirth ? new Date(meta.dateOfBirth as string) : undefined,
+          country:     (meta.country  as string) || undefined,
+          zipCode:     (meta.zipCode  as string) || undefined,
         },
         create: {
-          clerkId: id,
+          clerkId:     id,
           email,
-          name: [first_name, last_name].filter(Boolean).join(" ") || null,
-          imageUrl: image_url || null,
+          name:        [first_name, last_name].filter(Boolean).join(" ") || null,
+          imageUrl:    image_url || null,
+          dateOfBirth: meta.dateOfBirth ? new Date(meta.dateOfBirth as string) : null,
+          country:     (meta.country  as string) || null,
+          zipCode:     (meta.zipCode  as string) || null,
         },
       });
     }
