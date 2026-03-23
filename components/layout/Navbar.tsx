@@ -33,7 +33,7 @@ export default function Navbar() {
           </li>
         </ul>
 
-        <div>
+        <div className="ml-auto">
           {isLoaded && isSignedIn ? (
             <UserButton
               appearance={{

@@ -132,17 +132,17 @@ export default function HomePage() {
       </section>
 
       {/* ── How It Works ─────────────────────────────────────────────── */}
-      <section id="how-it-works" className="bg-[var(--bg-1)] py-[100px] text-center">
+      <section id="how-it-works" className="bg-[var(--bg-1)] py-[100px]">
         {/* Centered content — max 1200px */}
-        <div className="mx-auto w-full max-w-[1200px] px-6 sm:px-[60px]">
+        <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center px-6 sm:px-[60px]">
 
-          <div className="section-tag">HOW IT WORKS</div>
-          <h2 className="section-title mx-auto max-w-[700px]">Three Simple Steps to Save</h2>
-          <p className="section-sub mx-auto" style={{ marginBottom: "72px" }}>
+          <div className="section-tag w-full text-center">HOW IT WORKS</div>
+          <h2 className="section-title mx-auto w-full max-w-[700px] text-center" style={{ fontSize: "clamp(35px,4.4vw,55px)" }}>Three Simple Steps to Save</h2>
+          <p className="section-sub mx-auto w-full text-center" style={{ marginBottom: "72px" }}>
             Finding the best ticket prices has never been easier
           </p>
 
-          <div className="mx-auto grid max-w-[1100px] grid-cols-1 gap-8 lg:grid-cols-3">
+          <div className="mx-auto grid w-full max-w-[1100px] grid-cols-1 gap-8 lg:grid-cols-3">
             {STEPS.map((step) => {
               const Icon = step.icon;
               return (
