@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
   if (classificationName) url.searchParams.set("classificationName", classificationName);
 
   try {
-    const res = await fetch(url.toString(), { next: { revalidate: 120 } });
+    const res = await fetch(url.toString(), { cache: "no-store" });
     if (!res.ok) throw new Error(`Ticketmaster API error: ${res.status}`);
     const data = await res.json();
 
@@ -110,12 +110,15 @@ export async function GET(req: NextRequest) {
       };
     });
 
-    return NextResponse.json({
-      events,
-      total:      data.page?.totalElements ?? events.length,
-      page:       data.page?.number        ?? 0,
-      totalPages: data.page?.totalPages    ?? 1,
-    });
+    return NextResponse.json(
+      {
+        events,
+        total:      data.page?.totalElements ?? events.length,
+        page:       data.page?.number        ?? 0,
+        totalPages: data.page?.totalPages    ?? 1,
+      },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   } catch (err) {
     console.error("[/api/search] error:", err);
     return NextResponse.json({ error: "Search failed" }, { status: 500 });
