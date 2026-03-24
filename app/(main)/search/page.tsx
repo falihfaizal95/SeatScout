@@ -4,35 +4,41 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Search, X } from "lucide-react";
 import EventCard from "@/components/events/EventCard";
 import EventCardSkeleton from "@/components/events/EventCardSkeleton";
-import { SPORT_EMOJIS, type Sport } from "@/types/event";
 import type { NormalizedEvent } from "@/types/event";
 
-const SPORT_TABS: Sport[] = ["NFL", "NBA", "MLB", "NHL", "MLS", "UFC", "Boxing", "Tennis"];
+const CATEGORY_TABS = [
+  { id: "",                label: "All" },
+  { id: "Sports",         label: "Sports" },
+  { id: "Music",          label: "Music" },
+  { id: "Arts & Theatre", label: "Theater" },
+  { id: "Comedy",         label: "Comedy" },
+  { id: "Miscellaneous",  label: "Other" },
+];
 
 function SearchContent() {
-  const router = useRouter();
+  const router       = useRouter();
   const searchParams = useSearchParams();
-  const initQ = searchParams.get("q") || "";
-  const initS = (searchParams.get("sport") as Sport) || "";
+  const initQ = searchParams.get("q")        ?? "";
+  const initC = searchParams.get("category") ?? "";
 
-  const [query, setQuery] = useState(initQ);
-  const [sport, setSport] = useState<Sport | "">(initS);
-  const [events, setEvents] = useState<NormalizedEvent[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [query,    setQuery]    = useState(initQ);
+  const [category, setCategory] = useState(initC);
+  const [events,   setEvents]   = useState<NormalizedEvent[]>([]);
+  const [loading,  setLoading]  = useState(false);
+  const [error,    setError]    = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
 
-  const doSearch = useCallback(async (q: string, s: string) => {
+  const doSearch = useCallback(async (q: string, cat: string) => {
     if (!q.trim()) return;
     setLoading(true);
     setError(null);
     setSearched(true);
     try {
       const p = new URLSearchParams({ q });
-      if (s) p.set("sport", s);
-      const res = await fetch(`/api/events/search?${p}`);
-      const json = await res.json();
-      setEvents(Array.isArray(json.data) ? json.data : []);
+      if (cat) p.set("classificationName", cat);
+      const res  = await fetch(`/api/search?${p}`);
+      const json = await res.json() as { events?: NormalizedEvent[]; error?: string };
+      setEvents(Array.isArray(json.events) ? json.events : []);
     } catch {
       setError("Search failed. Please try again.");
     } finally {
@@ -41,15 +47,21 @@ function SearchContent() {
   }, []);
 
   useEffect(() => {
-    if (initQ) doSearch(initQ, initS);
+    if (initQ) doSearch(initQ, initC);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const p = new URLSearchParams({ q: query });
-    if (sport) p.set("sport", sport);
+    if (category) p.set("category", category);
     router.replace(`/search?${p}`, { scroll: false });
-    doSearch(query, sport);
+    doSearch(query, category);
+  };
+
+  const selectCategory = (cat: string) => {
+    setCategory(cat);
+    if (query) doSearch(query, cat);
   };
 
   return (
@@ -64,7 +76,7 @@ function SearchContent() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search teams, games, events..."
+                placeholder="Search teams, artists, events, venues..."
                 className="flex-1 bg-transparent text-sm text-white placeholder:text-[var(--text-3)] outline-none"
               />
               {query && (
@@ -75,39 +87,25 @@ function SearchContent() {
             </div>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-xl bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white text-sm font-semibold transition-all glow-brand"
+              className="px-5 py-2.5 rounded-xl bg-[var(--brand)] hover:bg-[var(--brand-light)] text-white text-sm font-semibold transition-all"
             >
               Search
             </button>
           </form>
 
-          {/* Sport tabs */}
+          {/* Category tabs */}
           <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-            <button
-              onClick={() => { setSport(""); if (query) doSearch(query, ""); }}
-              className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-[12px] font-medium border transition-all ${
-                sport === ""
-                  ? "bg-[var(--brand)] border-[var(--brand)] text-white"
-                  : "border-white/[0.08] text-[var(--text-2)] hover:text-white hover:border-white/[0.15]"
-              }`}
-            >
-              All
-            </button>
-            {SPORT_TABS.map((s) => (
+            {CATEGORY_TABS.map((tab) => (
               <button
-                key={s}
-                onClick={() => {
-                  const next = sport === s ? "" : s;
-                  setSport(next);
-                  if (query) doSearch(query, next);
-                }}
-                className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[12px] font-medium border transition-all ${
-                  sport === s
+                key={tab.id}
+                onClick={() => selectCategory(tab.id)}
+                className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-[12px] font-medium border transition-all ${
+                  category === tab.id
                     ? "bg-[var(--brand)] border-[var(--brand)] text-white"
                     : "border-white/[0.08] text-[var(--text-2)] hover:text-white hover:border-white/[0.15]"
                 }`}
               >
-                <span>{SPORT_EMOJIS[s]}</span> {s}
+                {tab.label}
               </button>
             ))}
           </div>
@@ -135,7 +133,9 @@ function SearchContent() {
           <div className="text-center py-24">
             <span className="text-6xl mb-5 block">🔍</span>
             <h3 className="text-xl font-bold text-white mb-2">No events found</h3>
-            <p className="text-[var(--text-2)]">Try a different search term or check back later.</p>
+            <p className="text-[var(--text-2)]">
+              No events found for &ldquo;{query}&rdquo;. Try searching an artist, team, or venue.
+            </p>
           </div>
         )}
 
@@ -143,7 +143,7 @@ function SearchContent() {
           <>
             <p className="text-sm text-[var(--text-2)] mb-6">
               <span className="font-semibold text-white">{events.length}</span> events
-              {query && <span> for <span className="text-[var(--brand-light)]">&ldquo;{query}&rdquo;</span></span>}
+              {query && <> for <span className="text-[var(--brand-light)]">&ldquo;{query}&rdquo;</span></>}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {events.map((event, i) => (
@@ -156,9 +156,9 @@ function SearchContent() {
         {!searched && !loading && (
           <div className="text-center py-28">
             <span className="text-7xl mb-6 block">🏟️</span>
-            <h3 className="text-2xl font-bold text-white mb-3">Search for any game</h3>
+            <h3 className="text-2xl font-bold text-white mb-3">Search any event</h3>
             <p className="text-[var(--text-2)] max-w-md mx-auto">
-              Type a team name, sport, or event to compare prices across every platform.
+              Search for sports, concerts, theater, comedy, and more.
             </p>
           </div>
         )}

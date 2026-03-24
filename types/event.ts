@@ -46,6 +46,7 @@ export interface NormalizedEvent {
   id: string;
   name: string;
   sport: Sport | string;
+  segment?: string;   // Top-level TM classification: "Sports" | "Music" | "Arts & Theatre" | etc.
   league?: string;
   homeTeam?: string;
   awayTeam?: string;

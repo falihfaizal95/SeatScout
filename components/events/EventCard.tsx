@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { MapPin, Calendar } from "lucide-react";
 import { formatDate, formatTime, formatPrice } from "@/lib/utils";
-import { SPORT_EMOJIS } from "@/types/event";
 import type { NormalizedEvent } from "@/types/event";
 
 interface EventCardProps {
@@ -10,9 +9,34 @@ interface EventCardProps {
   index?: number;
 }
 
+function segmentBadgeClass(segment?: string): string {
+  switch (segment) {
+    case "Sports":         return "border-[rgba(124,106,247,0.35)] bg-[rgba(124,106,247,0.15)] text-[var(--brand-light)]";
+    case "Music":          return "border-[rgba(59,130,246,0.35)]  bg-[rgba(59,130,246,0.15)]  text-blue-400";
+    case "Arts & Theatre": return "border-[rgba(234,179,8,0.35)]   bg-[rgba(234,179,8,0.15)]   text-yellow-400";
+    case "Comedy":         return "border-[rgba(249,115,22,0.35)]  bg-[rgba(249,115,22,0.15)]  text-orange-400";
+    default:               return "border-white/[0.12] bg-white/[0.06] text-[var(--text-2)]";
+  }
+}
+
+function segmentEmoji(segment?: string, sport?: string): string {
+  if (segment === "Music")          return "🎵";
+  if (segment === "Arts & Theatre") return "🎭";
+  if (segment === "Comedy")         return "😂";
+  // Sports — use sport-specific emoji
+  const sportEmojis: Record<string, string> = {
+    NFL: "🏈", NBA: "🏀", MLB: "⚾", NHL: "🏒", MLS: "⚽",
+    NCAAF: "🏈", NCAAB: "🏀", UFC: "🥊", Boxing: "🥊",
+    Tennis: "🎾", Golf: "⛳",
+  };
+  return sportEmojis[sport ?? ""] ?? "🎟️";
+}
+
 export default function EventCard({ event }: EventCardProps) {
-  const emoji = SPORT_EMOJIS[event.sport as keyof typeof SPORT_EMOJIS] || "🎟️";
+  const emoji    = segmentEmoji(event.segment, event.sport as string);
   const hasTeams = event.homeTeam && event.awayTeam;
+  const badgeClass = segmentBadgeClass(event.segment);
+  const badgeLabel = event.sport || event.segment || "Event";
 
   return (
     <Link href={`/event/${event.id}`} className="group block">
@@ -32,20 +56,19 @@ export default function EventCard({ event }: EventCardProps) {
             </div>
           )}
 
-          {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-1)] via-transparent to-transparent" />
 
-          {/* Sport badge */}
+          {/* Type badge — color-coded by segment */}
           <div className="absolute top-3 left-3">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-white/[0.12] bg-black/40 backdrop-blur-sm text-[11px] font-semibold text-[var(--text-2)]">
-              {emoji} {event.sport}
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border backdrop-blur-sm text-[11px] font-semibold ${badgeClass}`}>
+              {emoji} {badgeLabel}
             </span>
           </div>
 
           {/* Price */}
           {event.lowestPrice && (
             <div className="absolute bottom-3 right-3">
-              <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-[var(--brand)]/15 border border-[var(--brand)]/30 text-[var(--brand)] text-xs font-bold">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-[var(--green-dim)] border border-[rgba(34,197,94,0.3)] text-[var(--green)] text-xs font-bold">
                 From {formatPrice(event.lowestPrice)}
               </span>
             </div>
@@ -78,9 +101,9 @@ export default function EventCard({ event }: EventCardProps) {
           </div>
 
           <div className="mt-4 pt-3 border-t border-white/[0.05] flex items-center justify-between">
-            <span className="text-[11px] text-[var(--text-3)] capitalize">{event.source}</span>
+            <span className="text-[11px] text-[var(--text-3)]">Ticketmaster</span>
             <span className="text-[11px] font-semibold text-[var(--brand-light)] group-hover:translate-x-0.5 transition-transform">
-              Compare →
+              View Deals →
             </span>
           </div>
         </div>
