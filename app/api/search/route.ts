@@ -50,9 +50,8 @@ export async function GET(req: NextRequest) {
   }
 
   const url = new URL(`${TM_BASE}/events.json`);
-  url.searchParams.set("keyword",     q);
-  url.searchParams.set("countryCode", "US");
-  url.searchParams.set("size",        "20");
+  url.searchParams.set("keyword", q);
+  url.searchParams.set("size",    "20");
   url.searchParams.set("page",        page);
   url.searchParams.set("apikey",      apiKey);
   if (classificationName) url.searchParams.set("classificationName", classificationName);

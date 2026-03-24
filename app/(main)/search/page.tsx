@@ -38,6 +38,7 @@ function SearchContent() {
       if (cat) p.set("classificationName", cat);
       const res  = await fetch(`/api/search?${p}`);
       const json = await res.json() as { events?: NormalizedEvent[]; error?: string };
+      if (!res.ok) throw new Error(json.error ?? "Search failed");
       setEvents(Array.isArray(json.events) ? json.events : []);
     } catch {
       setError("Search failed. Please try again.");
