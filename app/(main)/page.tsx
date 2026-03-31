@@ -2,6 +2,7 @@ import HeroSearch from "@/components/search/HeroSearch";
 import LocalEventDate from "@/components/ui/LocalEventDate";
 import { Search, BarChart3, Ticket, SlidersHorizontal, Calendar, MapPin, ExternalLink, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { getUpcomingPopularEvents } from "@/lib/upcomingEvents";
 
 const STEPS = [
   {
@@ -31,50 +32,9 @@ const STATS = [
   { value: "50K+", label: "Happy Users" },
 ];
 
-// Dates stored as UTC ISO strings so they display in each visitor's local timezone
-const MOCK_EVENTS = [
-  {
-    id: "tm_knicks_celtics",
-    title: "Knicks vs Celtics",
-    isoDate: "2026-03-18T23:30:00Z", // 7:30 PM ET
-    location: "Madison Square Garden, New York",
-    imageUrl: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?w=800&q=80",
-    prices: [
-      { platform: "Ticketmaster", price: 310 },
-      { platform: "StubHub",      price: 274 },
-      { platform: "SeatGeek",     price: 289 },
-      { platform: "Vivid Seats",  price: 298 },
-    ],
-  },
-  {
-    id: "tm_heat_bucks",
-    title: "Heat vs Bucks",
-    isoDate: "2026-03-19T00:00:00Z", // 8:00 PM ET
-    location: "Kaseya Center, Miami",
-    imageUrl: "https://images.unsplash.com/photo-1608245449230-4ac19066d2d0?w=800&q=80",
-    prices: [
-      { platform: "Ticketmaster", price: 198 },
-      { platform: "StubHub",      price: 172 },
-      { platform: "SeatGeek",     price: 181 },
-      { platform: "Vivid Seats",  price: 190 },
-    ],
-  },
-  {
-    id: "tm_rangers_bruins",
-    title: "Rangers vs Bruins",
-    isoDate: "2026-03-19T23:00:00Z", // 7:00 PM ET
-    location: "Madison Square Garden, New York",
-    imageUrl: "https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?w=800&q=80",
-    prices: [
-      { platform: "Ticketmaster", price: 225 },
-      { platform: "StubHub",      price: 196 },
-      { platform: "SeatGeek",     price: 204 },
-      { platform: "Vivid Seats",  price: 218 },
-    ],
-  },
-];
+export default async function HomePage() {
+  const upcomingEvents = await getUpcomingPopularEvents(3);
 
-export default function HomePage() {
   return (
     <div className="w-full">
 
@@ -190,7 +150,7 @@ export default function HomePage() {
               <div className="section-tag">UPCOMING EVENTS</div>
               <h2 className="section-title">Popular Events Near You</h2>
               <p className="section-sub" style={{ marginBottom: 0 }}>
-                {MOCK_EVENTS.length} popular events in the next 2 days · Updated 2 min ago
+                {upcomingEvents.length} popular events in the next 2 days · Live prices
               </p>
             </div>
             <button className="flex items-center gap-2 rounded-[8px] border border-[var(--card-border)] bg-[var(--card)] px-5 py-[10px] text-[14px] text-[var(--text-2)] transition-all hover:border-[rgba(255,255,255,0.15)] hover:text-[var(--text-1)]">
@@ -201,7 +161,7 @@ export default function HomePage() {
 
           {/* Grid */}
           <div className="grid gap-6 lg:grid-cols-3">
-            {MOCK_EVENTS.map((event) => {
+            {upcomingEvents.map((event) => {
               const lowestPrice = Math.min(...event.prices.map((p) => p.price));
               const highestPrice = Math.max(...event.prices.map((p) => p.price));
               const savings = highestPrice - lowestPrice;
@@ -270,12 +230,24 @@ export default function HomePage() {
                     </table>
 
                     {/* View button */}
-                    <Link
-                      href={`/event/${event.id}`}
-                      className="block w-full rounded-[10px] border border-[rgba(124,106,247,0.25)] bg-[var(--brand-dim)] py-3 text-center text-[14px] font-[600] text-[var(--brand-light)] transition-all hover:border-[var(--brand)] hover:bg-[var(--brand)] hover:text-white"
-                    >
-                      View Best Deal
-                    </Link>
+                    {event.tmUrl ? (
+                      <a
+                        href={event.tmUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex w-full items-center justify-center gap-1.5 rounded-[10px] border border-[rgba(124,106,247,0.25)] bg-[var(--brand-dim)] py-3 text-center text-[14px] font-[600] text-[var(--brand-light)] transition-all hover:border-[var(--brand)] hover:bg-[var(--brand)] hover:text-white"
+                      >
+                        View Best Deal
+                        <ExternalLink className="size-3.5" />
+                      </a>
+                    ) : (
+                      <Link
+                        href={`/event/${event.id}`}
+                        className="block w-full rounded-[10px] border border-[rgba(124,106,247,0.25)] bg-[var(--brand-dim)] py-3 text-center text-[14px] font-[600] text-[var(--brand-light)] transition-all hover:border-[var(--brand)] hover:bg-[var(--brand)] hover:text-white"
+                      >
+                        View Best Deal
+                      </Link>
+                    )}
                   </div>
                 </div>
               );
