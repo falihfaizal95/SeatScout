@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Twitter, Instagram, Facebook } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -13,6 +14,22 @@ export default function Footer() {
           <p className="mt-4 max-w-[260px] text-[14px] leading-[1.75] text-[var(--text-2)]">
             Compare ticket prices across all major platforms and never overpay for seats again.
           </p>
+          <div className="mt-5 flex gap-2">
+            {[
+              { Icon: Twitter,   label: "Twitter"   },
+              { Icon: Instagram, label: "Instagram" },
+              { Icon: Facebook,  label: "Facebook"  },
+            ].map(({ Icon, label }) => (
+              <a
+                key={label}
+                href="#"
+                aria-label={label}
+                className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-[var(--card-border)] bg-[var(--card)] text-[var(--text-3)] transition-colors hover:border-[var(--border-hover)] hover:text-[var(--text-1)]"
+              >
+                <Icon className="size-4" />
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* Product */}
