@@ -145,11 +145,11 @@ export default async function HomePage() {
         <div className="mx-auto w-full max-w-[1200px] px-6 sm:px-[60px]">
 
           {/* Header */}
-          <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+          <div className="mb-12 flex flex-col items-center text-center gap-4">
             <div>
-              <div className="section-tag">UPCOMING EVENTS</div>
-              <h2 className="section-title">Popular Events Near You</h2>
-              <p className="section-sub" style={{ marginBottom: 0 }}>
+              <div className="section-tag text-center">UPCOMING EVENTS</div>
+              <h2 className="section-title text-center">Popular Events Near You</h2>
+              <p className="section-sub text-center" style={{ marginBottom: 0 }}>
                 {upcomingEvents.length} popular events in the next 2 days · Live prices
               </p>
             </div>
