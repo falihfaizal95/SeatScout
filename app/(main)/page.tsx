@@ -1,6 +1,6 @@
 import HeroSearch from "@/components/search/HeroSearch";
 import HomepageEventCard from "@/components/events/HomepageEventCard";
-import { Search, BarChart3, Ticket, SlidersHorizontal, ArrowRight } from "lucide-react";
+import { Search, BarChart3, Ticket, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { getUpcomingPopularEvents } from "@/lib/upcomingEvents";
 
@@ -26,10 +26,10 @@ const STEPS = [
 ];
 
 const STATS = [
-  { value: "1M+",  label: "Tickets Compared" },
-  { value: "4",    label: "Platforms" },
-  { value: "$2.5M", label: "Total Saved" },
-  { value: "50K+", label: "Happy Users" },
+  { value: "1M+",   label: "Tickets Compared" },
+  { value: "4",     label: "Platforms"         },
+  { value: "$2.5M", label: "Total Saved"       },
+  { value: "50K+",  label: "Happy Users"       },
 ];
 
 export default async function HomePage() {
@@ -40,13 +40,13 @@ export default async function HomePage() {
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pb-[100px] pt-[140px] text-center">
-        {/* Animated floating purple orb */}
+
+        {/* Animated purple orb */}
         <div
           className="orb-float pointer-events-none absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{ background: "radial-gradient(circle, rgba(124,106,247,0.22) 0%, transparent 65%)", zIndex: 0 }}
         />
 
-        {/* Centered content column — max 1200px */}
         <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-center px-6 sm:px-[60px]">
 
           {/* Badge */}
@@ -66,12 +66,12 @@ export default async function HomePage() {
             Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place. Never overpay for seats again.
           </p>
 
-          {/* Search + popular tags (centered, max 560px) */}
+          {/* Search bar + popular tags */}
           <div className="fade-up-3 flex w-full flex-col items-center">
             <HeroSearch />
           </div>
 
-          {/* Stats bar — 40px below popular tags */}
+          {/* Stats bar */}
           <div className="mx-auto mt-[160px] flex w-full max-w-[900px]">
             {STATS.map((stat, i) => (
               <div
@@ -93,12 +93,13 @@ export default async function HomePage() {
 
       {/* ── How It Works ─────────────────────────────────────────────── */}
       <section id="how-it-works" className="bg-[var(--bg-1)] py-[100px]">
-        {/* Centered content — max 1200px */}
         <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center px-6 sm:px-[60px]">
 
-          <div className="section-tag w-full text-center">HOW IT WORKS</div>
-          <h2 className="section-title mx-auto w-full max-w-[700px] text-center" style={{ fontSize: "clamp(35px,4.4vw,55px)" }}>Three Simple Steps to Save</h2>
-          <p className="section-sub mx-auto w-full text-center" style={{ marginBottom: "72px" }}>
+          <div className="section-tag text-center">HOW IT WORKS</div>
+          <h2 className="section-title text-center" style={{ fontSize: "clamp(35px,4.4vw,55px)" }}>
+            Three Simple Steps to Save
+          </h2>
+          <p className="section-sub text-center">
             Finding the best ticket prices has never been easier
           </p>
 
@@ -110,13 +111,13 @@ export default async function HomePage() {
                   key={step.number}
                   className="group relative overflow-hidden rounded-[20px] border border-[var(--card-border)] bg-[var(--card)] p-[48px_36px] text-left transition-all duration-200 hover:-translate-y-1 hover:border-[rgba(124,106,247,0.3)]"
                 >
-                  {/* Ghost number watermark */}
+                  {/* Ghost number */}
                   <div className="font-syne pointer-events-none absolute bottom-5 right-6 select-none text-[72px] font-[800] leading-none text-[rgba(124,106,247,0.08)]">
                     {step.number}
                   </div>
 
-                  {/* Icon — centered */}
-                  <div className="mx-auto mb-8 flex h-14 w-14 items-center justify-center rounded-[14px] border border-[rgba(124,106,247,0.25)] bg-[var(--brand-dim)]">
+                  {/* Icon */}
+                  <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-[14px] border border-[rgba(124,106,247,0.25)] bg-[var(--brand-dim)]">
                     <Icon className="size-6 text-[var(--brand-light)]" />
                   </div>
 
@@ -139,24 +140,17 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Events ───────────────────────────────────────────────────── */}
+      {/* ── Upcoming Events ──────────────────────────────────────────── */}
       <section id="results" className="bg-[var(--bg)] py-[100px]">
-        {/* Centered content — max 1200px */}
         <div className="mx-auto w-full max-w-[1200px] px-6 sm:px-[60px]">
 
           {/* Header */}
-          <div className="mb-12 flex flex-col items-center text-center gap-4">
-            <div>
-              <div className="section-tag text-center">UPCOMING EVENTS</div>
-              <h2 className="section-title text-center">Popular Events Near You</h2>
-              <p className="section-sub text-center" style={{ marginBottom: 0 }}>
-                {upcomingEvents.length} popular events in the next 2 days · Live prices
-              </p>
-            </div>
-            <button className="flex items-center gap-2 rounded-[8px] border border-[var(--card-border)] bg-[var(--card)] px-5 py-[10px] text-[14px] text-[var(--text-2)] transition-all hover:border-[rgba(255,255,255,0.15)] hover:text-[var(--text-1)]">
-              <SlidersHorizontal className="size-4" />
-              Filters
-            </button>
+          <div className="mb-12 flex flex-col items-center text-center gap-3">
+            <div className="section-tag">UPCOMING EVENTS</div>
+            <h2 className="section-title" style={{ marginBottom: 0 }}>Popular Events Near You</h2>
+            <p className="section-sub" style={{ marginBottom: 0 }}>
+              {upcomingEvents.length} popular events in the next 2 days · Live prices
+            </p>
           </div>
 
           {/* Grid */}
@@ -179,6 +173,7 @@ export default async function HomePage() {
 
         </div>
       </section>
+
     </div>
   );
 }
