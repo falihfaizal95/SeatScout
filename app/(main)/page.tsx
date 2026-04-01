@@ -57,23 +57,23 @@ export default async function HomePage() {
           </div>
 
           {/* H1 */}
-          <h1 className="font-syne fade-up-1 mx-auto mb-7 max-w-[900px] text-[clamp(48px,7vw,88px)] font-[800] leading-[1.05] tracking-[-2px]">
+          <h1 className="font-syne fade-up-1 mx-auto mb-10 max-w-[900px] text-[clamp(48px,7vw,88px)] font-[800] leading-[1.05] tracking-[-2px]">
             Find the <em className="not-italic text-[var(--brand-light)]">Best</em><br />
             Seat Deals
           </h1>
 
           {/* Subtext */}
-          <p className="fade-up-2 mx-auto mb-[72px] max-w-[520px] text-[18px] leading-[1.7] text-[var(--text-2)]">
+          <p className="fade-up-2 mx-auto max-w-[520px] text-[18px] leading-[1.7] text-[var(--text-2)]" style={{ marginBottom: "64px" }}>
             Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place. Never overpay for seats again.
           </p>
 
           {/* Search bar + popular tags */}
-          <div className="fade-up-3 flex w-full flex-col items-center">
+          <div className="fade-up-3 flex w-full flex-col items-center" style={{ marginBottom: "24px" }}>
             <HeroSearch />
           </div>
 
           {/* Stats bar */}
-          <div className="mx-auto mt-[160px] flex w-full max-w-[900px]">
+          <div className="mx-auto flex w-full max-w-[900px]" style={{ marginTop: "80px" }}>
             {STATS.map((stat, i) => (
               <div
                 key={stat.label}
