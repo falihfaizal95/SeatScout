@@ -19,19 +19,19 @@ export default function HeroSearch() {
   return (
     <div className="mx-auto flex max-w-[680px] flex-col items-center">
       <form onSubmit={handleSubmit} className="w-full">
-        <div className="flex w-full items-center rounded-[14px] border border-[var(--card-border)] bg-[var(--card)] p-2 focus-within:border-[rgba(124,106,247,0.4)] transition-colors">
-          <Search className="ml-4 size-5 shrink-0 text-[var(--text-3)]" />
+        <div className="flex w-full items-center rounded-[16px] border border-[var(--card-border)] bg-[var(--card)] p-3 focus-within:border-[rgba(124,106,247,0.4)] transition-colors">
+          <Search className="ml-4 size-6 shrink-0 text-[var(--text-3)]" />
           <input
             type="text"
             placeholder="Search for teams, games, or events..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 bg-transparent px-4 py-3 text-[16px] text-[var(--text-1)] outline-none placeholder:text-[var(--text-3)]"
+            className="flex-1 bg-transparent px-4 py-3 text-[18px] text-[var(--text-1)] outline-none placeholder:text-[var(--text-3)]"
           />
           <button
             type="submit"
             disabled={!searchQuery.trim()}
-            className="font-syne shrink-0 rounded-[10px] bg-[var(--brand)] px-6 py-3 text-[15px] font-[700] text-white transition-all hover:bg-[var(--brand-light)] hover:shadow-[0_8px_24px_rgba(124,106,247,0.35)] disabled:cursor-not-allowed disabled:opacity-40"
+            className="font-syne shrink-0 rounded-[12px] bg-[var(--brand)] px-8 py-4 text-[16px] font-[700] text-white transition-all hover:bg-[var(--brand-light)] hover:shadow-[0_8px_24px_rgba(124,106,247,0.35)] disabled:cursor-not-allowed disabled:opacity-40"
           >
             Search Deals →
           </button>
