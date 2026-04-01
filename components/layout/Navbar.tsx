@@ -51,7 +51,7 @@ export default function Navbar() {
           ) : (
             <button
               onClick={() => router.push("/sign-in")}
-              className="font-syne rounded-[10px] bg-[var(--brand)] px-[40px] py-[16px] text-[18px] font-[800] text-white transition-all hover:bg-[var(--brand-light)] hover:-translate-y-px"
+              className="font-syne text-[15px] font-[700] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]"
             >
               Sign In / Register
             </button>
