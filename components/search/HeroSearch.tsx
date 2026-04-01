@@ -17,11 +17,11 @@ export default function HeroSearch() {
   const go = (q: string) => router.push(`/search?q=${encodeURIComponent(q)}`);
 
   return (
-    <div className="mx-auto flex max-w-[680px] flex-col items-center w-full">
+    <div className="mx-auto flex max-w-[780px] flex-col items-center w-full">
       <form onSubmit={handleSubmit} className="w-full">
         <div
           className="flex w-full items-center rounded-[18px] border border-[var(--card-border)] bg-[var(--card)] transition-colors focus-within:border-[rgba(124,106,247,0.4)]"
-          style={{ padding: "16px" }}
+          style={{ padding: "10px 10px 10px 10px" }}
         >
           <Search className="ml-4 size-6 shrink-0 text-[var(--text-3)]" />
           <input
@@ -42,7 +42,7 @@ export default function HeroSearch() {
         </div>
       </form>
 
-      <div className="mt-6 flex w-full flex-wrap items-center justify-center gap-[10px]">
+      <div className="flex w-full flex-wrap items-center justify-center gap-[10px]" style={{ marginTop: "20px" }}>
         <span className="mr-1 text-[13px] text-[var(--text-3)]">Popular:</span>
         {["Lakers", "Yankees", "Cowboys", "Warriors"].map((team) => (
           <button
