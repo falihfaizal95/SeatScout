@@ -62,7 +62,7 @@ export default async function HomePage() {
           </h1>
 
           {/* Subtext */}
-          <p className="fade-up-2 mx-auto mb-[52px] max-w-[520px] text-[18px] leading-[1.7] text-[var(--text-2)]">
+          <p className="fade-up-2 mx-auto mb-[72px] max-w-[520px] text-[18px] leading-[1.7] text-[var(--text-2)]">
             Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place. Never overpay for seats again.
           </p>
 
@@ -72,7 +72,7 @@ export default async function HomePage() {
           </div>
 
           {/* Stats bar — 40px below popular tags */}
-          <div className="mx-auto mt-[120px] flex w-full max-w-[900px]">
+          <div className="mx-auto mt-[160px] flex w-full max-w-[900px]">
             {STATS.map((stat, i) => (
               <div
                 key={stat.label}
