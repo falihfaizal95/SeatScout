@@ -1,4 +1,5 @@
 import HeroSearch from "@/components/search/HeroSearch";
+import RotatingBadge from "@/components/ui/RotatingBadge";
 import HomepageEventCard from "@/components/events/HomepageEventCard";
 import { Search, BarChart3, Ticket, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -49,10 +50,9 @@ export default async function HomePage() {
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-center px-6 sm:px-[60px]">
 
-          {/* Badge */}
-          <div className="fade-up-0 mb-9 inline-flex items-center gap-2 rounded-full border border-[rgba(124,106,247,0.3)] bg-[var(--brand-dim)] px-4 py-[7px] text-[13px] font-[500] tracking-[0.3px] text-[var(--brand-light)]">
-            <span className="text-[10px]">✦</span>
-            Compare prices across 4+ platforms instantly
+          {/* Rotating badge */}
+          <div className="fade-up-0">
+            <RotatingBadge />
           </div>
 
           {/* H1 */}
