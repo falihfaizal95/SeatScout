@@ -27,7 +27,7 @@ export default function RotatingBadge() {
   }, []);
 
   return (
-    <div className="mb-9 inline-flex items-center gap-2 rounded-full border border-[rgba(124,106,247,0.3)] bg-[var(--brand-dim)] px-4 py-[7px] text-[13px] font-[500] tracking-[0.3px] text-[var(--brand-light)]">
+    <div className="mb-9 inline-flex max-w-full items-center gap-2 rounded-full border border-[rgba(124,106,247,0.3)] bg-[var(--brand-dim)] px-4 py-[7px] text-[13px] font-[500] tracking-[0.3px] text-[var(--brand-light)]" style={{ minWidth: "340px", justifyContent: "center" }}>
       <span className="text-[10px]">✦</span>
       <span
         style={{
