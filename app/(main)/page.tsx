@@ -82,7 +82,13 @@ export default async function HomePage() {
                   ${i === STATS.length - 1 ? "rounded-r-2xl" : ""}`}
               >
                 <div className="font-syne mb-1.5 text-[36px] font-[800] leading-none text-[var(--text-1)]">
-                  {stat.label === "Total Saved" ? <RollingCounter /> : stat.value}
+                  {stat.label === "Total Saved" ? (
+                    <RollingCounter start={100_000} incrementMin={10_000} incrementMax={15_000} intervalMs={60} prefix="$" />
+                  ) : stat.label === "Happy Users" ? (
+                    <RollingCounter start={100} incrementMin={50} incrementMax={200} intervalMs={60} suffix="+" />
+                  ) : stat.label === "Tickets Compared" ? (
+                    <RollingCounter start={250_000} incrementMin={8_000} incrementMax={14_000} intervalMs={60} suffix="+" />
+                  ) : stat.value}
                 </div>
                 <div className="text-[13px] text-[var(--text-2)]">{stat.label}</div>
               </div>

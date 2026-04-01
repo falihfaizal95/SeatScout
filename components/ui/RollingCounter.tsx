@@ -1,26 +1,44 @@
 "use client";
 import { useState, useEffect } from "react";
 
-function format(n: number): string {
-  if (n >= 1_000_000) {
-    return "$" + (n / 1_000_000).toFixed(1) + "M";
-  }
-  return "$" + Math.round(n / 1_000) + "K";
+interface Props {
+  start: number;
+  incrementMin: number;
+  incrementMax: number;
+  intervalMs?: number;
+  prefix?: string;
+  suffix?: string;
+  formatValue?: (n: number) => string;
 }
 
-export default function RollingCounter() {
-  const [value, setValue] = useState(100_000);
+function defaultFormat(n: number, prefix = "", suffix = ""): string {
+  if (n >= 1_000_000) return prefix + (n / 1_000_000).toFixed(1) + "M" + suffix;
+  if (n >= 1_000)     return prefix + Math.round(n / 1_000) + "K" + suffix;
+  return prefix + n.toLocaleString() + suffix;
+}
+
+export default function RollingCounter({
+  start,
+  incrementMin,
+  incrementMax,
+  intervalMs = 60,
+  prefix = "",
+  suffix = "",
+  formatValue,
+}: Props) {
+  const [value, setValue] = useState(start);
 
   useEffect(() => {
-    const tick = () => {
-      const increment = Math.floor(Math.random() * (15_000 - 10_000 + 1)) + 10_000;
-      setValue((prev) => prev + increment);
-    };
-
-    // fast initial roll up to 2.5M — runs every 60ms
-    const interval = setInterval(tick, 60);
+    const interval = setInterval(() => {
+      const inc = Math.floor(Math.random() * (incrementMax - incrementMin + 1)) + incrementMin;
+      setValue((prev) => prev + inc);
+    }, intervalMs);
     return () => clearInterval(interval);
-  }, []);
+  }, [incrementMin, incrementMax, intervalMs]);
 
-  return <span>{format(value)}</span>;
+  return (
+    <span>
+      {formatValue ? formatValue(value) : defaultFormat(value, prefix, suffix)}
+    </span>
+  );
 }
