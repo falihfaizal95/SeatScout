@@ -1,5 +1,6 @@
 import HeroSearch from "@/components/search/HeroSearch";
 import RotatingBadge from "@/components/ui/RotatingBadge";
+import RollingCounter from "@/components/ui/RollingCounter";
 import HomepageEventCard from "@/components/events/HomepageEventCard";
 import { Search, BarChart3, Ticket, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -81,7 +82,7 @@ export default async function HomePage() {
                   ${i === STATS.length - 1 ? "rounded-r-2xl" : ""}`}
               >
                 <div className="font-syne mb-1.5 text-[36px] font-[800] leading-none text-[var(--text-1)]">
-                  {stat.value}
+                  {stat.label === "Total Saved" ? <RollingCounter /> : stat.value}
                 </div>
                 <div className="text-[13px] text-[var(--text-2)]">{stat.label}</div>
               </div>
