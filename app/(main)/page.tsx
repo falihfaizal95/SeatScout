@@ -99,7 +99,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── How It Works ─────────────────────────────────────────────── */}
-      <section id="how-it-works" className="bg-[var(--bg-1)] py-[100px]">
+      <section id="how-it-works" className="w-full overflow-x-hidden bg-[var(--bg-1)] py-[100px]">
         <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center px-6 sm:px-[60px]">
 
           <div className="section-tag text-center">HOW IT WORKS</div>
@@ -148,7 +148,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Upcoming Events ──────────────────────────────────────────── */}
-      <section id="results" className="bg-[var(--bg)] py-[100px]">
+      <section id="results" className="w-full overflow-x-hidden bg-[var(--bg)] py-[100px]">
         <div className="mx-auto w-full max-w-[1200px] px-6 sm:px-[60px]">
 
           {/* Header */}
