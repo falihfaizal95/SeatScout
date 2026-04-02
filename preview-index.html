@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SeatScout – Find the Best Seat Deals</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #0a0b14;
+    --bg-1:        #0f1120;
+    --card:        #131527;
+    --card-border: rgba(255,255,255,0.07);
+    --text-1:      #f0f0f8;
+    --text-2:      #7a7d99;
+    --text-3:      #4a4d66;
+    --brand:       #7c6af7;
+    --brand-light: #9d8fff;
+    --brand-dim:   rgba(124,106,247,0.15);
+    --green:       #22c55e;
+    --green-dim:   rgba(34,197,94,0.12);
+  }
+
+  html, body { width: 100%; overflow-x: hidden; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-1);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Navbar ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--card-border);
+    background: rgba(10,11,20,0.85);
+    backdrop-filter: blur(16px);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 60px;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text-1);
+    text-decoration: none;
+  }
+  .logo span { color: var(--brand); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-1); }
+  .nav-cta {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .nav-cta:hover { color: var(--text-2); }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 140px 60px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .orb {
+    position: absolute;
+    width: 900px; height: 900px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,106,247,0.22) 0%, transparent 65%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: floatOrb 12s ease-in-out infinite;
+  }
+  @keyframes floatOrb {
+    0%   { transform: translate(-50%,-50%) translate(-20px,-20px); }
+    50%  { transform: translate(-50%,-50%) translate(20px,20px); }
+    100% { transform: translate(-50%,-50%) translate(-20px,-20px); }
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(124,106,247,0.3);
+    background: var(--brand-dim);
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--brand-light);
+    margin-bottom: 36px;
+    letter-spacing: 0.3px;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 28px;
+    max-width: 900px;
+  }
+  h1 em { font-style: normal; color: var(--brand-light); }
+  .hero-sub {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text-2);
+    max-width: 520px;
+    margin-bottom: 72px;
+  }
+
+  /* ── Search Bar ── */
+  .search-wrap { width: 100%; max-width: 680px; margin-bottom: 24px; }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 12px;
+    transition: border-color 0.2s;
+  }
+  .search-bar:focus-within { border-color: rgba(124,106,247,0.4); }
+  .search-icon { margin-left: 16px; color: var(--text-3); font-size: 18px; flex-shrink: 0; }
+  .search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    font-size: 17px;
+    color: var(--text-1);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .search-input::placeholder { color: var(--text-3); }
+  .search-btn {
+    flex-shrink: 0;
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 32px;
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+  }
+  .search-btn:hover {
+    background: var(--brand-light);
+    box-shadow: 0 8px 24px rgba(124,106,247,0.35);
+  }
+  .popular {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .popular-label { font-size: 13px; color: var(--text-3); margin-right: 4px; }
+  .popular-tag {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .popular-tag:hover { border-color: rgba(124,106,247,0.3); background: var(--brand-dim); color: var(--brand-light); }
+
+  /* ── Stats Bar ── */
+  .stats {
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 160px;
+  }
+  .stat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 32px;
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+  }
+  .stat:first-child { border-radius: 16px 0 0 16px; }
+  .stat:last-child  { border-radius: 0 16px 16px 0; }
+  .stat + .stat     { border-left: none; }
+  .stat-value { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; line-height: 1; color: var(--text-1); margin-bottom: 6px; }
+  .stat-label { font-size: 13px; color: var(--text-2); }
+
+  /* ── How It Works ── */
+  .how { background: var(--bg-1); padding: 100px 60px; }
+  .section-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .section-tag { color: var(--brand-light); font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(32px,4vw,50px); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; line-height: 1.1; }
+  .section-sub { color: var(--text-2); font-size: 16px; max-width: 480px; line-height: 1.7; margin-bottom: 72px; }
+
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; width: 100%; max-width: 1100px; }
+  .step {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 48px 36px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .step:hover { transform: translateY(-4px); border-color: rgba(124,106,247,0.3); }
+  .step-num { position: absolute; bottom: 20px; right: 24px; font-family: 'Syne', sans-serif; font-size: 72px; font-weight: 800; color: rgba(124,106,247,0.08); line-height: 1; user-select: none; }
+  .step-icon { width: 56px; height: 56px; border-radius: 14px; border: 1px solid rgba(124,106,247,0.25); background: var(--brand-dim); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 32px; }
+  .step h3 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 16px; }
+  .step p { font-size: 14px; line-height: 1.75; color: var(--text-2); }
+
+  .savings-pill { margin-top: 60px; display: inline-flex; align-items: center; gap: 10px; background: var(--green-dim); border: 1px solid rgba(34,197,94,0.2); border-radius: 999px; padding: 12px 24px; font-size: 15px; font-weight: 600; color: var(--green); }
+
+  /* ── Events ── */
+  .events { background: var(--bg); padding: 100px 60px; }
+  .events-header { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 48px; }
+  .events-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 1200px; margin: 0 auto; }
+
+  .event-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; transition: all 0.2s; cursor: pointer; }
+  .event-card:hover { transform: translateY(-4px); border-color: rgba(124,106,247,0.3); }
+
+  .event-thumb {
+    width: 100%; height: 190px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px;
+  }
+  .thumb-basketball { background: linear-gradient(135deg,#1a1b2e 0%,#2a1c40 100%); }
+  .thumb-hockey     { background: linear-gradient(135deg,#1a1b2e 0%,#1c2a40 100%); }
+  .thumb-soccer     { background: linear-gradient(135deg,#1a1b2e 0%,#1c402a 100%); }
+
+  .save-badge { display: inline-block; margin: 14px 16px 0; padding: 4px 10px; border-radius: 6px; background: var(--green-dim); border: 1px solid rgba(34,197,94,0.2); font-size: 13px; font-weight: 700; color: var(--green); }
+  .event-body { padding: 10px 16px 16px; }
+  .event-title { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+  .event-meta { font-size: 13px; color: var(--text-2); display: flex; flex-direction: column; gap: 3px; margin-bottom: 14px; }
+  .price-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--card-border); color: var(--text-2); font-size: 14px; }
+  .price-row:last-child { border-bottom: none; }
+  .platform-name { display: flex; align-items: center; gap: 6px; }
+  .best-badge { font-size: 10px; font-weight: 700; background: var(--green-dim); color: var(--green); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; }
+  .price-val { font-weight: 600; }
+  .best-price { color: var(--green); }
+  .best-row { color: var(--text-1); }
+
+  .view-btn { display: block; width: calc(100% - 32px); margin: 4px 16px 16px; padding: 14px; background: rgba(124,106,247,0.15); border: 1px solid rgba(124,106,247,0.25); border-radius: 10px; color: var(--brand-light); font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .view-btn:hover { background: rgba(124,106,247,0.25); }
+
+  .load-more { margin-top: 40px; text-align: center; }
+  .load-more a { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 8px; border: 1px solid var(--card-border); background: var(--card); color: var(--text-2); font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+  .load-more a:hover { border-color: rgba(255,255,255,0.15); color: var(--text-1); }
+
+  /* ── Footer ── */
+  footer { border-top: 1px solid var(--card-border); padding: 40px 60px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-copy { font-size: 13px; color: var(--text-3); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: var(--text-3); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text-2); }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Seat<span>Scout</span></a>
+    <ul class="nav-links">
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#events">Compare Prices</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+    <button class="nav-cta">Sign In / Register</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="orb"></div>
+  <div class="hero-inner">
+
+    <div class="badge"><span style="font-size:10px">✦</span> Compare prices across 4+ platforms instantly</div>
+
+    <h1>Find the <em>Best</em><br>Seat Deals</h1>
+
+    <p class="hero-sub">Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place. Never overpay for seats again.</p>
+
+    <div class="search-wrap">
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="text" placeholder="Search for teams, games, or events..." />
+        <button class="search-btn">Search Deals →</button>
+      </div>
+    </div>
+
+    <div class="popular">
+      <span class="popular-label">Popular:</span>
+      <button class="popular-tag">Lakers</button>
+      <button class="popular-tag">Yankees</button>
+      <button class="popular-tag">Cowboys</button>
+      <button class="popular-tag">Warriors</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-value">1M+</div><div class="stat-label">Tickets Compared</div></div>
+      <div class="stat"><div class="stat-value">4</div><div class="stat-label">Platforms</div></div>
+      <div class="stat"><div class="stat-value">$2.5M</div><div class="stat-label">Total Saved</div></div>
+      <div class="stat"><div class="stat-value">50K+</div><div class="stat-label">Happy Users</div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how" id="how">
+  <div class="section-inner">
+    <div class="section-tag">HOW IT WORKS</div>
+    <h2 class="section-title">Three Simple Steps to Save</h2>
+    <p class="section-sub">Finding the best ticket prices has never been easier</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">🔍</div>
+        <h3>Search Your Event</h3>
+        <p>Enter the team, game, or event you want to attend. We'll instantly find all available listings across every major platform.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">📊</div>
+        <h3>Compare Prices</h3>
+        <p>View side-by-side prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in real-time — all in one place.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">🎟️</div>
+        <h3>Get Best Deal</h3>
+        <p>See the cheapest option highlighted in green. Click to purchase directly from the platform with confidence.</p>
+      </div>
+    </div>
+    <div class="savings-pill">💰 Average savings: <strong>$47 per ticket</strong></div>
+  </div>
+</section>
+
+<!-- Upcoming Events -->
+<section class="events" id="events">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="events-header">
+      <div class="section-tag">UPCOMING EVENTS</div>
+      <h2 class="section-title">Popular Events Near You</h2>
+      <p class="section-sub" style="margin-bottom:0">3 popular events in the next 2 days · Live prices</p>
+    </div>
+    <div class="events-grid">
+
+      <div class="event-card">
+        <div class="event-thumb thumb-basketball">🏀</div>
+        <span class="save-badge">Save $36</span>
+        <div class="event-body">
+          <div class="event-title">Knicks vs Celtics</div>
+          <div class="event-meta"><span>📅 March 18, 2026 · 7:30 PM</span><span>📍 Madison Square Garden, New York</span></div>
+          <div class="price-row"><span>Ticketmaster</span><span class="price-val">$310</span></div>
+          <div class="price-row best-row"><span class="platform-name">StubHub <span class="best-badge">BEST</span></span><span class="price-val best-price">$274</span></div>
+          <div class="price-row"><span>SeatGeek</span><span class="price-val">$289</span></div>
+          <div class="price-row"><span>Vivid Seats</span><span class="price-val">$298</span></div>
+        </div>
+        <button class="view-btn">View Best Deal</button>
+      </div>
+
+      <div class="event-card">
+        <div class="event-thumb thumb-hockey">🏒</div>
+        <span class="save-badge">Save $26</span>
+        <div class="event-body">
+          <div class="event-title">Heat vs Bucks</div>
+          <div class="event-meta"><span>📅 March 18, 2026 · 8:00 PM</span><span>📍 Kaseya Center, Miami</span></div>
+          <div class="price-row"><span>Ticketmaster</span><span class="price-val">$198</span></div>
+          <div class="price-row best-row"><span class="platform-name">StubHub <span class="best-badge">BEST</span></span><span class="price-val best-price">$172</span></div>
+          <div class="price-row"><span>SeatGeek</span><span class="price-val">$181</span></div>
+          <div class="price-row"><span>Vivid Seats</span><span class="price-val">$190</span></div>
+        </div>
+        <button class="view-btn">View Best Deal</button>
+      </div>
+
+      <div class="event-card">
+        <div class="event-thumb thumb-soccer">⚽</div>
+        <span class="save-badge">Save $29</span>
+        <div class="event-body">
+          <div class="event-title">Rangers vs Bruins</div>
+          <div class="event-meta"><span>📅 March 19, 2026 · 7:00 PM</span><span>📍 Madison Square Garden, New York</span></div>
+          <div class="price-row"><span>Ticketmaster</span><span class="price-val">$225</span></div>
+          <div class="price-row best-row"><span class="platform-name">StubHub <span class="best-badge">BEST</span></span><span class="price-val best-price">$196</span></div>
+          <div class="price-row"><span>SeatGeek</span><span class="price-val">$204</span></div>
+          <div class="price-row"><span>Vivid Seats</span><span class="price-val">$218</span></div>
+        </div>
+        <button class="view-btn">View Best Deal</button>
+      </div>
+
+    </div>
+    <div class="load-more"><a href="#">Load More Events →</a></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 SeatScout. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a><a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

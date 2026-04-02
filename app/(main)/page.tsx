@@ -1,6 +1,7 @@
 import HeroSearch from "@/components/search/HeroSearch";
 import RotatingBadge from "@/components/ui/RotatingBadge";
 import RollingCounter from "@/components/ui/RollingCounter";
+import RollingSavings from "@/components/ui/RollingSavings";
 import HomepageEventCard from "@/components/events/HomepageEventCard";
 import { Search, BarChart3, Ticket, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -140,8 +141,8 @@ export default async function HomePage() {
           </div>
 
           {/* Savings pill */}
-          <div className="mt-[60px] inline-flex items-center gap-[10px] rounded-full border border-[rgba(34,197,94,0.2)] bg-[var(--green-dim)] px-6 py-3 text-[15px] font-[600] text-[var(--green)]">
-            💰 Average savings: <strong>$47 per ticket</strong>
+          <div style={{ marginTop: "80px", marginBottom: "80px" }} className="inline-flex items-center gap-[10px] rounded-full border border-[rgba(34,197,94,0.2)] bg-[var(--green-dim)] px-6 py-3 text-[15px] font-[600] text-[var(--green)]">
+            💰 Average savings: <strong><RollingSavings /> per ticket</strong>
           </div>
 
         </div>
