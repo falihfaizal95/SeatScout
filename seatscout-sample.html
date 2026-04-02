@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SeatScout – Find the Cheapest Sports Tickets</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0b14;
+    --bg2: #0f1120;
+    --bg3: #141629;
+    --card: #131527;
+    --card-border: rgba(255,255,255,0.07);
+    --purple: #7c6af7;
+    --purple-light: #9d8fff;
+    --purple-dim: rgba(124,106,247,0.15);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.12);
+    --text: #f0f0f8;
+    --text-muted: #7a7d99;
+    --text-dim: #4a4d66;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(10,11,20,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 22px;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--purple); }
+
+  nav ul { display: flex; gap: 36px; list-style: none; }
+  nav ul a {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--purple); color: #fff;
+    padding: 10px 22px; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--purple-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 140px 60px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(124,106,247,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--purple-dim);
+    border: 1px solid rgba(124,106,247,0.3);
+    color: var(--purple-light);
+    padding: 7px 16px; border-radius: 100px;
+    font-size: 13px; font-weight: 500;
+    margin-bottom: 36px;
+    letter-spacing: 0.3px;
+  }
+  .hero-badge::before { content: '✦'; font-size: 10px; }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 28px;
+    max-width: 900px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--purple-light);
+  }
+
+  .hero p {
+    color: var(--text-muted);
+    font-size: 18px;
+    max-width: 520px;
+    margin: 0 auto 52px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex; align-items: center; gap: 16px;
+    flex-wrap: wrap; justify-content: center;
+    margin-bottom: 72px;
+  }
+
+  .btn-primary {
+    background: var(--purple);
+    color: #fff; font-weight: 600; font-size: 15px;
+    padding: 14px 32px; border-radius: 10px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--purple-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,106,247,0.35); }
+
+  .btn-ghost {
+    color: var(--text-muted); font-weight: 500; font-size: 15px;
+    padding: 14px 24px; border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid var(--card-border);
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+  .hero-tags {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center;
+  }
+  .hero-tags span { color: var(--text-dim); font-size: 13px; margin-right: 4px; }
+  .tag {
+    background: var(--card); border: 1px solid var(--card-border);
+    color: var(--text-muted); padding: 6px 14px; border-radius: 100px;
+    font-size: 13px; cursor: pointer; transition: all 0.2s;
+  }
+  .tag:hover { background: var(--purple-dim); border-color: rgba(124,106,247,0.3); color: var(--purple-light); }
+
+  /* ── STATS ── */
+  .stats {
+    display: flex; justify-content: center; gap: 0;
+    padding: 0 60px 100px;
+    max-width: 900px; margin: 0 auto;
+  }
+
+  .stat {
+    flex: 1; text-align: center;
+    padding: 40px 32px;
+    border: 1px solid var(--card-border);
+    background: var(--card);
+    position: relative;
+  }
+  .stat:first-child { border-radius: 16px 0 0 16px; }
+  .stat:last-child { border-radius: 0 16px 16px 0; }
+  .stat + .stat { border-left: none; }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .stat-num span { color: var(--purple-light); }
+  .stat-label { color: var(--text-muted); font-size: 13px; }
+
+  /* ── SECTION WRAPPER ── */
+  section { padding: 100px 60px; }
+
+  .section-tag {
+    display: inline-block;
+    color: var(--purple-light);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 4vw, 50px);
+    font-weight: 800; letter-spacing: -1px;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .section-sub {
+    color: var(--text-muted); font-size: 16px;
+    max-width: 480px; line-height: 1.7;
+    margin-bottom: 72px;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .hiw { background: var(--bg2); text-align: center; }
+  .hiw .section-sub { margin-left: auto; margin-right: auto; }
+
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 32px; max-width: 1100px; margin: 0 auto;
+  }
+
+  .step {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 48px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .step:hover { transform: translateY(-4px); border-color: rgba(124,106,247,0.3); }
+
+  .step-num {
+    position: absolute; bottom: 20px; right: 24px;
+    font-family: 'Syne', sans-serif;
+    font-size: 72px; font-weight: 800;
+    color: rgba(124,106,247,0.08);
+    line-height: 1; pointer-events: none;
+    user-select: none;
+  }
+
+  .step-icon {
+    width: 56px; height: 56px;
+    background: var(--purple-dim);
+    border: 1px solid rgba(124,106,247,0.25);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 32px;
+  }
+
+  .step h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.3px;
+  }
+
+  .step p {
+    color: var(--text-muted); font-size: 14px; line-height: 1.75;
+  }
+
+  .savings-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--green-dim);
+    border: 1px solid rgba(34,197,94,0.2);
+    color: var(--green);
+    padding: 12px 24px; border-radius: 100px;
+    font-size: 15px; font-weight: 600;
+    margin-top: 60px;
+  }
+
+  /* ── EVENTS ── */
+  .events { background: var(--bg); }
+  .events-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 48px; flex-wrap: wrap; gap: 24px;
+  }
+  .events-header .section-sub { margin-bottom: 0; }
+
+  .filters-btn {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--card); border: 1px solid var(--card-border);
+    color: var(--text-muted); padding: 10px 20px; border-radius: 8px;
+    font-size: 14px; cursor: pointer; transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .filters-btn:hover { border-color: rgba(255,255,255,0.15); color: var(--text); }
+
+  .events-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; max-width: 1200px;
+  }
+
+  .event-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 20px; overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .event-card:hover { transform: translateY(-4px); border-color: rgba(124,106,247,0.25); }
+
+  .event-img {
+    width: 100%; height: 180px; object-fit: cover;
+    display: block;
+    filter: brightness(0.85);
+  }
+
+  .event-body { padding: 28px; }
+
+  .save-badge {
+    display: inline-block;
+    background: var(--green-dim);
+    border: 1px solid rgba(34,197,94,0.2);
+    color: var(--green);
+    font-size: 12px; font-weight: 600;
+    padding: 4px 12px; border-radius: 100px;
+    margin-bottom: 16px;
+  }
+
+  .event-body h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 8px; letter-spacing: -0.3px;
+  }
+
+  .event-meta {
+    color: var(--text-muted); font-size: 13px;
+    margin-bottom: 24px; line-height: 1.7;
+  }
+
+  .price-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .price-table tr { border-bottom: 1px solid var(--card-border); }
+  .price-table tr:last-child { border-bottom: none; }
+  .price-table td { padding: 10px 0; font-size: 13px; }
+  .price-table td:last-child { text-align: right; font-weight: 500; }
+  .price-table .best td { color: var(--green); }
+  .best-label {
+    display: inline-block;
+    background: var(--green-dim);
+    color: var(--green);
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+    margin-left: 6px; letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .view-btn {
+    display: block; width: 100%; text-align: center;
+    background: var(--purple-dim); border: 1px solid rgba(124,106,247,0.25);
+    color: var(--purple-light); padding: 12px;
+    border-radius: 10px; font-weight: 600; font-size: 14px;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .view-btn:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--card-border);
+    padding: 72px 60px 40px;
+  }
+
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px; margin-bottom: 60px;
+  }
+
+  .footer-brand p {
+    color: var(--text-muted); font-size: 14px; line-height: 1.75;
+    margin-top: 16px; max-width: 260px;
+  }
+
+  footer h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 20px;
+  }
+
+  footer ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  footer ul a { color: var(--text-muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  footer ul a:hover { color: var(--text); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--card-border);
+    padding-top: 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+
+  .footer-bottom p { color: var(--text-dim); font-size: 13px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge { animation: fadeUp 0.5s ease both; }
+  .hero h1 { animation: fadeUp 0.5s 0.1s ease both; }
+  .hero p { animation: fadeUp 0.5s 0.2s ease both; }
+  .hero-actions { animation: fadeUp 0.5s 0.3s ease both; }
+  .hero-tags { animation: fadeUp 0.5s 0.4s ease both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    section { padding: 72px 24px; }
+    .hero { padding: 120px 24px 72px; }
+    .stats { padding: 0 24px 72px; flex-direction: column; gap: 0; }
+    .stat:first-child { border-radius: 16px 16px 0 0; }
+    .stat:last-child { border-radius: 0 0 16px 16px; }
+    .stat + .stat { border-left: 1px solid var(--card-border); border-top: none; }
+    .steps { grid-template-columns: 1fr; }
+    .events-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Seat<span>Scout</span></div>
+  <ul>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#events">Compare Prices</a></li>
+    <li><a href="#events">FAQ</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Sign In</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Compare prices across 4+ platforms instantly</div>
+  <h1>Find the <em>Best</em><br>Seat Deals</h1>
+  <p>Compare ticket prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in one place. Never overpay for seats again.</p>
+  <div class="hero-actions">
+    <a href="#events" class="btn-primary">Search Deals →</a>
+    <a href="#how-it-works" class="btn-ghost">How it works</a>
+  </div>
+  <div class="hero-tags">
+    <span>Popular:</span>
+    <div class="tag">Lakers</div>
+    <div class="tag">Yankees</div>
+    <div class="tag">Cowboys</div>
+    <div class="tag">Warriors</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">1<span>M+</span></div>
+    <div class="stat-label">Tickets Compared</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Platforms</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">$2.5<span>M</span></div>
+    <div class="stat-label">Total Saved</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">50<span>K+</span></div>
+    <div class="stat-label">Happy Users</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="hiw" id="how-it-works">
+  <div class="section-tag">HOW IT WORKS</div>
+  <h2 class="section-title">Three Simple Steps to Save</h2>
+  <p class="section-sub">Finding the best ticket prices has never been easier</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-icon">🔍</div>
+      <h3>Search Your Event</h3>
+      <p>Enter the team, game, or event you want to attend. We'll instantly find all available listings across every major platform.</p>
+      <div class="step-num">01</div>
+    </div>
+    <div class="step">
+      <div class="step-icon">📊</div>
+      <h3>Compare Prices</h3>
+      <p>View side-by-side prices from Ticketmaster, StubHub, SeatGeek, and Vivid Seats in real-time — all in one place.</p>
+      <div class="step-num">02</div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🎟️</div>
+      <h3>Get Best Deal</h3>
+      <p>See the cheapest option highlighted in green. Click to purchase directly from the platform with confidence.</p>
+      <div class="step-num">03</div>
+    </div>
+  </div>
+
+  <div class="savings-pill">💰 Average savings: <strong>$47 per ticket</strong></div>
+</section>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="events-header">
+    <div>
+      <div class="section-tag">UPCOMING EVENTS</div>
+      <h2 class="section-title">Popular Events Near You</h2>
+      <p class="section-sub">3 popular events in the next 2 days · Updated 2 min ago</p>
+    </div>
+    <button class="filters-btn">⚙ Filters</button>
+  </div>
+
+  <div class="events-grid">
+
+    <div class="event-card">
+      <img class="event-img" src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?w=800&q=80" alt="Knicks vs Celtics">
+      <div class="event-body">
+        <div class="save-badge">Save $36</div>
+        <h3>Knicks vs Celtics</h3>
+        <div class="event-meta">March 18, 2026 · 7:30 PM<br>Madison Square Garden, New York</div>
+        <table class="price-table">
+          <tr><td>Ticketmaster</td><td>$310</td></tr>
+          <tr class="best"><td>StubHub <span class="best-label">Best</span></td><td>$274</td></tr>
+          <tr><td>SeatGeek</td><td>$289</td></tr>
+          <tr><td>Vivid Seats</td><td>$298</td></tr>
+        </table>
+        <a href="#" class="view-btn">View Best Deal</a>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <img class="event-img" src="https://images.unsplash.com/photo-1608245449230-4ac19066d2d0?w=800&q=80" alt="Heat vs Bucks">
+      <div class="event-body">
+        <div class="save-badge">Save $26</div>
+        <h3>Heat vs Bucks</h3>
+        <div class="event-meta">March 18, 2026 · 8:00 PM<br>Kaseya Center, Miami</div>
+        <table class="price-table">
+          <tr><td>Ticketmaster</td><td>$198</td></tr>
+          <tr class="best"><td>StubHub <span class="best-label">Best</span></td><td>$172</td></tr>
+          <tr><td>SeatGeek</td><td>$181</td></tr>
+          <tr><td>Vivid Seats</td><td>$190</td></tr>
+        </table>
+        <a href="#" class="view-btn">View Best Deal</a>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <img class="event-img" src="https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?w=800&q=80" alt="Rangers vs Bruins">
+      <div class="event-body">
+        <div class="save-badge">Save $29</div>
+        <h3>Rangers vs Bruins</h3>
+        <div class="event-meta">March 19, 2026 · 7:00 PM<br>Madison Square Garden, New York</div>
+        <table class="price-table">
+          <tr><td>Ticketmaster</td><td>$225</td></tr>
+          <tr class="best"><td>StubHub <span class="best-label">Best</span></td><td>$196</td></tr>
+          <tr><td>SeatGeek</td><td>$204</td></tr>
+          <tr><td>Vivid Seats</td><td>$218</td></tr>
+        </table>
+        <a href="#" class="view-btn">View Best Deal</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">Seat<span>Scout</span></div>
+      <p>Compare ticket prices across all major platforms and never overpay for seats again.</p>
+    </div>
+    <div>
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#">How It Works</a></li>
+        <li><a href="#">Compare Prices</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Sports</h4>
+      <ul>
+        <li><a href="#">NBA</a></li>
+        <li><a href="#">NFL</a></li>
+        <li><a href="#">MLB</a></li>
+        <li><a href="#">NHL</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 SeatScout. All rights reserved.</p>
+    <p>Prices are updated in real-time from official ticket platforms</p>
+  </div>
+</footer>
+
+</body>
+</html>
