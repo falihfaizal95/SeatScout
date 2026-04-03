@@ -1,35 +1,18 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-
-function randomTarget() {
-  return Math.floor(Math.random() * (200 - 30 + 1)) + 30;
-}
+import { useState, useEffect } from "react";
 
 export default function RollingSavings() {
   const [display, setDisplay] = useState(47);
-  const target = useRef(randomTarget());
-  const current = useRef(47);
 
   useEffect(() => {
-    const tick = setInterval(() => {
-      const cur = current.current;
-      const tgt = target.current;
-
-      if (cur === tgt) {
-        // Reached target — pause then pick a new one
-        setTimeout(() => {
-          target.current = randomTarget();
-        }, 800);
-        return;
-      }
-
-      // Step toward target by 1
-      const next = cur < tgt ? cur + 1 : cur - 1;
-      current.current = next;
-      setDisplay(next);
-    }, 30); // ~33 steps/sec — fast enough to look like rolling digits
-
-    return () => clearInterval(tick);
+    const interval = setInterval(() => {
+      setDisplay((prev) => {
+        const bump = Math.floor(Math.random() * 3) + 1; // +1, +2, or +3
+        const next = prev + bump;
+        return next > 200 ? 30 : next; // reset to $30 after hitting $200
+      });
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (

@@ -42,7 +42,7 @@ export default async function HomePage() {
     <div className="w-full">
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pb-[100px] pt-[140px] text-center">
+      <section className="relative flex flex-col items-center justify-center overflow-hidden text-center" style={{ minHeight: "160vh", paddingTop: "140px", paddingBottom: "200px" }}>
 
         {/* Animated purple orb */}
         <div
@@ -84,11 +84,11 @@ export default async function HomePage() {
               >
                 <div className="font-syne mb-1.5 text-[36px] font-[800] leading-none text-[var(--text-1)]">
                   {stat.label === "Total Saved" ? (
-                    <RollingCounter start={100_000} incrementMin={10_000} incrementMax={15_000} intervalMs={60} prefix="$" />
+                    <RollingCounter start={100_000} incrementMin={500} incrementMax={2_000} intervalMs={5000} prefix="$" />
                   ) : stat.label === "Happy Users" ? (
-                    <RollingCounter start={100} incrementMin={50} incrementMax={200} intervalMs={60} suffix="+" />
+                    <RollingCounter start={100} incrementMin={1} incrementMax={5} intervalMs={5000} suffix="+" />
                   ) : stat.label === "Tickets Compared" ? (
-                    <RollingCounter start={250_000} incrementMin={8_000} incrementMax={14_000} intervalMs={60} suffix="+" />
+                    <RollingCounter start={250_000} incrementMin={500} incrementMax={2_000} intervalMs={5000} suffix="+" />
                   ) : stat.value}
                 </div>
                 <div className="text-[13px] text-[var(--text-2)]">{stat.label}</div>

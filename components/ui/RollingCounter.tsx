@@ -21,7 +21,7 @@ export default function RollingCounter({
   start,
   incrementMin,
   incrementMax,
-  intervalMs = 60,
+  intervalMs = 5000,
   prefix = "",
   suffix = "",
   formatValue,
