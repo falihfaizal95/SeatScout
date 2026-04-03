@@ -141,8 +141,9 @@ export default async function HomePage() {
           </div>
 
           {/* Savings pill */}
-          <div style={{ marginTop: "80px", marginBottom: "80px" }} className="inline-flex items-center gap-[10px] rounded-full border border-[rgba(34,197,94,0.2)] bg-[var(--green-dim)] px-6 py-3 text-[15px] font-[600] text-[var(--green)]">
-            💰 Average savings: <strong><RollingSavings /> per ticket</strong>
+          <div style={{ marginTop: "80px", marginBottom: "80px" }} className="inline-flex items-center gap-[10px] rounded-full border border-[rgba(34,197,94,0.2)] bg-[var(--green-dim)] px-6 py-3 text-[var(--green)]">
+            <span className="text-[15px] font-[600]">💰 Average savings:</span>
+            <span className="font-syne text-[28px] font-[800] leading-none"><RollingSavings /> per ticket</span>
           </div>
 
         </div>
