@@ -3,8 +3,8 @@ import RotatingBadge from "@/components/ui/RotatingBadge";
 import RollingCounter from "@/components/ui/RollingCounter";
 import RollingSavings from "@/components/ui/RollingSavings";
 import HomepageEventCard from "@/components/events/HomepageEventCard";
-import { Search, BarChart3, Ticket, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Search, BarChart3, Ticket } from "lucide-react";
+import RefreshEventsButton from "@/components/ui/RefreshEventsButton";
 import { getUpcomingPopularEvents } from "@/lib/upcomingEvents";
 
 const STEPS = [
@@ -53,7 +53,7 @@ export default async function HomePage() {
         <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-center px-6 sm:px-[60px]">
 
           {/* Rotating badge */}
-          <div className="fade-up-0">
+          <div className="fade-up-0" style={{ marginBottom: "48px" }}>
             <RotatingBadge />
           </div>
 
@@ -150,7 +150,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Upcoming Events ──────────────────────────────────────────── */}
-      <section id="results" className="w-full overflow-x-hidden bg-[var(--bg)] py-[100px]">
+      <section id="results" className="w-full overflow-x-hidden bg-[var(--bg)] py-[140px]">
         <div className="mx-auto w-full max-w-[1200px] px-6 sm:px-[60px]">
 
           {/* Header */}
@@ -170,14 +170,8 @@ export default async function HomePage() {
           </div>
 
           {/* Load more */}
-          <div className="mt-10 text-center">
-            <Link
-              href="/search"
-              className="inline-flex h-12 items-center gap-2 rounded-[8px] border border-[var(--card-border)] bg-[var(--card)] px-6 text-[14px] font-[600] text-[var(--text-2)] transition-all hover:border-[rgba(255,255,255,0.15)] hover:text-[var(--text-1)]"
-            >
-              Load More Events
-              <ArrowRight size={16} />
-            </Link>
+          <div style={{ marginTop: "60px", marginBottom: "40px" }} className="text-center">
+            <RefreshEventsButton />
           </div>
 
         </div>
