@@ -62,7 +62,7 @@ export default function PrivacyPage() {
         <div aria-hidden style={{ position: "absolute", top: "80px", left: "50%", transform: "translateX(-50%)", width: "700px", height: "400px", background: "radial-gradient(ellipse at center, rgba(124,108,255,0.16) 0%, transparent 70%)", pointerEvents: "none" }} />
 
         <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(124,108,255,0.12)", border: "1px solid rgba(124,108,255,0.25)", borderRadius: "30px", padding: "6px 18px", marginBottom: "28px", fontSize: "0.8rem", fontWeight: 700, color: "#a99fff", letterSpacing: "0.06em", textTransform: "uppercase", fontFamily: "var(--font-syne), 'Syne', sans-serif", position: "relative", zIndex: 1 }}>
-          Last Updated: April 2025
+          Last Updated: April 2026
         </div>
 
         <h1 style={{ fontFamily: "var(--font-syne), 'Syne', sans-serif", fontWeight: 900, fontSize: "clamp(44px, 8vw, 100px)", lineHeight: 0.95, letterSpacing: "-0.03em", color: "#ffffff", textTransform: "uppercase", position: "relative", zIndex: 1 }}>
