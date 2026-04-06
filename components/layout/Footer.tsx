@@ -40,10 +40,10 @@ export default function Footer() {
         <div>
           <h4 className="font-syne mb-5 text-[13px] font-[700] uppercase tracking-[0.5px] text-[var(--text-3)]">Company</h4>
           <ul className="flex flex-col gap-3">
-            <li><a href="#" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">About Us</a></li>
-            <li><a href="#" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">Contact</a></li>
-            <li><a href="#" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">Privacy Policy</a></li>
-            <li><a href="#" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">Terms of Service</a></li>
+            <li><Link href="/about" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">About Us</Link></li>
+            <li><Link href="/contact" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">Contact</Link></li>
+            <li><Link href="/privacy" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">Privacy Policy</Link></li>
+            <li><Link href="/terms" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">Terms of Service</Link></li>
           </ul>
         </div>
       </div>
