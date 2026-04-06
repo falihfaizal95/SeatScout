@@ -5,119 +5,303 @@ import { ChevronDown } from "lucide-react";
 const FAQS = [
   {
     q: "What is SeatScout?",
-    a: "SeatScout is a ticket price comparison platform that searches across Ticketmaster, StubHub, SeatGeek, Vivid Seats, and more — all at once. Instead of checking each site individually, you get every available listing side by side so you can find the best deal in seconds.",
+    a: "SeatScout is a ticket price comparison platform that aggregates listings from multiple resale marketplaces — including StubHub, SeatGeek, Ticketmaster, and more — so you can instantly find the best deal for any event without bouncing between tabs.",
   },
   {
     q: "Is SeatScout free to use?",
-    a: "Yes, completely free. We never charge you to compare prices. You only pay the ticket price (plus any fees) directly to the platform you choose to buy from. We don't add any markups or hidden charges.",
+    a: "Yes — SeatScout is completely free. You never pay us anything. We make money through referral partnerships with ticket platforms, not by charging you.",
   },
   {
     q: "How does SeatScout find prices so fast?",
-    a: "We connect in real-time to the major ticket marketplaces and pull live listings the moment you search. Prices on SeatScout reflect what's actually available right now — not cached data from hours ago.",
+    a: "We query multiple ticket marketplace APIs simultaneously and return results in real time. Our caching layer ensures popular events load instantly while keeping prices up to date.",
   },
   {
     q: "Which platforms does SeatScout compare?",
-    a: "Currently we compare Ticketmaster, StubHub, SeatGeek, and Vivid Seats. We're actively adding more platforms — the goal is to have every major resale and primary market covered in one place.",
+    a: "Currently we compare StubHub, SeatGeek, Ticketmaster Resale, Vivid Seats, and Gametime. We're actively adding more partners — check back often.",
   },
   {
     q: "What sports and events are covered?",
-    a: "We cover NBA, NFL, MLB, NHL, MLS, and major concert and entertainment events. If it's on the big ticket platforms, SeatScout can find it. Search by team, artist, or venue to see what's available.",
+    a: "NFL, NBA, MLB, NHL, MLS, college sports, concerts, comedy shows, theater, and more. If it's on a major resale platform, SeatScout can find it.",
   },
   {
     q: "Do I buy the ticket through SeatScout?",
-    a: "No — SeatScout shows you the best price and then sends you directly to the platform that has it. You complete the purchase on their site, so you're protected by their buyer guarantees and refund policies.",
+    a: "No — SeatScout is a comparison engine. When you click a listing, you're taken directly to the partner platform to complete your purchase. Your payment info stays between you and them.",
   },
   {
     q: "Are the prices shown all-in, including fees?",
-    a: "We display the base listed price from each platform. Final checkout prices may include service fees and delivery charges, which vary by platform. We always recommend clicking through to confirm the total before buying.",
+    a: "We display all-in pricing wherever the platform supports it. Some platforms don't expose full fee breakdowns via API, so we'll always flag when a displayed price may not include service fees.",
   },
   {
     q: "How much can I actually save using SeatScout?",
-    a: "On average, SeatScout users save around $47 per ticket compared to buying from the first platform they check. For popular events with high demand, the price difference between platforms can be $80 or more for the same seat.",
+    a: "On average, users find savings of 15–30% versus buying from the first platform they check. For high-demand events the gap between platforms can be much larger.",
   },
   {
     q: "Do I need an account to use SeatScout?",
-    a: "You can search and compare prices without an account. Creating a free account lets you save your favorite teams, get price drop alerts, and track events you're watching.",
+    a: "Not at all. You can search and compare prices instantly without signing up. Creating an account unlocks price alerts and saved searches.",
   },
   {
     q: "Are the tickets on SeatScout guaranteed to be legitimate?",
-    a: "SeatScout only surfaces listings from established, reputable ticket platforms that have their own buyer protection and guarantee programs. We don't list tickets from unverified third parties.",
+    a: "We only surface listings from established, buyer-guaranteed marketplaces. Each partner platform carries their own guarantee — SeatScout links you to the platform's own guarantee page so you know exactly what you're covered for before you buy.",
   },
 ];
 
-function FAQItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
-
+function FAQItem({
+  q,
+  a,
+  isOpen,
+  onToggle,
+}: {
+  q: string;
+  a: string;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
   return (
     <div
-      className="border-b border-[var(--card-border)] last:border-0"
+      onClick={onToggle}
+      style={{
+        background: isOpen ? "#1a1830" : "#13121f",
+        border: `1px solid ${isOpen ? "rgba(124,108,255,0.35)" : "rgba(255,255,255,0.08)"}`,
+        borderRadius: "12px",
+        marginBottom: "6px",
+        overflow: "hidden",
+        cursor: "pointer",
+        transition: "border-color 0.2s, background 0.2s",
+      }}
     >
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between gap-6 py-6 text-left"
-      >
-        <span className="font-syne text-[17px] font-[700] leading-snug text-[var(--text-1)]">
-          {q}
-        </span>
-        <ChevronDown
-          size={20}
-          className="shrink-0 text-[var(--brand-light)] transition-transform duration-300"
-          style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
-        />
-      </button>
       <div
         style={{
-          maxHeight: open ? "400px" : "0px",
-          overflow: "hidden",
-          transition: "max-height 0.35s ease",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "16px",
+          padding: "22px 28px",
+          color: isOpen ? "#a99fff" : "#ffffff",
+          fontFamily: "var(--font-barlow), 'Barlow', sans-serif",
+          fontSize: "1.05rem",
+          fontWeight: 600,
+          letterSpacing: "0.01em",
+          transition: "color 0.2s",
         }}
       >
-        <p className="pb-6 text-[15px] leading-[1.8] text-[var(--text-2)]">{a}</p>
+        <span>{q}</span>
+        <ChevronDown
+          size={20}
+          style={{
+            flexShrink: 0,
+            color: "#7c6cff",
+            transition: "transform 0.3s cubic-bezier(0.4,0,0.2,1)",
+            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+          }}
+        />
+      </div>
+      <div
+        style={{
+          maxHeight: isOpen ? "300px" : "0px",
+          overflow: "hidden",
+          transition: "max-height 0.35s cubic-bezier(0.4,0,0.2,1)",
+        }}
+      >
+        <p
+          style={{
+            padding: "0 28px 22px",
+            color: "#8b89a8",
+            fontSize: "0.97rem",
+            lineHeight: 1.7,
+            fontFamily: "var(--font-barlow), 'Barlow', sans-serif",
+          }}
+        >
+          {a}
+        </p>
       </div>
     </div>
   );
 }
 
 export default function FAQPage() {
-  return (
-    <div className="min-h-screen bg-[var(--bg)]">
+  const [openIndex, setOpenIndex] = useState<number>(0);
 
-      {/* Hero */}
-      <section className="flex flex-col items-center justify-center px-6 pb-[80px] pt-[160px] text-center sm:px-[60px]">
-        <div className="section-tag">FAQ</div>
-        <h1 className="font-syne mx-auto mb-5 max-w-[700px] text-[clamp(40px,5vw,64px)] font-[800] leading-[1.05] tracking-[-2px] text-[var(--text-1)]">
-          Frequently Asked Questions
+  return (
+    <div style={{ background: "#0e0d18", minHeight: "100vh" }}>
+
+      {/* ── Header ── */}
+      <div
+        style={{
+          padding: "160px 48px 80px",
+          textAlign: "center",
+          position: "relative",
+          animation: "fadeUp 0.6s ease both",
+        }}
+      >
+        {/* Radial glow */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: "80px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "700px",
+            height: "400px",
+            background:
+              "radial-gradient(ellipse at center, rgba(124,108,255,0.18) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }}
+        />
+
+        <h1
+          style={{
+            fontFamily: "var(--font-barlow-condensed), 'Barlow Condensed', sans-serif",
+            fontWeight: 900,
+            fontSize: "clamp(72px, 12vw, 140px)",
+            lineHeight: 0.92,
+            letterSpacing: "-0.02em",
+            color: "#ffffff",
+            textTransform: "uppercase",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          Frequently
+          <br />
+          Asked
+          <br />
+          Questions
         </h1>
-        <p className="mx-auto max-w-[520px] text-[16px] leading-[1.75] text-[var(--text-2)]">
+
+        <p
+          style={{
+            marginTop: "24px",
+            color: "#8b89a8",
+            fontSize: "1.05rem",
+            fontWeight: 400,
+            maxWidth: "520px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            lineHeight: 1.6,
+            position: "relative",
+            zIndex: 1,
+            fontFamily: "var(--font-barlow), 'Barlow', sans-serif",
+          }}
+        >
           Everything you need to know about comparing ticket prices with SeatScout.
         </p>
-      </section>
+      </div>
 
-      {/* FAQ accordion */}
-      <section className="mx-auto w-full max-w-[760px] px-6 pb-[120px] sm:px-[60px]">
-        <div className="rounded-[16px] border border-[var(--card-border)] bg-[var(--card)] px-8 py-2">
-          {FAQS.map((item) => (
-            <FAQItem key={item.q} q={item.q} a={item.a} />
-          ))}
-        </div>
+      {/* ── FAQ list ── */}
+      <div
+        style={{
+          maxWidth: "860px",
+          margin: "0 auto",
+          padding: "0 24px 40px",
+          animation: "fadeUp 0.6s 0.15s ease both",
+        }}
+      >
+        {FAQS.map((item, i) => (
+          <FAQItem
+            key={item.q}
+            q={item.q}
+            a={item.a}
+            isOpen={openIndex === i}
+            onToggle={() => setOpenIndex(openIndex === i ? -1 : i)}
+          />
+        ))}
+      </div>
 
-        {/* Bottom CTA */}
-        <div className="mt-14 rounded-[16px] border border-[var(--border-brand)] bg-[var(--brand-dim)] px-8 py-10 text-center">
-          <h2 className="font-syne mb-3 text-[22px] font-[800] tracking-[-0.5px] text-[var(--text-1)]">
+      {/* ── CTA card ── */}
+      <div
+        style={{
+          maxWidth: "860px",
+          margin: "12px auto 100px",
+          padding: "0 24px",
+          animation: "fadeUp 0.6s 0.25s ease both",
+        }}
+      >
+        <div
+          style={{
+            padding: "48px 40px",
+            background: "linear-gradient(135deg, #1a1838 0%, #151330 100%)",
+            border: "1px solid rgba(124,108,255,0.25)",
+            borderRadius: "16px",
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          {/* Inner glow */}
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "radial-gradient(ellipse at 50% 0%, rgba(124,108,255,0.12) 0%, transparent 60%)",
+              pointerEvents: "none",
+            }}
+          />
+          <h2
+            style={{
+              fontFamily: "var(--font-barlow-condensed), 'Barlow Condensed', sans-serif",
+              fontWeight: 900,
+              fontSize: "2rem",
+              letterSpacing: "-0.01em",
+              color: "#ffffff",
+              textTransform: "uppercase",
+              position: "relative",
+            }}
+          >
             Still have questions?
           </h2>
-          <p className="mb-6 text-[14px] text-[var(--text-2)]">
-            Can't find the answer you're looking for? Reach out and we'll get back to you.
+          <p
+            style={{
+              marginTop: "10px",
+              color: "#8b89a8",
+              fontSize: "0.95rem",
+              position: "relative",
+              fontFamily: "var(--font-barlow), 'Barlow', sans-serif",
+            }}
+          >
+            Can&apos;t find the answer you&apos;re looking for? Reach out and we&apos;ll get back to you.
           </p>
           <a
             href="mailto:hello@seatscout.com"
-            className="font-syne inline-flex items-center rounded-[10px] bg-[var(--brand)] px-7 py-[13px] text-[15px] font-[700] text-white transition-opacity hover:opacity-80"
+            style={{
+              display: "inline-block",
+              marginTop: "24px",
+              padding: "13px 32px",
+              background: "#7c6cff",
+              color: "#ffffff",
+              fontFamily: "var(--font-barlow), 'Barlow', sans-serif",
+              fontWeight: 600,
+              fontSize: "0.95rem",
+              borderRadius: "30px",
+              letterSpacing: "0.03em",
+              textDecoration: "none",
+              position: "relative",
+              transition: "background 0.2s, transform 0.15s, box-shadow 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background = "#6a5ae0";
+              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
+              (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 24px rgba(124,108,255,0.35)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background = "#7c6cff";
+              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
+              (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none";
+            }}
           >
             Contact Us
           </a>
         </div>
-      </section>
+      </div>
 
+      <style>{`
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }

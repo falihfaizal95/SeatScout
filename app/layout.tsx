@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/next";
-import { Syne, DM_Sans } from "next/font/google";
+import { Syne, DM_Sans, Barlow, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 
 const syne = Syne({
@@ -15,6 +15,20 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500"],
   variable: "--font-dm-sans",
+  display: "swap",
+});
+
+const barlow = Barlow({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-barlow",
+  display: "swap",
+});
+
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
+  variable: "--font-barlow-condensed",
   display: "swap",
 });
 
@@ -62,7 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         },
       }}
     >
-      <html lang="en" className={`dark ${syne.variable} ${dmSans.variable}`}>
+      <html lang="en" className={`dark ${syne.variable} ${dmSans.variable} ${barlow.variable} ${barlowCondensed.variable}`}>
         <body className="w-full">
           {children}
           <Analytics />

@@ -58,6 +58,12 @@ body {
 .font-syne {
   font-family: var(--font-syne), 'Syne', sans-serif;
 }
+.font-barlow {
+  font-family: var(--font-barlow), 'Barlow', sans-serif;
+}
+.font-barlow-condensed {
+  font-family: var(--font-barlow-condensed), 'Barlow Condensed', sans-serif;
+}
 
 /* ─── Section Helpers ────────────────────────────────────────────── */
 .section-tag {
