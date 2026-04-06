@@ -173,7 +173,10 @@ export async function getUpcomingPopularEvents(count = 3): Promise<HomepageEvent
     .filter(({ game }) => !game.status.type.completed)
     .sort((a, b) => popularityScore(b.game) - popularityScore(a.game));
 
-  const top = allGames.slice(0, count);
+  // Take a larger pool and randomly pick `count` so each refresh shows different events
+  const pool = allGames.slice(0, Math.max(count * 2, 6));
+  const shuffled = pool.sort(() => Math.random() - 0.5);
+  const top = shuffled.slice(0, count);
 
   const enriched = await Promise.all(
     top.map(async ({ game, sport }) => {

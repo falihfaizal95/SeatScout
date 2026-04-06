@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import HeroSearch from "@/components/search/HeroSearch";
 import RotatingBadge from "@/components/ui/RotatingBadge";
 import RollingCounter from "@/components/ui/RollingCounter";
