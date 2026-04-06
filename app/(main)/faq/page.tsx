@@ -77,7 +77,7 @@ function FAQItem({
           gap: "16px",
           padding: "22px 28px",
           color: isOpen ? "#a99fff" : "#ffffff",
-          fontFamily: "var(--font-barlow), 'Barlow', sans-serif",
+          fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
           fontSize: "1.05rem",
           fontWeight: 600,
           letterSpacing: "0.01em",
@@ -108,7 +108,7 @@ function FAQItem({
             color: "#8b89a8",
             fontSize: "0.97rem",
             lineHeight: 1.7,
-            fontFamily: "var(--font-barlow), 'Barlow', sans-serif",
+            fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
           }}
         >
           {a}
@@ -151,11 +151,11 @@ export default function FAQPage() {
 
         <h1
           style={{
-            fontFamily: "var(--font-barlow-condensed), 'Barlow Condensed', sans-serif",
+            fontFamily: "var(--font-syne), 'Syne', sans-serif",
             fontWeight: 900,
-            fontSize: "clamp(72px, 12vw, 140px)",
-            lineHeight: 0.92,
-            letterSpacing: "-0.02em",
+            fontSize: "clamp(64px, 10vw, 120px)",
+            lineHeight: 0.95,
+            letterSpacing: "-0.03em",
             color: "#ffffff",
             textTransform: "uppercase",
             position: "relative",
@@ -181,7 +181,7 @@ export default function FAQPage() {
             lineHeight: 1.6,
             position: "relative",
             zIndex: 1,
-            fontFamily: "var(--font-barlow), 'Barlow', sans-serif",
+            fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
           }}
         >
           Everything you need to know about comparing ticket prices with SeatScout.
@@ -241,7 +241,7 @@ export default function FAQPage() {
           />
           <h2
             style={{
-              fontFamily: "var(--font-barlow-condensed), 'Barlow Condensed', sans-serif",
+              fontFamily: "var(--font-syne), 'Syne', sans-serif",
               fontWeight: 900,
               fontSize: "2rem",
               letterSpacing: "-0.01em",
@@ -258,7 +258,7 @@ export default function FAQPage() {
               color: "#8b89a8",
               fontSize: "0.95rem",
               position: "relative",
-              fontFamily: "var(--font-barlow), 'Barlow', sans-serif",
+              fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
             }}
           >
             Can&apos;t find the answer you&apos;re looking for? Reach out and we&apos;ll get back to you.
@@ -271,7 +271,7 @@ export default function FAQPage() {
               padding: "13px 32px",
               background: "#7c6cff",
               color: "#ffffff",
-              fontFamily: "var(--font-barlow), 'Barlow', sans-serif",
+              fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
               fontWeight: 600,
               fontSize: "0.95rem",
               borderRadius: "30px",
