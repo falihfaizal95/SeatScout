@@ -2,6 +2,64 @@ import { NextRequest, NextResponse } from "next/server";
 
 const TM_BASE = "https://app.ticketmaster.com/discovery/v2";
 
+// Map of team name keywords → Ticketmaster classificationName
+const SPORT_TEAMS: Record<string, string> = {
+  // NBA
+  hawks: "Basketball", lakers: "Basketball", warriors: "Basketball", celtics: "Basketball",
+  bulls: "Basketball", heat: "Basketball", knicks: "Basketball", nets: "Basketball",
+  spurs: "Basketball", suns: "Basketball", nuggets: "Basketball", bucks: "Basketball",
+  raptors: "Basketball", cavaliers: "Basketball", sixers: "Basketball",
+  "76ers": "Basketball", pistons: "Basketball", pacers: "Basketball",
+  hornets: "Basketball", wizards: "Basketball", magic: "Basketball",
+  pelicans: "Basketball", grizzlies: "Basketball", thunder: "Basketball",
+  blazers: "Basketball", kings: "Basketball", timberwolves: "Basketball",
+  jazz: "Basketball", rockets: "Basketball", mavericks: "Basketball",
+  mavs: "Basketball", clippers: "Basketball",
+
+  // NFL
+  cowboys: "American Football", patriots: "American Football", chiefs: "American Football",
+  eagles: "American Football", packers: "American Football", steelers: "American Football",
+  ravens: "American Football", broncos: "American Football", seahawks: "American Football",
+  "49ers": "American Football", rams: "American Football", saints: "American Football",
+  bears: "American Football", giants: "American Football", jets: "American Football",
+  bills: "American Football", dolphins: "American Football", colts: "American Football",
+  titans: "American Football", texans: "American Football", jaguars: "American Football",
+  bengals: "American Football", browns: "American Football", raiders: "American Football",
+  chargers: "American Football", vikings: "American Football", lions: "American Football",
+  falcons: "American Football", panthers: "American Football", buccaneers: "American Football",
+  cardinals: "American Football", commanders: "American Football",
+
+  // MLB
+  yankees: "Baseball", dodgers: "Baseball", "red sox": "Baseball", cubs: "Baseball",
+  mets: "Baseball", braves: "Baseball", astros: "Baseball", phillies: "Baseball",
+  cardinals2: "Baseball", giants2: "Baseball", padres: "Baseball", brewers: "Baseball",
+  mariners: "Baseball", athletics: "Baseball", rangers: "Baseball", angels: "Baseball",
+  tigers: "Baseball", twins: "Baseball", royals: "Baseball", indians: "Baseball",
+  guardians: "Baseball", orioles: "Baseball", bluejays: "Baseball", "blue jays": "Baseball",
+  rays: "Baseball", whitesox: "Baseball", "white sox": "Baseball", reds: "Baseball",
+  rockies: "Baseball", diamondbacks: "Baseball", marlins: "Baseball", pirates: "Baseball",
+  nationals: "Baseball",
+
+  // NHL
+  bruins: "Ice Hockey", rangers2: "Ice Hockey", blackhawks: "Ice Hockey",
+  penguins: "Ice Hockey", lightning: "Ice Hockey", avalanche: "Ice Hockey",
+  golden: "Ice Hockey", canadiens: "Ice Hockey", maple: "Ice Hockey",
+  oilers: "Ice Hockey", flames: "Ice Hockey", canucks: "Ice Hockey",
+  senators: "Ice Hockey", sabres: "Ice Hockey", hurricanes: "Ice Hockey",
+  capitals: "Ice Hockey", flyers: "Ice Hockey", devils: "Ice Hockey",
+  islanders: "Ice Hockey", wild: "Ice Hockey", predators: "Ice Hockey",
+  blues: "Ice Hockey", ducks: "Ice Hockey", sharks: "Ice Hockey",
+  coyotes: "Ice Hockey", panthers2: "Ice Hockey",
+};
+
+function detectSportClassification(query: string): string | null {
+  const q = query.toLowerCase().trim();
+  for (const [keyword, classification] of Object.entries(SPORT_TEAMS)) {
+    if (q.includes(keyword)) return classification;
+  }
+  return null;
+}
+
 interface TMAttr {
   name: string;
   images?: Array<{ url: string; width: number; height: number }>;
@@ -49,12 +107,16 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Ticketmaster API key not configured" }, { status: 500 });
   }
 
+  // Auto-detect sport classification from team name
+  const detectedSport = detectSportClassification(q);
+  const effectiveClassification = classificationName || detectedSport || "";
+
   const url = new URL(`${TM_BASE}/events.json`);
   url.searchParams.set("keyword", q);
   url.searchParams.set("size",    "20");
   url.searchParams.set("page",        page);
   url.searchParams.set("apikey",      apiKey);
-  if (classificationName) url.searchParams.set("classificationName", classificationName);
+  if (effectiveClassification) url.searchParams.set("classificationName", effectiveClassification);
 
   try {
     const res = await fetch(url.toString(), { cache: "no-store" });
@@ -110,12 +172,17 @@ export async function GET(req: NextRequest) {
       };
     });
 
+    // When searching for a known sports team, strip any non-sports results
+    const filteredEvents = detectedSport
+      ? events.filter((e) => e.segment === "Sports")
+      : events;
+
     return NextResponse.json(
       {
-        events,
-        total:      data.page?.totalElements ?? events.length,
-        page:       data.page?.number        ?? 0,
-        totalPages: data.page?.totalPages    ?? 1,
+        events:     filteredEvents,
+        total:      filteredEvents.length,
+        page:       data.page?.number ?? 0,
+        totalPages: data.page?.totalPages ?? 1,
       },
       { headers: { "Cache-Control": "no-store" } }
     );
