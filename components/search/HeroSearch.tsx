@@ -19,39 +19,33 @@ export default function HeroSearch() {
   return (
     <div className="mx-auto flex max-w-[780px] flex-col items-center w-full">
       <form onSubmit={handleSubmit} className="w-full">
-        {/* Outer pill container — dark with subtle border + glow */}
+        {/* Search bar — white border, dark fill, white text */}
         <div
-          className="flex w-full items-center rounded-[24px] p-[6px] transition-shadow focus-within:shadow-[0_0_0_3px_rgba(124,106,247,0.25)]"
+          className="flex w-full items-center rounded-[24px] p-[6px] transition-shadow focus-within:shadow-[0_0_0_3px_rgba(255,255,255,0.15)]"
           style={{
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.12)",
+            background: "rgba(255,255,255,0.08)",
+            border: "1.5px solid rgba(255,255,255,0.9)",
           }}
         >
-          {/* White inner input pill */}
-          <div
-            className="flex flex-1 items-center rounded-[18px] overflow-hidden"
-            style={{ background: "rgba(255,255,255,0.95)" }}
-          >
-            <Search className="ml-4 size-5 shrink-0" style={{ color: "#9ca3af" }} />
-            <input
-              type="text"
-              placeholder="Search for teams, games, or events..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 bg-transparent text-[16px] sm:text-[17px] outline-none"
-              style={{
-                padding: "16px 14px",
-                color: "#111827",
-                fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
-                caretColor: "#7c6cff",
-              }}
-            />
-          </div>
+          <Search className="ml-4 size-5 shrink-0" style={{ color: "rgba(255,255,255,0.5)" }} />
+          <input
+            type="text"
+            placeholder="Search for teams, games, or events..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="flex-1 bg-transparent text-[16px] sm:text-[17px] outline-none"
+            style={{
+              padding: "16px 14px",
+              color: "#ffffff",
+              fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
+              caretColor: "#ffffff",
+            }}
+          />
 
-          {/* Brand-colored pill button */}
+          {/* Brand button */}
           <button
             type="submit"
-            className="font-syne ml-2 shrink-0 rounded-[18px] font-[700] text-white transition-all hover:shadow-[0_6px_20px_rgba(124,106,247,0.45)] active:scale-[0.97]"
+            className="font-syne shrink-0 rounded-[18px] font-[700] text-white transition-all hover:shadow-[0_6px_20px_rgba(124,106,247,0.45)] active:scale-[0.97]"
             style={{
               background: "linear-gradient(135deg, #7c6cff 0%, #9b8fff 100%)",
               padding: "16px 20px",
