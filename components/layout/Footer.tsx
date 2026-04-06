@@ -29,10 +29,10 @@ export default function Footer() {
         <div>
           <h4 className="font-syne mb-5 text-[13px] font-[700] uppercase tracking-[0.5px] text-[var(--text-3)]">Sports</h4>
           <ul className="flex flex-col gap-3">
-            <li><Link href="/search?sport=NBA" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">NBA</Link></li>
-            <li><Link href="/search?sport=NFL" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">NFL</Link></li>
-            <li><Link href="/search?sport=MLB" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">MLB</Link></li>
-            <li><Link href="/search?sport=NHL" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">NHL</Link></li>
+            <li><Link href="/sports/nba" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">NBA</Link></li>
+            <li><Link href="/sports/nfl" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">NFL</Link></li>
+            <li><Link href="/sports/mlb" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">MLB</Link></li>
+            <li><Link href="/sports/nhl" className="text-[14px] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">NHL</Link></li>
           </ul>
         </div>
 

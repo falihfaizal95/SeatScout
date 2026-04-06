@@ -98,7 +98,8 @@ export async function GET(req: NextRequest) {
   const page            = searchParams.get("page")               ?? "0";
   const classificationName = searchParams.get("classificationName") ?? "";
 
-  if (!q.trim()) {
+  // Allow classification-only browse (no keyword required when classificationName is set)
+  if (!q.trim() && !classificationName) {
     return NextResponse.json({ events: [], total: 0 }, { status: 400 });
   }
 
@@ -112,10 +113,11 @@ export async function GET(req: NextRequest) {
   const effectiveClassification = classificationName || detectedSport || "";
 
   const url = new URL(`${TM_BASE}/events.json`);
-  url.searchParams.set("keyword", q);
+  if (q.trim()) url.searchParams.set("keyword", q);
   url.searchParams.set("size",    "20");
   url.searchParams.set("page",        page);
   url.searchParams.set("apikey",      apiKey);
+  url.searchParams.set("segmentName", "Sports");
   if (effectiveClassification) url.searchParams.set("classificationName", effectiveClassification);
 
   try {
