@@ -1,6 +1,185 @@
 "use client";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X, Send } from "lucide-react";
+
+function ContactModal({ onClose }: { onClose: () => void }) {
+  const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSent(true);
+  };
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    background: "rgba(255,255,255,0.05)",
+    border: "1px solid rgba(255,255,255,0.1)",
+    borderRadius: "10px",
+    padding: "13px 16px",
+    color: "#e8e6ff",
+    fontSize: "0.95rem",
+    fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
+    outline: "none",
+    transition: "border-color 0.2s",
+  };
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 1000,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba(0,0,0,0.7)",
+        backdropFilter: "blur(6px)",
+        padding: "20px",
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: "100%",
+          maxWidth: "500px",
+          background: "#13121f",
+          border: "1px solid rgba(124,108,255,0.3)",
+          borderRadius: "20px",
+          padding: "36px",
+          position: "relative",
+          animation: "fadeUp 0.25s ease both",
+        }}
+      >
+        {/* Close */}
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            top: "16px",
+            right: "16px",
+            background: "rgba(255,255,255,0.06)",
+            border: "none",
+            borderRadius: "8px",
+            padding: "6px",
+            cursor: "pointer",
+            color: "#8b89a8",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <X size={16} />
+        </button>
+
+        {sent ? (
+          <div style={{ textAlign: "center", padding: "20px 0" }}>
+            <div style={{ fontSize: "2.5rem", marginBottom: "12px" }}>✅</div>
+            <h3 style={{ fontFamily: "var(--font-syne), 'Syne', sans-serif", fontWeight: 800, fontSize: "1.4rem", color: "#ffffff", marginBottom: "8px" }}>
+              Message Sent!
+            </h3>
+            <p style={{ color: "#8b89a8", fontSize: "0.95rem", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>
+              We&apos;ll get back to you at {form.email} within 24 hours.
+            </p>
+          </div>
+        ) : (
+          <>
+            <h3 style={{ fontFamily: "var(--font-syne), 'Syne', sans-serif", fontWeight: 800, fontSize: "1.4rem", color: "#ffffff", marginBottom: "6px" }}>
+              Get in Touch
+            </h3>
+            <p style={{ color: "#8b89a8", fontSize: "0.9rem", marginBottom: "28px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>
+              Fill out the form below and we&apos;ll respond within 24 hours.
+            </p>
+
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+                <div>
+                  <label style={{ display: "block", color: "#8b89a8", fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: "6px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>Name</label>
+                  <input
+                    required
+                    placeholder="John Smith"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    style={inputStyle}
+                    onFocus={(e) => (e.target.style.borderColor = "rgba(124,108,255,0.5)")}
+                    onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.1)")}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: "block", color: "#8b89a8", fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: "6px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>Phone</label>
+                  <input
+                    type="tel"
+                    placeholder="+1 (555) 000-0000"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    style={inputStyle}
+                    onFocus={(e) => (e.target.style.borderColor = "rgba(124,108,255,0.5)")}
+                    onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.1)")}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: "block", color: "#8b89a8", fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: "6px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>Email</label>
+                <input
+                  required
+                  type="email"
+                  placeholder="you@example.com"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "rgba(124,108,255,0.5)")}
+                  onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.1)")}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: "block", color: "#8b89a8", fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: "6px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>Message</label>
+                <textarea
+                  required
+                  rows={4}
+                  placeholder="How can we help you?"
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  style={{ ...inputStyle, resize: "none" }}
+                  onFocus={(e) => (e.target.style.borderColor = "rgba(124,108,255,0.5)")}
+                  onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.1)")}
+                />
+              </div>
+
+              <button
+                type="submit"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  marginTop: "4px",
+                  padding: "14px",
+                  background: "#7c6cff",
+                  color: "#ffffff",
+                  fontFamily: "var(--font-syne), 'Syne', sans-serif",
+                  fontWeight: 700,
+                  fontSize: "0.95rem",
+                  borderRadius: "10px",
+                  border: "none",
+                  cursor: "pointer",
+                  transition: "background 0.2s",
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#6a5ae0")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#7c6cff")}
+              >
+                <Send size={15} />
+                Send Message
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
 
 const FAQS = [
   {
@@ -120,9 +299,11 @@ function FAQItem({
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number>(0);
+  const [showContact, setShowContact] = useState(false);
 
   return (
     <div style={{ background: "#0e0d18", minHeight: "100vh" }}>
+      {showContact && <ContactModal onClose={() => setShowContact(false)} />}
 
       {/* ── Header ── */}
       <div
@@ -263,8 +444,8 @@ export default function FAQPage() {
           >
             Can&apos;t find the answer you&apos;re looking for? Reach out and we&apos;ll get back to you.
           </p>
-          <a
-            href="mailto:hello@seatscout.com"
+          <button
+            onClick={() => setShowContact(true)}
             style={{
               display: "inline-block",
               marginTop: "24px",
@@ -279,20 +460,21 @@ export default function FAQPage() {
               textDecoration: "none",
               position: "relative",
               transition: "background 0.2s, transform 0.15s, box-shadow 0.2s",
+              cursor: "pointer",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = "#6a5ae0";
-              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)";
-              (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 24px rgba(124,108,255,0.35)";
+              (e.currentTarget as HTMLButtonElement).style.background = "#6a5ae0";
+              (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
+              (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 24px rgba(124,108,255,0.35)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = "#7c6cff";
-              (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
-              (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none";
+              (e.currentTarget as HTMLButtonElement).style.background = "#7c6cff";
+              (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+              (e.currentTarget as HTMLButtonElement).style.boxShadow = "none";
             }}
           >
             Contact Us
-          </a>
+          </button>
         </div>
       </div>
 
