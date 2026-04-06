@@ -48,7 +48,7 @@ async function fetchESPNSchedule(sport: "nba" | "nhl", dateStr: string): Promise
   const league = sport === "nba" ? "basketball/nba" : "hockey/nhl";
   const url = `https://site.api.espn.com/apis/site/v2/sports/${league}/scoreboard?dates=${dateStr}`;
   try {
-    const res = await fetch(url, { next: { revalidate: 300 } });
+    const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) return [];
     const json = await res.json();
     return (json.events as ESPNGame[]) ?? [];
@@ -97,7 +97,7 @@ async function enrichWithTicketmaster(game: ESPNGame): Promise<TMResult> {
   url.searchParams.set("size", "5");
 
   try {
-    const res = await fetch(url.toString(), { next: { revalidate: 300 } });
+    const res = await fetch(url.toString(), { cache: "no-store" });
     if (!res.ok) return {};
     const data = await res.json();
     const events: {
