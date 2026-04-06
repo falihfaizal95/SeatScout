@@ -114,10 +114,12 @@ export async function GET(req: NextRequest) {
 
   const url = new URL(`${TM_BASE}/events.json`);
   if (q.trim()) url.searchParams.set("keyword", q);
-  url.searchParams.set("size",    "20");
+  // Fetch extra to survive deduplication
+  url.searchParams.set("size",    q.trim() ? "20" : "50");
   url.searchParams.set("page",        page);
   url.searchParams.set("apikey",      apiKey);
   url.searchParams.set("segmentName", "Sports");
+  url.searchParams.set("sort",        "date,asc");
   if (effectiveClassification) url.searchParams.set("classificationName", effectiveClassification);
 
   try {
@@ -175,9 +177,20 @@ export async function GET(req: NextRequest) {
     });
 
     // When searching for a known sports team, strip any non-sports results
-    const filteredEvents = detectedSport
+    const sportsFiltered = detectedSport
       ? events.filter((e) => e.segment === "Sports")
       : events;
+
+    // Deduplicate: same matchup on the same date = same game (TM lists multiple ticket tiers as separate events)
+    const seen = new Set<string>();
+    const filteredEvents = sportsFiltered.filter((e) => {
+      const dateDay = e.eventDate?.slice(0, 10) ?? "";
+      // Key on normalized name + date — catches "Yankees vs Athletics" duplicates
+      const key = `${e.name.toLowerCase().replace(/\s+/g, "")}|${dateDay}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).slice(0, 20); // cap at 20 after dedup
 
     return NextResponse.json(
       {
