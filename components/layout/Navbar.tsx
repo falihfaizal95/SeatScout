@@ -27,7 +27,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/#results" className="font-syne text-[14px] font-[600] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">
+            <Link href="/faq" className="font-syne text-[14px] font-[600] text-[var(--text-2)] transition-colors hover:text-[var(--text-1)]">
               FAQ
             </Link>
           </li>
