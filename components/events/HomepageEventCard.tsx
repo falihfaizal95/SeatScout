@@ -13,7 +13,7 @@ export default function HomepageEventCard({ event }: Props) {
   const savings      = highestPrice - lowestPrice;
 
   const btn =
-    "font-syne mx-4 mb-5 flex w-[calc(100%-32px)] items-center justify-center rounded-[30px] bg-[rgba(99,91,199,0.18)] py-[15px] text-[15px] font-[700] text-[var(--brand-light)] transition-all hover:bg-[var(--brand)] hover:text-white";
+    "font-syne mx-auto mb-5 flex w-[80%] items-center justify-center rounded-[30px] bg-[rgba(99,91,199,0.18)] py-[14px] text-[15px] font-[700] text-[var(--brand-light)] transition-all hover:bg-[var(--brand)] hover:text-white";
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-[20px] border border-[var(--card-border)] bg-[var(--card)] transition-all duration-200 hover:-translate-y-1 hover:border-[rgba(124,106,247,0.25)]">
