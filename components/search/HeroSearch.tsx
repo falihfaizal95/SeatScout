@@ -19,25 +19,49 @@ export default function HeroSearch() {
   return (
     <div className="mx-auto flex max-w-[780px] flex-col items-center w-full">
       <form onSubmit={handleSubmit} className="w-full">
+        {/* Outer pill container — dark with subtle border + glow */}
         <div
-          className="flex w-full items-center rounded-[18px] border border-[var(--card-border)] bg-[var(--card)] transition-colors focus-within:border-[rgba(124,106,247,0.4)]"
-          style={{ padding: "10px 10px 10px 10px" }}
+          className="flex w-full items-center rounded-[24px] p-[6px] transition-shadow focus-within:shadow-[0_0_0_3px_rgba(124,106,247,0.25)]"
+          style={{
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.12)",
+          }}
         >
-          <Search className="ml-4 size-6 shrink-0 text-[var(--text-3)]" />
-          <input
-            type="text"
-            placeholder="Search for teams, games, or events..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 bg-transparent text-[17px] text-[var(--text-1)] outline-none placeholder:text-[var(--text-3)]"
-            style={{ padding: "22px 16px" }}
-          />
+          {/* White inner input pill */}
+          <div
+            className="flex flex-1 items-center rounded-[18px] overflow-hidden"
+            style={{ background: "rgba(255,255,255,0.95)" }}
+          >
+            <Search className="ml-4 size-5 shrink-0" style={{ color: "#9ca3af" }} />
+            <input
+              type="text"
+              placeholder="Search for teams, games, or events..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 bg-transparent text-[16px] sm:text-[17px] outline-none"
+              style={{
+                padding: "16px 14px",
+                color: "#111827",
+                fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
+                caretColor: "#7c6cff",
+              }}
+            />
+          </div>
+
+          {/* Brand-colored pill button */}
           <button
             type="submit"
-            className="font-syne shrink-0 rounded-[12px] bg-[var(--brand)] text-[17px] font-[700] text-white transition-all hover:bg-[var(--brand-light)] hover:shadow-[0_8px_24px_rgba(124,106,247,0.35)]"
-            style={{ padding: "22px 32px" }}
+            className="font-syne ml-2 shrink-0 rounded-[18px] font-[700] text-white transition-all hover:shadow-[0_6px_20px_rgba(124,106,247,0.45)] active:scale-[0.97]"
+            style={{
+              background: "linear-gradient(135deg, #7c6cff 0%, #9b8fff 100%)",
+              padding: "16px 20px",
+              fontSize: "15px",
+              whiteSpace: "nowrap",
+              letterSpacing: "0.01em",
+            }}
           >
-            Search Deals →
+            <span className="sm:hidden">Search →</span>
+            <span className="hidden sm:inline">Search Deals</span>
           </button>
         </div>
       </form>

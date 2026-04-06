@@ -195,7 +195,7 @@ function SearchContent() {
     <div style={{ background: "#0e0d18", minHeight: "100vh" }}>
 
       {/* Search bar area */}
-      <div style={{ paddingTop: "100px", paddingBottom: 0, paddingLeft: "48px", paddingRight: "48px", maxWidth: "1300px", margin: "0 auto" }}>
+      <div style={{ paddingTop: "100px", paddingBottom: 0, paddingLeft: "clamp(16px, 4vw, 48px)", paddingRight: "clamp(16px, 4vw, 48px)", maxWidth: "1300px", margin: "0 auto" }}>
         <form onSubmit={handleSubmit}>
           <div
             style={{ display: "flex", alignItems: "center", background: "#1a1830", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "16px", overflow: "hidden", transition: "border-color 0.2s, box-shadow 0.2s" }}
@@ -241,7 +241,7 @@ function SearchContent() {
       </div>
 
       {/* Results */}
-      <div style={{ maxWidth: "1300px", margin: "0 auto", padding: "40px 48px 100px", animation: "fadeUp 0.5s ease both" }}>
+      <div style={{ maxWidth: "1300px", margin: "0 auto", padding: "40px clamp(16px, 4vw, 48px) 100px", animation: "fadeUp 0.5s ease both" }}>
 
         {searched && !loading && (
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", marginBottom: "28px", flexWrap: "wrap" }}>
@@ -274,7 +274,7 @@ function SearchContent() {
         )}
 
         {loading && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
+          <div className="search-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
             {Array.from({ length: 8 }).map((_, i) => <EventCardSkeleton key={i} />)}
           </div>
         )}
@@ -296,7 +296,7 @@ function SearchContent() {
         )}
 
         {!loading && filtered.length > 0 && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
+          <div className="search-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
             {filtered.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}

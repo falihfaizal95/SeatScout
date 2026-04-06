@@ -93,7 +93,7 @@ function ContactModal({ onClose }: { onClose: () => void }) {
             </p>
 
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+              <div className="contact-name-phone" style={{ display: "grid", gap: "14px" }}>
                 <div>
                   <label style={{ display: "block", color: "#8b89a8", fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: "6px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>Name</label>
                   <input
@@ -308,7 +308,7 @@ export default function FAQPage() {
       {/* ── Header ── */}
       <div
         style={{
-          padding: "160px 48px 80px",
+          padding: "clamp(110px, 14vw, 160px) clamp(20px, 5vw, 48px) clamp(50px, 7vw, 80px)",
           textAlign: "center",
           position: "relative",
           animation: "fadeUp 0.6s ease both",
@@ -400,7 +400,7 @@ export default function FAQPage() {
       >
         <div
           style={{
-            padding: "48px 40px",
+            padding: "clamp(32px, 6vw, 48px) clamp(20px, 5vw, 40px)",
             background: "linear-gradient(135deg, #1a1838 0%, #151330 100%)",
             border: "1px solid rgba(124,108,255,0.25)",
             borderRadius: "16px",
@@ -483,6 +483,8 @@ export default function FAQPage() {
           from { opacity: 0; transform: translateY(24px); }
           to   { opacity: 1; transform: translateY(0); }
         }
+        .contact-name-phone { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 480px) { .contact-name-phone { grid-template-columns: 1fr; } }
       `}</style>
     </div>
   );

@@ -44,11 +44,11 @@ export default async function HomePage() {
     <div className="w-full">
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <section className="relative flex flex-col items-center justify-center overflow-hidden text-center" style={{ minHeight: "160vh", paddingTop: "140px", paddingBottom: "200px" }}>
+      <section className="relative flex flex-col items-center justify-center overflow-hidden text-center pt-[100px] pb-[80px] md:pt-[140px] md:pb-[200px] md:min-h-[160vh]">
 
         {/* Animated purple orb */}
         <div
-          className="orb-float pointer-events-none absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          className="orb-float pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] md:h-[900px] md:w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{ background: "radial-gradient(circle, rgba(124,106,247,0.22) 0%, transparent 65%)", zIndex: 0 }}
         />
 
@@ -76,15 +76,15 @@ export default async function HomePage() {
           </div>
 
           {/* Stats bar */}
-          <div className="mx-auto flex w-full max-w-[900px]" style={{ marginTop: "80px" }}>
+          <div className="mx-auto grid w-full max-w-[900px] grid-cols-2 gap-3 md:flex md:gap-0" style={{ marginTop: "60px" }}>
             {STATS.map((stat, i) => (
               <div
                 key={stat.label}
-                className={`flex flex-1 flex-col items-center justify-center border border-[var(--card-border)] bg-[var(--card)] px-8 py-10 text-center
-                  ${i === 0 ? "rounded-l-2xl" : "border-l-0"}
-                  ${i === STATS.length - 1 ? "rounded-r-2xl" : ""}`}
+                className={`flex flex-col items-center justify-center border border-[var(--card-border)] bg-[var(--card)] px-4 py-6 md:flex-1 md:px-8 md:py-10 text-center rounded-xl md:rounded-none
+                  ${i === 0 ? "md:rounded-l-2xl" : "md:border-l-0"}
+                  ${i === STATS.length - 1 ? "md:rounded-r-2xl" : ""}`}
               >
-                <div className="font-syne mb-1.5 text-[36px] font-[800] leading-none text-[var(--text-1)]">
+                <div className="font-syne mb-1.5 text-[26px] md:text-[36px] font-[800] leading-none text-[var(--text-1)]">
                   {stat.label === "Total Saved" ? (
                     <RollingCounter start={100_000} incrementMin={500} incrementMax={2_000} intervalMs={5000} prefix="$" />
                   ) : stat.label === "Happy Users" ? (
@@ -102,7 +102,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── How It Works ─────────────────────────────────────────────── */}
-      <section id="how-it-works" className="w-full overflow-x-hidden bg-[var(--bg-1)] py-[100px]">
+      <section id="how-it-works" className="w-full overflow-x-hidden bg-[var(--bg-1)] py-[60px] md:py-[100px]">
         <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center px-6 sm:px-[60px]">
 
           <div className="section-tag text-center">HOW IT WORKS</div>
@@ -113,7 +113,7 @@ export default async function HomePage() {
             Finding the best ticket prices has never been easier
           </p>
 
-          <div className="mx-auto grid w-full max-w-[1100px] grid-cols-1 gap-8 lg:grid-cols-3">
+          <div className="mx-auto grid w-full max-w-[1100px] grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {STEPS.map((step) => {
               const Icon = step.icon;
               return (
@@ -152,7 +152,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Upcoming Events ──────────────────────────────────────────── */}
-      <section id="results" className="w-full overflow-x-hidden bg-[var(--bg)] py-[140px]">
+      <section id="results" className="w-full overflow-x-hidden bg-[var(--bg)] py-[60px] md:py-[140px]">
         <div className="mx-auto w-full max-w-[1200px] px-6 sm:px-[60px]">
 
           {/* Header */}
@@ -165,7 +165,7 @@ export default async function HomePage() {
           </div>
 
           {/* Grid */}
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {upcomingEvents.map((event) => (
               <HomepageEventCard key={event.id} event={event} />
             ))}

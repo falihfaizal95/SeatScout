@@ -3,16 +3,9 @@
   "configurations": [
     {
       "name": "SeatScout Dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-c", "source ~/.nvm/nvm.sh && npm run dev"],
       "port": 3000,
-      "autoPort": true
-    },
-    {
-      "name": "SeatScout Preview",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "."],
-      "port": 3001,
       "autoPort": true
     }
   ]

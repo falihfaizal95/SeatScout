@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin, ExternalLink } from "lucide-react";
 import LocalEventDate from "@/components/ui/LocalEventDate";
 import type { HomepageEvent } from "@/lib/upcomingEvents";
 
@@ -12,13 +12,10 @@ export default function HomepageEventCard({ event }: Props) {
   const highestPrice = Math.max(...event.prices.map((p) => p.price));
   const savings      = highestPrice - lowestPrice;
 
-  const btn =
-    "font-syne mx-auto mb-5 flex w-[80%] items-center justify-center rounded-[30px] bg-[rgba(99,91,199,0.18)] py-[14px] text-[15px] font-[700] text-[var(--brand-light)] transition-all hover:bg-[var(--brand)] hover:text-white";
-
   return (
     <div className="group flex flex-col overflow-hidden rounded-[20px] border border-[var(--card-border)] bg-[var(--card)] transition-all duration-200 hover:-translate-y-1 hover:border-[rgba(124,106,247,0.25)]">
 
-      {/* Image — fixed height */}
+      {/* Image */}
       <div className="h-[200px] shrink-0 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -29,7 +26,7 @@ export default function HomepageEventCard({ event }: Props) {
         />
       </div>
 
-      {/* Body — grows to fill space */}
+      {/* Body */}
       <div className="flex flex-1 flex-col px-5 pt-4">
 
         {/* Save badge */}
@@ -37,7 +34,7 @@ export default function HomepageEventCard({ event }: Props) {
           Save ${savings}
         </span>
 
-        {/* Title — fixed min-height so 1-line titles don't collapse */}
+        {/* Title */}
         <h3 className="font-syne mb-3 min-h-[52px] text-[19px] font-[800] leading-[1.3] tracking-[-0.3px] text-[var(--text-1)]">
           {event.title}
         </h3>
@@ -54,29 +51,40 @@ export default function HomepageEventCard({ event }: Props) {
           </div>
         </div>
 
-        {/* Divider */}
-        <hr className="border-[var(--card-border)]" />
+        {/* Column headers */}
+        <div className="mb-2 flex items-center justify-between px-[2px] text-[11px] font-[700] uppercase tracking-[0.06em] text-[var(--text-3)]">
+          <span>Platform</span>
+          <span>Price</span>
+        </div>
 
-        {/* Price rows — always 4 rows, fixed height */}
-        <div className="mt-3 mb-4 w-full">
+        {/* Price rows — each in its own rounded card */}
+        <div className="flex flex-col gap-[6px]">
           {event.prices.map((p) => {
             const isBest = p.price === lowestPrice;
             return (
               <div
                 key={p.platform}
-                className={`flex items-center justify-between py-[6px] text-[13.5px] ${
-                  isBest ? "text-[var(--text-1)]" : "text-[var(--text-2)]"
-                }`}
+                className="flex items-center justify-between rounded-[10px] px-4 py-[10px]"
+                style={{
+                  background: isBest ? "rgba(34,197,94,0.08)" : "rgba(255,255,255,0.04)",
+                  border: isBest ? "1.5px solid rgba(34,197,94,0.45)" : "1px solid rgba(255,255,255,0.07)",
+                }}
               >
                 <span className="flex items-center gap-2">
-                  <span className={isBest ? "font-syne font-[700]" : ""}>{p.platform}</span>
+                  <span
+                    className={`font-syne text-[13.5px] font-[700] ${isBest ? "text-[var(--green)]" : "text-[var(--text-1)]"}`}
+                  >
+                    {p.platform}
+                  </span>
                   {isBest && (
-                    <span className="rounded-[4px] bg-[var(--green-dim)] px-[6px] py-[2px] text-[10px] font-[700] uppercase tracking-[0.5px] text-[var(--green)]">
+                    <span className="rounded-full bg-[var(--green)] px-[7px] py-[2px] text-[10px] font-[800] uppercase tracking-[0.5px] text-white">
                       BEST
                     </span>
                   )}
                 </span>
-                <span className={`font-[600] tabular-nums ${isBest ? "text-[var(--green)]" : ""}`}>
+                <span
+                  className={`font-syne text-[14px] font-[800] tabular-nums ${isBest ? "text-[var(--green)]" : "text-[var(--text-1)]"}`}
+                >
                   ${p.price}
                 </span>
               </div>
@@ -84,20 +92,34 @@ export default function HomepageEventCard({ event }: Props) {
           })}
         </div>
 
-        {/* Spacer pushes button to bottom */}
+        {/* Spacer */}
         <div className="flex-1" />
       </div>
 
-      {/* Button — always at the bottom */}
-      {event.tmUrl ? (
-        <a href={event.tmUrl} target="_blank" rel="noopener noreferrer" className={btn}>
-          View Best Deal
-        </a>
-      ) : (
-        <Link href={`/event/${event.id}`} className={btn}>
-          View Best Deal
-        </Link>
-      )}
+      {/* View Best Deal button */}
+      <div className="px-5 pb-5 pt-4">
+        {event.tmUrl ? (
+          <a
+            href={event.tmUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-syne flex w-full items-center justify-center gap-2 rounded-[12px] py-[14px] text-[15px] font-[700] text-white transition-all hover:opacity-90 hover:shadow-[0_6px_20px_rgba(34,197,94,0.35)]"
+            style={{ background: "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)" }}
+          >
+            View Best Deal
+            <ExternalLink size={15} />
+          </a>
+        ) : (
+          <Link
+            href={`/event/${event.id}`}
+            className="font-syne flex w-full items-center justify-center gap-2 rounded-[12px] py-[14px] text-[15px] font-[700] text-white transition-all hover:opacity-90 hover:shadow-[0_6px_20px_rgba(34,197,94,0.35)]"
+            style={{ background: "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)" }}
+          >
+            View Best Deal
+            <ExternalLink size={15} />
+          </Link>
+        )}
+      </div>
 
     </div>
   );
