@@ -181,16 +181,20 @@ export async function GET(req: NextRequest) {
       ? events.filter((e) => e.segment === "Sports")
       : events;
 
-    // Deduplicate: same matchup on the same date = same game (TM lists multiple ticket tiers as separate events)
+    // Deduplicate: same matchup on the same date = same game
+    // TM lists multiple ticket tiers / sections as separate events for the same game
     const seen = new Set<string>();
     const filteredEvents = sportsFiltered.filter((e) => {
       const dateDay = e.eventDate?.slice(0, 10) ?? "";
-      // Key on normalized name + date — catches "Yankees vs Athletics" duplicates
-      const key = `${e.name.toLowerCase().replace(/\s+/g, "")}|${dateDay}`;
+      const norm    = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+      // Prefer team-based key (most reliable), fall back to name+date
+      const key = e.homeTeam && e.awayTeam
+        ? `${norm(e.homeTeam)}|${norm(e.awayTeam)}|${dateDay}`
+        : `${norm(e.name)}|${dateDay}`;
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
-    }).slice(0, 20); // cap at 20 after dedup
+    }).slice(0, 20);
 
     return NextResponse.json(
       {
