@@ -109,61 +109,86 @@ export default async function EventPage({ params }: PageProps) {
 
           {/* Sports hero */}
           {isSports && event?.homeTeam && event?.awayTeam ? (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "24px", textAlign: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "32px", textAlign: "center" }}>
+
               {/* Sport badge */}
-              <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "rgba(124,108,255,0.15)", border: "1px solid rgba(124,108,255,0.3)", borderRadius: "30px", padding: "5px 16px", fontSize: "0.8rem", fontWeight: 700, color: "#a99fff", letterSpacing: "0.06em", textTransform: "uppercase", fontFamily: "var(--font-syne), 'Syne', sans-serif" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "rgba(124,108,255,0.15)", border: "1px solid rgba(124,108,255,0.3)", borderRadius: "30px", padding: "5px 16px", fontSize: "0.78rem", fontWeight: 700, color: "#a99fff", letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "var(--font-syne), 'Syne', sans-serif" }}>
                 {sportEmoji} {event.sport}
               </span>
 
-              {/* Team matchup */}
-              <div style={{ display: "flex", alignItems: "center", gap: "clamp(24px, 6vw, 64px)" }}>
+              {/* Matchup row */}
+              <div style={{ display: "flex", alignItems: "center", gap: "clamp(20px,5vw,56px)", width: "100%" }}>
+
                 {/* Away team */}
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", minWidth: "100px" }}>
-                  <div style={{ width: "clamp(80px,12vw,120px)", height: "clamp(80px,12vw,120px)", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
+                  <div style={{
+                    width: "clamp(110px,16vw,180px)", height: "clamp(110px,16vw,180px)",
+                    borderRadius: "24px",
+                    border: "1.5px solid rgba(124,108,255,0.4)",
+                    background: "linear-gradient(135deg, rgba(124,108,255,0.12) 0%, rgba(255,255,255,0.03) 100%)",
+                    boxShadow: "0 0 48px rgba(124,108,255,0.2), inset 0 1px 0 rgba(255,255,255,0.08)",
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>
                     {event.awayTeamLogo ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={event.awayTeamLogo} alt={event.awayTeam} style={{ width: "100%", height: "100%", objectFit: "contain", padding: "8px" }} />
-                    ) : <span style={{ fontSize: "3rem" }}>{sportEmoji}</span>}
+                      <img src={event.awayTeamLogo} alt={event.awayTeam} style={{ width: "72%", height: "72%", objectFit: "contain" }} />
+                    ) : <span style={{ fontSize: "3.5rem" }}>{sportEmoji}</span>}
                   </div>
-                  <div className="font-syne" style={{ fontWeight: 800, fontSize: "clamp(0.95rem,2.5vw,1.15rem)", color: "#ffffff", lineHeight: 1.2, maxWidth: "140px" }}>{event.awayTeam}</div>
-                  <div style={{ fontSize: "0.7rem", fontWeight: 700, color: "#8b89a8", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>AWAY</div>
+                  <div className="font-syne" style={{ fontWeight: 800, fontSize: "clamp(1rem,2.5vw,1.3rem)", color: "#ffffff", lineHeight: 1.2, maxWidth: "180px" }}>{event.awayTeam}</div>
+                  <span style={{ display: "inline-flex", padding: "4px 14px", borderRadius: "20px", background: "rgba(124,108,255,0.15)", border: "1px solid rgba(124,108,255,0.35)", fontSize: "0.65rem", fontWeight: 800, color: "#a99fff", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>AWAY</span>
                 </div>
 
-                {/* VS */}
-                <div className="font-syne" style={{ fontWeight: 900, fontSize: "clamp(24px,5vw,44px)", color: "rgba(255,255,255,0.2)", letterSpacing: "-1px", flexShrink: 0 }}>VS</div>
+                {/* VS circle + meta */}
+                <div style={{ flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
+                  <div style={{
+                    width: "clamp(68px,9vw,100px)", height: "clamp(68px,9vw,100px)",
+                    borderRadius: "50%",
+                    background: "linear-gradient(135deg, #7c6cff 0%, #5b4fe8 100%)",
+                    boxShadow: "0 0 40px rgba(124,108,255,0.55), 0 0 80px rgba(124,108,255,0.2)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>
+                    <span className="font-syne" style={{ fontWeight: 900, fontSize: "clamp(16px,2.5vw,28px)", color: "#ffffff", letterSpacing: "-0.5px" }}>VS</span>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "6px", alignItems: "center" }}>
+                    {event.eventDate && (
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "0.8rem", color: "#c4c2e0", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 500, whiteSpace: "nowrap" }}>
+                        <Calendar size={12} style={{ color: "#7c6cff" }} />
+                        {formatDate(event.eventDate)} · {formatTime(event.eventDate)}
+                      </div>
+                    )}
+                    {event.venue && (
+                      <div style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "0.78rem", color: "#8b89a8", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", whiteSpace: "nowrap" }}>
+                        <MapPin size={11} style={{ color: "#7c6cff" }} />
+                        {event.venue}{event.city ? `, ${event.city}` : ""}
+                      </div>
+                    )}
+                    {event.url && (
+                      <a href={event.url} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginTop: "2px", fontSize: "0.72rem", color: "#7c6cff", textDecoration: "none", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 600 }}>
+                        Official page <ExternalLink size={10} />
+                      </a>
+                    )}
+                  </div>
+                </div>
 
                 {/* Home team */}
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", minWidth: "100px" }}>
-                  <div style={{ width: "clamp(80px,12vw,120px)", height: "clamp(80px,12vw,120px)", borderRadius: "20px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
+                  <div style={{
+                    width: "clamp(110px,16vw,180px)", height: "clamp(110px,16vw,180px)",
+                    borderRadius: "24px",
+                    border: "1.5px solid rgba(255,200,80,0.35)",
+                    background: "linear-gradient(135deg, rgba(255,200,80,0.08) 0%, rgba(255,255,255,0.03) 100%)",
+                    boxShadow: "0 0 48px rgba(255,200,80,0.12), inset 0 1px 0 rgba(255,255,255,0.08)",
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>
                     {event.homeTeamLogo ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={event.homeTeamLogo} alt={event.homeTeam} style={{ width: "100%", height: "100%", objectFit: "contain", padding: "8px" }} />
-                    ) : <span style={{ fontSize: "3rem" }}>🏟️</span>}
+                      <img src={event.homeTeamLogo} alt={event.homeTeam} style={{ width: "72%", height: "72%", objectFit: "contain" }} />
+                    ) : <span style={{ fontSize: "3.5rem" }}>🏟️</span>}
                   </div>
-                  <div className="font-syne" style={{ fontWeight: 800, fontSize: "clamp(0.95rem,2.5vw,1.15rem)", color: "#ffffff", lineHeight: 1.2, maxWidth: "140px" }}>{event.homeTeam}</div>
-                  <div style={{ fontSize: "0.7rem", fontWeight: 700, color: "#8b89a8", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>HOME</div>
+                  <div className="font-syne" style={{ fontWeight: 800, fontSize: "clamp(1rem,2.5vw,1.3rem)", color: "#ffffff", lineHeight: 1.2, maxWidth: "180px" }}>{event.homeTeam}</div>
+                  <span style={{ display: "inline-flex", padding: "4px 14px", borderRadius: "20px", background: "rgba(255,200,80,0.12)", border: "1px solid rgba(255,200,80,0.35)", fontSize: "0.65rem", fontWeight: 800, color: "#ffc850", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>HOME</span>
                 </div>
-              </div>
 
-              {/* Meta row */}
-              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "18px", fontSize: "0.88rem", color: "#8b89a8" }}>
-                {event.eventDate && (
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>
-                    <Calendar size={14} style={{ color: "#7c6cff", flexShrink: 0 }} />
-                    {formatDate(event.eventDate)} · {formatTime(event.eventDate)}
-                  </div>
-                )}
-                {event.venue && (
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>
-                    <MapPin size={14} style={{ color: "#7c6cff", flexShrink: 0 }} />
-                    {event.venue}{event.city ? `, ${event.city}` : ""}
-                  </div>
-                )}
-                {event.url && (
-                  <a href={event.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "5px", color: "#7c6cff", textDecoration: "none", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontWeight: 600 }}>
-                    Official page <ExternalLink size={12} />
-                  </a>
-                )}
               </div>
             </div>
 
