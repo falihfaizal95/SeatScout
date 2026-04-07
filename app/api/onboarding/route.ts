@@ -20,32 +20,42 @@ export async function POST(req: NextRequest) {
 
   const client = await clerkClient();
 
-  // Save to Clerk publicMetadata
-  await client.users.updateUserMetadata(userId, {
-    publicMetadata: {
-      onboardingComplete: true,
-      dob,
-      country,
-      zipCode: country === "US" ? (zipCode ?? null) : null,
-    },
-  });
+  try {
+    // Save to Clerk publicMetadata
+    await client.users.updateUserMetadata(userId, {
+      publicMetadata: {
+        onboardingComplete: true,
+        dob,
+        country,
+        zipCode: country === "US" ? (zipCode ?? null) : null,
+      },
+    });
+  } catch (err) {
+    console.error("Clerk metadata update failed:", err);
+    return NextResponse.json({ error: "Failed to save preferences" }, { status: 500 });
+  }
 
-  // Save to Postgres via Prisma
-  await prisma.user.upsert({
-    where:  { clerkId: userId },
-    update: {
-      dateOfBirth: new Date(dob),
-      country,
-      zipCode: country === "US" ? (zipCode ?? null) : null,
-    },
-    create: {
-      clerkId:     userId,
-      email:       "",   // webhook will fill this in on next user.updated
-      dateOfBirth: new Date(dob),
-      country,
-      zipCode: country === "US" ? (zipCode ?? null) : null,
-    },
-  });
+  try {
+    // Save to Postgres via Prisma
+    await prisma.user.upsert({
+      where:  { clerkId: userId },
+      update: {
+        dateOfBirth: new Date(dob),
+        country,
+        zipCode: country === "US" ? (zipCode ?? null) : null,
+      },
+      create: {
+        clerkId:     userId,
+        email:       "",   // webhook will fill this in on next user.updated
+        dateOfBirth: new Date(dob),
+        country,
+        zipCode: country === "US" ? (zipCode ?? null) : null,
+      },
+    });
+  } catch (err) {
+    console.error("Prisma upsert failed:", err);
+    // Don't block onboarding if DB write fails — Clerk metadata was saved
+  }
 
   return NextResponse.json({ success: true });
 }

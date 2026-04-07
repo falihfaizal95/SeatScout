@@ -109,11 +109,9 @@ export default function OnboardingPage() {
   const router = useRouter();
   const [country, setCountry] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     const form     = e.currentTarget;
@@ -123,23 +121,17 @@ export default function OnboardingPage() {
     const zipCode  = zipInput?.value ?? "";
 
     try {
-      const res = await fetch("/api/onboarding", {
+      await fetch("/api/onboarding", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify({ dob, country, zipCode: country === "US" ? zipCode : undefined }),
       });
-
-      if (!res.ok) {
-        const data = await res.json() as { error?: string };
-        throw new Error(data.error ?? "Something went wrong");
-      }
-
-      router.push("/");
-      router.refresh();
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-      setLoading(false);
+    } catch {
+      // best-effort save — proceed regardless
     }
+
+    router.push("/");
+    router.refresh();
   }
 
   return (
@@ -232,12 +224,6 @@ export default function OnboardingPage() {
               </div>
             )}
 
-            {error && (
-              <p className="rounded-[8px] bg-red-500/10 px-4 py-3 text-[13px] text-red-400">
-                {error}
-              </p>
-            )}
-
             <button
               type="submit"
               disabled={loading}
@@ -249,9 +235,14 @@ export default function OnboardingPage() {
           </form>
         </div>
 
-        <p className="mt-5 text-center text-[12px] text-[var(--text-3)]">
-          You can update these anytime in your account settings.
-        </p>
+        <div className="mt-5 text-center flex flex-col gap-1">
+          <p className="text-[12px] text-[var(--text-3)]">
+            You can update these anytime in your account settings.
+          </p>
+          <Link href="/" className="text-[12px] text-[var(--text-3)] hover:text-[var(--text-2)] transition-colors">
+            Skip for now →
+          </Link>
+        </div>
       </div>
     </div>
   );
