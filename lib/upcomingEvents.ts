@@ -126,13 +126,34 @@ async function enrichWithTicketmaster(game: ESPNGame): Promise<TMResult> {
 
 const FALLBACK_BASE: Record<string, number> = { NBA: 145, NHL: 120 };
 
-function buildPrices(base: number) {
-  return [
-    { platform: "Ticketmaster", price: Math.round(base) },
-    { platform: "StubHub",      price: Math.round(base * 1.05) },
-    { platform: "SeatGeek",     price: Math.round(base * 0.97) },
-    { platform: "Vivid Seats",  price: Math.round(base * 0.98) },
+/**
+ * Deterministic per-game price variance seeded by the game id.
+ * Each platform gets a unique multiplier in the 0.93–1.08 range so the
+ * cheapest platform differs across games but stays stable on refresh.
+ */
+function buildPrices(base: number, gameId: string) {
+  // Simple integer hash of the game id — deterministic, no library needed
+  let h = 2166136261;
+  for (let i = 0; i < gameId.length; i++) {
+    h ^= gameId.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  h = h >>> 0; // unsigned 32-bit
+
+  // Pull 8 bits per platform for a 0–15% spread centred on base
+  const frac = (shift: number) => 0.93 + (((h >> shift) & 0xff) / 255) * 0.15;
+
+  const raw = [
+    { platform: "Ticketmaster", mult: frac(0)  },
+    { platform: "StubHub",      mult: frac(8)  },
+    { platform: "SeatGeek",     mult: frac(16) },
+    { platform: "Vivid Seats",  mult: frac(24) },
   ];
+
+  return raw.map(({ platform, mult }) => ({
+    platform,
+    price: Math.round(base * mult),
+  }));
 }
 
 // ── Fallback images ──────────────────────────────────────────────────────────
@@ -197,7 +218,7 @@ export async function getUpcomingPopularEvents(count = 3): Promise<HomepageEvent
         imageUrl: tm.imageUrl ?? SPORT_FALLBACK[sport],
         sport,
         tmUrl: tm.tmUrl,
-        prices: buildPrices(base),
+        prices: buildPrices(base, game.id),
       } satisfies HomepageEvent;
     })
   );
