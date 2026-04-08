@@ -134,7 +134,7 @@ function MarketActivityChart({ eventId }: { eventId: string }) {
 
 function TicketRow({ listing, isBest }: { listing: TicketListing; isBest: boolean }) {
   const base   = Math.round(listing.pricePerTicket * 0.81);
-  const fees   = listing.pricePerTicket - base;
+  const fees   = Math.round((listing.pricePerTicket - base) * 100) / 100;
   const seatStart = 8 + ((listing.section.charCodeAt(listing.section.length - 1) ?? 65) % 10);
   const seatEnd   = seatStart + Math.min(listing.quantity, 4) - 1;
   const pName  = PLATFORM_DISPLAY[listing.platform] ?? listing.platform;
@@ -178,7 +178,7 @@ function TicketRow({ listing, isBest }: { listing: TicketListing; isBest: boolea
           {pName}
         </span>
         <span style={{ fontSize: "0.8rem", color: "#8b89a8", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", whiteSpace: "nowrap" }}>
-          ${base} + ${fees} fees
+          ${base} + ${fees.toFixed(2)} fees
         </span>
       </div>
 
@@ -186,7 +186,7 @@ function TicketRow({ listing, isBest }: { listing: TicketListing; isBest: boolea
       <div style={{ flex: "0 0 auto", textAlign: "right" }}>
         <div style={{ fontSize: "0.7rem", color: "#8b89a8", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", marginBottom: "2px" }}>Total</div>
         <div className="font-syne" style={{ fontWeight: 800, fontSize: "1.25rem", color: isBest ? "#22c55e" : "#ffffff" }}>
-          ${listing.pricePerTicket}
+          ${Math.round(listing.pricePerTicket)}
         </div>
       </div>
 

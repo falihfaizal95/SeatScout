@@ -25,11 +25,14 @@ const SECTIONS = [
 
 const ROWS = ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R"];
 
+type UrlBuilder = (eventName: string, externalEventId: string) => string;
+
 function createMockAdapter(
   platform: Platform,
   siteName: string,
   siteUrl: string,
-  priceMultiplier: number
+  priceMultiplier: number,
+  urlBuilder?: UrlBuilder
 ): TicketAdapter {
   return {
     platform,
@@ -43,10 +46,14 @@ function createMockAdapter(
       const rand = seededRandom(`${platform}_${externalEventId}`);
       const listingCount = Math.floor(rand() * 8) + 4; // 4–11 listings
       const listings: TicketListing[] = [];
+      const q = encodeURIComponent(eventName ?? "");
+      const buyUrl = urlBuilder && eventName
+        ? urlBuilder(eventName, externalEventId)
+        : q ? `${siteUrl}/search?q=${q}` : siteUrl;
 
       for (let i = 0; i < listingCount; i++) {
         const basePrice = 40 + rand() * 200; // $40–$240 base
-        const price = Math.round(basePrice * priceMultiplier * 10) / 10;
+        const price = Math.round(basePrice * priceMultiplier);
         const section = SECTIONS[Math.floor(rand() * SECTIONS.length)];
         const row = ROWS[Math.floor(rand() * ROWS.length)];
         const qty = Math.floor(rand() * 4) + 1; // 1–4 tickets
@@ -62,7 +69,7 @@ function createMockAdapter(
           pricePerTicket: price,
           totalPrice: price * qty,
           currency: "USD",
-          buyUrl: `${siteUrl}`,
+          buyUrl,
           listingFetchedAt: new Date(),
           isVerified: false,
           isMock: true,
@@ -79,33 +86,38 @@ export const stubhubAdapter = createMockAdapter(
   "stubhub",
   "StubHub",
   "https://www.stubhub.com",
-  1.05
+  1.05,
+  (name) => `https://www.stubhub.com/find/s/?q=${encodeURIComponent(name)}`
 );
 
 export const vividseatsAdapter = createMockAdapter(
   "vividseats",
   "Vivid Seats",
   "https://www.vividseats.com",
-  0.98
+  0.98,
+  (name) => `https://www.vividseats.com/search?searchTerm=${encodeURIComponent(name)}`
 );
 
 export const axsAdapter = createMockAdapter(
   "axs",
   "AXS",
   "https://www.axs.com",
-  1.02
+  1.02,
+  (name) => `https://www.axs.com/search?keyword=${encodeURIComponent(name)}`
 );
 
 export const gametimeAdapter = createMockAdapter(
   "gametime",
   "Gametime",
   "https://gametime.co",
-  0.95
+  0.95,
+  (name) => `https://gametime.co/s?q=${encodeURIComponent(name)}`
 );
 
 export const tickpickAdapter = createMockAdapter(
   "tickpick",
   "TickPick",
   "https://www.tickpick.com",
-  0.93
+  0.93,
+  (name) => `https://www.tickpick.com/buy-tickets/#q=${encodeURIComponent(name)}`
 );
