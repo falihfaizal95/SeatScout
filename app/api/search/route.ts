@@ -146,9 +146,9 @@ export async function GET(req: NextRequest) {
         e.dates.start.dateTime ??
         `${e.dates.start.localDate}T${e.dates.start.localTime ?? "19:00:00"}`;
 
-      // TM returns away team first in attractions array for sports
-      const awayAttr = isSpor ? attractions[0] : undefined;
-      const homeAttr = isSpor ? attractions[1] : undefined;
+      // TM event names follow "HOME vs AWAY" — attractions[0] is home team
+      const homeAttr = isSpor ? attractions[0] : undefined;
+      const awayAttr = isSpor ? attractions[1] : undefined;
 
       return {
         id:            `tm_${e.id}`,

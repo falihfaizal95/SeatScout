@@ -100,9 +100,9 @@ function EventCard({ event }: { event: NormalizedEvent }) {
           {/* Matchup / title */}
           {hasTeams ? (
             <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "8px", flexWrap: "wrap" }}>
-              <span className="font-syne" style={{ fontWeight: 800, fontSize: "1rem", color: "#ffffff", lineHeight: 1.1 }}>{event.awayTeam}</span>
-              <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "#7b799a", letterSpacing: "0.08em", textTransform: "uppercase" }}>vs</span>
               <span className="font-syne" style={{ fontWeight: 800, fontSize: "1rem", color: "#ffffff", lineHeight: 1.1 }}>{event.homeTeam}</span>
+              <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "#7b799a", letterSpacing: "0.08em", textTransform: "uppercase" }}>vs</span>
+              <span className="font-syne" style={{ fontWeight: 800, fontSize: "1rem", color: "#ffffff", lineHeight: 1.1 }}>{event.awayTeam}</span>
             </div>
           ) : (
             <h3 className="font-syne" style={{ fontWeight: 800, fontSize: "1rem", color: "#ffffff", marginBottom: "8px", lineHeight: 1.2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
