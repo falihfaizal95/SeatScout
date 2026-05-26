@@ -4,7 +4,7 @@
 
 🌐 **Live:** [seatscout-build.vercel.app](https://seatscout-build.vercel.app)
 
----
+------
 
 ## What it does
 
