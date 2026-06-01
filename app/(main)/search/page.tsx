@@ -5,26 +5,55 @@ import { Search, Calendar, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { NormalizedEvent } from "@/types/event";
 
-const POPULAR = ["Lakers", "Yankees", "Cowboys", "Warriors"];
+const POPULAR = [
+  "Taylor Swift", "Lakers", "World Cup", "Cowboys", "Coldplay",
+  "Champions League", "WWE", "Yankees", "Bad Bunny", "Warriors",
+];
 
-const FILTERS = [
+const CATEGORY_TABS = [
+  { id: "all",      label: "All Events",  emoji: "🎟️" },
+  { id: "sports",   label: "Sports",      emoji: "🏆" },
+  { id: "soccer",   label: "Soccer",      emoji: "⚽" },
+  { id: "concerts", label: "Concerts",    emoji: "🎵" },
+  { id: "theatre",  label: "Theatre",     emoji: "🎭" },
+  { id: "comedy",   label: "Comedy",      emoji: "🎤" },
+  { id: "family",   label: "Family",      emoji: "🎪" },
+];
+
+const RESULT_FILTERS = [
   { id: "all",  label: "All" },
-  { id: "home", label: "Home Games" },
-  { id: "away", label: "Away Games" },
+  { id: "home", label: "Home" },
+  { id: "away", label: "Away" },
   { id: "soon", label: "Next 7 Days" },
 ];
 
-function segmentDotColor(segment?: string): string {
-  switch (segment) {
-    case "Music":          return "#3b82f6";
-    case "Arts & Theatre": return "#eab308";
-    case "Comedy":         return "#f97316";
-    default:               return "#ef4444"; // Sports / default
+function categoryToSegment(cat: string): string {
+  switch (cat) {
+    case "sports":   return "Sports";
+    case "concerts": return "Music";
+    case "theatre":
+    case "comedy":
+    case "family":   return "Arts & Theatre";
+    case "soccer":   return "Sports";
+    default:         return "";
   }
 }
 
-function applyFilter(events: NormalizedEvent[], filter: string, query: string): NormalizedEvent[] {
-  const q = query.toLowerCase();
+function sportDotColor(sport?: string, segment?: string): string {
+  const s = (sport ?? segment ?? "").toLowerCase();
+  if (s === "concert" || s === "music" || segment === "Music")        return "#3b82f6";
+  if (s === "theatre" || s === "comedy" || segment === "Arts & Theatre") return "#eab308";
+  if (s === "soccer" || s === "mls")                                  return "#22c55e";
+  if (s === "nfl")    return "#ef4444";
+  if (s === "nba")    return "#f97316";
+  if (s === "mlb")    return "#3b82f6";
+  if (s === "nhl")    return "#06b6d4";
+  if (s === "ufc" || s === "boxing" || s === "wrestling") return "#a855f7";
+  return "#ef4444";
+}
+
+function applyResultFilter(events: NormalizedEvent[], filter: string, query: string): NormalizedEvent[] {
+  const q   = query.toLowerCase();
   const now = new Date();
   const in7 = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
@@ -40,11 +69,11 @@ function applyFilter(events: NormalizedEvent[], filter: string, query: string): 
 }
 
 function EventCard({ event }: { event: NormalizedEvent }) {
-  const label = event.sport || event.segment || "Event";
-  const dotColor = segmentDotColor(event.segment);
+  const label    = event.sport || event.segment || "Event";
+  const dotColor = sportDotColor(event.sport, event.segment);
   const hasTeams = event.homeTeam && event.awayTeam;
 
-  const date = new Date(event.eventDate);
+  const date    = new Date(event.eventDate);
   const dateStr = date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
   const timeStr = date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 
@@ -63,27 +92,26 @@ function EventCard({ event }: { event: NormalizedEvent }) {
         onMouseEnter={(e) => {
           const el = e.currentTarget as HTMLDivElement;
           el.style.borderColor = "rgba(255,255,255,0.16)";
-          el.style.transform = "translateY(-3px)";
-          el.style.boxShadow = "0 12px 36px rgba(0,0,0,0.45)";
+          el.style.transform   = "translateY(-3px)";
+          el.style.boxShadow   = "0 12px 36px rgba(0,0,0,0.45)";
         }}
         onMouseLeave={(e) => {
           const el = e.currentTarget as HTMLDivElement;
           el.style.borderColor = "rgba(255,255,255,0.07)";
-          el.style.transform = "translateY(0)";
-          el.style.boxShadow = "none";
+          el.style.transform   = "translateY(0)";
+          el.style.boxShadow   = "none";
         }}
       >
         {/* Banner */}
         <div style={{ width: "100%", aspectRatio: "16/9", position: "relative", overflow: "hidden", background: "#1a1830", display: "flex", alignItems: "center", justifyContent: "center" }}>
           {event.imageUrl ? (
-            <img src={event.imageUrl} alt={event.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.7 }} />
+            <img src={event.imageUrl} alt={event.name} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.8 }} />
           ) : (
             <span style={{ fontSize: "3rem", opacity: 0.15 }}>🎟️</span>
           )}
-          {/* Gradient overlay */}
-          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.04) 0%, transparent 60%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.4) 100%)" }} />
           {/* Category badge */}
-          <div style={{ position: "absolute", top: "10px", left: "10px", display: "flex", alignItems: "center", gap: "5px", background: "rgba(0,0,0,0.55)", backdropFilter: "blur(6px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "6px", padding: "4px 9px", fontSize: "0.7rem", fontWeight: 600, color: "#ffffff", letterSpacing: "0.03em" }}>
+          <div style={{ position: "absolute", top: "10px", left: "10px", display: "flex", alignItems: "center", gap: "5px", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(6px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "6px", padding: "4px 9px", fontSize: "0.7rem", fontWeight: 600, color: "#ffffff", letterSpacing: "0.03em" }}>
             <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: dotColor, flexShrink: 0 }} />
             {label}
           </div>
@@ -97,7 +125,6 @@ function EventCard({ event }: { event: NormalizedEvent }) {
 
         {/* Body */}
         <div style={{ padding: "14px 16px 16px", display: "flex", flexDirection: "column", flex: 1 }}>
-          {/* Matchup / title */}
           {hasTeams ? (
             <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "8px", flexWrap: "wrap" }}>
               <span className="font-syne" style={{ fontWeight: 800, fontSize: "1rem", color: "#ffffff", lineHeight: 1.1 }}>{event.homeTeam}</span>
@@ -110,7 +137,6 @@ function EventCard({ event }: { event: NormalizedEvent }) {
             </h3>
           )}
 
-          {/* Meta */}
           <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "14px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.78rem", color: "#7b799a" }}>
               <Calendar size={12} style={{ opacity: 0.6, flexShrink: 0 }} />
@@ -122,10 +148,9 @@ function EventCard({ event }: { event: NormalizedEvent }) {
             </div>
           </div>
 
-          {/* Footer */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto", paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
             <span style={{ fontSize: "0.78rem", color: "#7b799a" }}>{event.source || "Ticketmaster"}</span>
-            <span style={{ fontSize: "0.82rem", fontWeight: 600, color: "#a99fff", display: "flex", alignItems: "center", gap: "4px", transition: "gap 0.2s" }}>
+            <span style={{ fontSize: "0.82rem", fontWeight: 600, color: "#a99fff", display: "flex", alignItems: "center", gap: "4px" }}>
               View Deals <ArrowRight size={13} />
             </span>
           </div>
@@ -151,26 +176,60 @@ function EventCardSkeleton() {
 function SearchContent() {
   const router       = useRouter();
   const searchParams = useSearchParams();
-  const initQ = searchParams.get("q") ?? "";
+  const initQ        = searchParams.get("q") ?? "";
+  const initCat      = searchParams.get("category") ?? "all";
 
-  const [query,    setQuery]    = useState(initQ);
-  const [events,   setEvents]   = useState<NormalizedEvent[]>([]);
-  const [loading,  setLoading]  = useState(false);
-  const [error,    setError]    = useState<string | null>(null);
-  const [searched, setSearched] = useState(false);
-  const [filter,   setFilter]   = useState("all");
+  const [query,       setQuery]       = useState(initQ);
+  const [activeCategory, setActiveCategory] = useState(initCat);
+  const [events,      setEvents]      = useState<NormalizedEvent[]>([]);
+  const [loading,     setLoading]     = useState(false);
+  const [error,       setError]       = useState<string | null>(null);
+  const [searched,    setSearched]    = useState(false);
+  const [resultFilter, setResultFilter] = useState("all");
 
-  const doSearch = useCallback(async (q: string) => {
-    if (!q.trim()) return;
+  const doSearch = useCallback(async (q: string, cat: string) => {
+    if (!q.trim() && cat === "all") return;
     setLoading(true);
     setError(null);
     setSearched(true);
-    setFilter("all");
+    setResultFilter("all");
+
     try {
-      const res  = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-      const json = await res.json() as { events?: NormalizedEvent[]; error?: string };
+      const segment = categoryToSegment(cat);
+      const params  = new URLSearchParams();
+      if (q.trim())  params.set("q", q);
+      if (segment)   params.set("segment", segment);
+
+      const endpoint = q.trim() ? `/api/search?${params}` : `/api/search?${params}`;
+      const res   = await fetch(endpoint);
+      const json  = await res.json() as { events?: NormalizedEvent[]; error?: string };
       if (!res.ok) throw new Error(json.error ?? "Search failed");
-      setEvents(Array.isArray(json.events) ? json.events : []);
+
+      let results = Array.isArray(json.events) ? json.events : [];
+
+      // Client-side filter for sub-categories
+      if (cat === "soccer") {
+        results = results.filter((e) =>
+          ["Soccer", "MLS"].includes(e.sport as string) ||
+          (e.genre ?? "").toLowerCase().includes("soccer")
+        );
+      } else if (cat === "comedy") {
+        results = results.filter((e) =>
+          (e.sport as string) === "Comedy" ||
+          (e.genre ?? "").toLowerCase().includes("comedy")
+        );
+      } else if (cat === "theatre") {
+        results = results.filter((e) =>
+          (e.sport as string) === "Theatre" ||
+          e.segment === "Arts & Theatre"
+        );
+      } else if (cat === "family") {
+        results = results.filter((e) =>
+          (e.sport as string) === "Family"
+        );
+      }
+
+      setEvents(results);
     } catch {
       setError("Search failed. Please try again.");
     } finally {
@@ -179,22 +238,34 @@ function SearchContent() {
   }, []);
 
   useEffect(() => {
-    if (initQ) doSearch(initQ);
+    if (initQ || initCat !== "all") doSearch(initQ, initCat);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.replace(`/search?q=${encodeURIComponent(query)}`, { scroll: false });
-    doSearch(query);
+    const params = new URLSearchParams();
+    if (query.trim())            params.set("q", query);
+    if (activeCategory !== "all") params.set("category", activeCategory);
+    router.replace(`/search?${params}`, { scroll: false });
+    doSearch(query, activeCategory);
   };
 
-  const filtered = applyFilter(events, filter, query);
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat);
+    const params = new URLSearchParams();
+    if (query.trim()) params.set("q", query);
+    if (cat !== "all") params.set("category", cat);
+    router.replace(`/search?${params}`, { scroll: false });
+    doSearch(query, cat);
+  };
+
+  const filtered = applyResultFilter(events, resultFilter, query);
 
   return (
     <div style={{ background: "#0e0d18", minHeight: "100vh" }}>
 
-      {/* Search bar area */}
+      {/* Search bar */}
       <div style={{ paddingTop: "100px", paddingBottom: 0, paddingLeft: "clamp(16px, 4vw, 48px)", paddingRight: "clamp(16px, 4vw, 48px)", maxWidth: "1300px", margin: "0 auto" }}>
         <form onSubmit={handleSubmit}>
           <div
@@ -209,7 +280,7 @@ function SearchContent() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search teams, artists, events, venues..."
+              placeholder="Search teams, artists, FIFA, concerts, shows, venues..."
               style={{ flex: 1, background: "none", border: "none", outline: "none", color: "#ffffff", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", fontSize: "1.1rem", padding: "22px 0", caretColor: "#7c6cff" }}
             />
             <button
@@ -223,14 +294,45 @@ function SearchContent() {
           </div>
         </form>
 
+        {/* Category tabs */}
+        <div style={{ display: "flex", gap: "8px", marginTop: "16px", flexWrap: "wrap" }}>
+          {CATEGORY_TABS.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => handleCategoryChange(tab.id)}
+              style={{
+                background:  activeCategory === tab.id ? "rgba(124,108,255,0.2)" : "rgba(255,255,255,0.06)",
+                border:      `1px solid ${activeCategory === tab.id ? "rgba(124,108,255,0.5)" : "rgba(255,255,255,0.1)"}`,
+                color:       activeCategory === tab.id ? "#c4b5fd" : "#9b99b8",
+                fontSize:    "0.82rem",
+                fontWeight:  600,
+                padding:     "7px 15px",
+                borderRadius: "24px",
+                cursor:      "pointer",
+                fontFamily:  "var(--font-dm-sans), 'DM Sans', sans-serif",
+                transition:  "all 0.2s",
+                display:     "flex",
+                alignItems:  "center",
+                gap:         "5px",
+              }}
+            >
+              <span>{tab.emoji}</span> {tab.label}
+            </button>
+          ))}
+        </div>
+
         {/* Popular tags */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "16px", flexWrap: "wrap" }}>
-          <span style={{ color: "#7b799a", fontSize: "0.85rem", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>Popular:</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "12px", flexWrap: "wrap" }}>
+          <span style={{ color: "#7b799a", fontSize: "0.82rem", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>Trending:</span>
           {POPULAR.map((tag) => (
             <button
               key={tag}
-              onClick={() => { setQuery(tag); router.replace(`/search?q=${encodeURIComponent(tag)}`, { scroll: false }); doSearch(tag); }}
-              style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", color: "#e8e6ff", fontSize: "0.82rem", fontWeight: 500, padding: "5px 14px", borderRadius: "20px", cursor: "pointer", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", transition: "background 0.2s" }}
+              onClick={() => {
+                setQuery(tag);
+                router.replace(`/search?q=${encodeURIComponent(tag)}`, { scroll: false });
+                doSearch(tag, activeCategory);
+              }}
+              style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", color: "#e8e6ff", fontSize: "0.78rem", fontWeight: 500, padding: "4px 12px", borderRadius: "20px", cursor: "pointer", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", transition: "background 0.2s" }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.13)"; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.07)"; }}
             >
@@ -246,22 +348,23 @@ function SearchContent() {
         {searched && !loading && (
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", marginBottom: "28px", flexWrap: "wrap" }}>
             <p style={{ fontSize: "0.95rem", color: "#7b799a", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>
-              <strong style={{ color: "#ffffff", fontWeight: 600 }}>{filtered.length} events</strong> for &ldquo;{query}&rdquo;
+              <strong style={{ color: "#ffffff", fontWeight: 600 }}>{filtered.length} events</strong>
+              {query ? <> for &ldquo;{query}&rdquo;</> : null}
             </p>
             <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-              {FILTERS.map((f) => (
+              {RESULT_FILTERS.map((f) => (
                 <button
                   key={f.id}
-                  onClick={() => setFilter(f.id)}
+                  onClick={() => setResultFilter(f.id)}
                   style={{
-                    background: filter === f.id ? "rgba(124,108,255,0.15)" : "rgba(255,255,255,0.06)",
-                    border: `1px solid ${filter === f.id ? "rgba(124,108,255,0.4)" : "rgba(255,255,255,0.1)"}`,
-                    color: filter === f.id ? "#a99fff" : "#7b799a",
-                    fontSize: "0.8rem",
+                    background: resultFilter === f.id ? "rgba(124,108,255,0.15)" : "rgba(255,255,255,0.06)",
+                    border:     `1px solid ${resultFilter === f.id ? "rgba(124,108,255,0.4)" : "rgba(255,255,255,0.1)"}`,
+                    color:      resultFilter === f.id ? "#a99fff" : "#7b799a",
+                    fontSize:   "0.8rem",
                     fontWeight: 500,
-                    padding: "6px 14px",
+                    padding:    "6px 14px",
                     borderRadius: "20px",
-                    cursor: "pointer",
+                    cursor:     "pointer",
                     fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
                     transition: "all 0.2s",
                   }}
@@ -290,7 +393,7 @@ function SearchContent() {
             <div style={{ fontSize: "4rem", marginBottom: "16px" }}>🔍</div>
             <h3 className="font-syne" style={{ fontSize: "1.3rem", fontWeight: 800, color: "#ffffff", marginBottom: "8px" }}>No events found</h3>
             <p style={{ color: "#7b799a", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif" }}>
-              Try a different search or filter.
+              Try a different search term or category.
             </p>
           </div>
         )}
@@ -305,10 +408,12 @@ function SearchContent() {
 
         {!searched && !loading && (
           <div style={{ textAlign: "center", padding: "100px 0" }}>
-            <div style={{ fontSize: "4.5rem", marginBottom: "20px" }}>🏟️</div>
-            <h3 className="font-syne" style={{ fontSize: "1.6rem", fontWeight: 800, color: "#ffffff", marginBottom: "10px" }}>Search any event</h3>
-            <p style={{ color: "#7b799a", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", maxWidth: "400px", margin: "0 auto" }}>
-              Search for sports, concerts, theater, comedy, and more.
+            <div style={{ fontSize: "4.5rem", marginBottom: "20px" }}>🌍</div>
+            <h3 className="font-syne" style={{ fontSize: "1.6rem", fontWeight: 800, color: "#ffffff", marginBottom: "10px" }}>
+              Every event. Every ticket. Best price.
+            </h3>
+            <p style={{ color: "#7b799a", fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif", maxWidth: "440px", margin: "0 auto" }}>
+              Search sports, FIFA, World Cup, concerts, Broadway, comedy, and more.
             </p>
           </div>
         )}

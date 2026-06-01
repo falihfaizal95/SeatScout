@@ -7,16 +7,32 @@ interface Props {
   event: HomepageEvent;
 }
 
+const SPORT_EMOJIS: Record<string, string> = {
+  NBA: "🏀", NHL: "🏒", NFL: "🏈", MLB: "⚾", MLS: "⚽", Soccer: "⚽",
+  Concert: "🎵", Festival: "🎉", Theatre: "🎭", Comedy: "🎤", Family: "🎪",
+  UFC: "🥊", Boxing: "🥊", Wrestling: "🤼", Tennis: "🎾", Golf: "⛳",
+};
+
+const SPORT_COLORS: Record<string, string> = {
+  NBA: "#f97316", NHL: "#06b6d4", NFL: "#ef4444", MLB: "#3b82f6",
+  MLS: "#22c55e", Soccer: "#22c55e",
+  Concert: "#8b5cf6", Festival: "#ec4899", Theatre: "#eab308",
+  Comedy: "#f97316", Family: "#06b6d4",
+  UFC: "#a855f7", Boxing: "#a855f7", Wrestling: "#a855f7",
+};
+
 export default function HomepageEventCard({ event }: Props) {
   const lowestPrice  = Math.min(...event.prices.map((p) => p.price));
   const highestPrice = Math.max(...event.prices.map((p) => p.price));
   const savings      = highestPrice - lowestPrice;
+  const sportEmoji   = SPORT_EMOJIS[event.sport]  ?? "🎟️";
+  const sportColor   = SPORT_COLORS[event.sport]  ?? "#7c6cff";
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-[20px] border border-[var(--card-border)] bg-[var(--card)] transition-all duration-200 hover:-translate-y-1 hover:border-[rgba(124,106,247,0.25)]">
 
       {/* Image */}
-      <div className="h-[200px] shrink-0 overflow-hidden">
+      <div className="relative h-[200px] shrink-0 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={event.imageUrl}
@@ -24,6 +40,14 @@ export default function HomepageEventCard({ event }: Props) {
           className="h-full w-full object-cover brightness-[0.85] transition-transform duration-500 group-hover:scale-105"
           crossOrigin="anonymous"
         />
+        {/* Category badge */}
+        <div
+          className="absolute left-3 top-3 flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[11px] font-[700] text-white"
+          style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(6px)", border: `1px solid ${sportColor}55` }}
+        >
+          <span>{sportEmoji}</span>
+          <span style={{ color: sportColor }}>{event.sport}</span>
+        </div>
       </div>
 
       {/* Body */}
